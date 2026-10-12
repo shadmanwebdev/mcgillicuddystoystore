@@ -9,9 +9,9 @@
       if (typeof privacy?.currentVisitorConsent !== 'function') return;
       try {
         const consent = privacy.currentVisitorConsent();
-        // Sale-of-data can be populated by GPC before a banner choice.
-        // Require explicit decisions for all three cookie categories.
-        const saved = ['analytics', 'marketing', 'preferences'].every(
+        // A saved decision can contain only the categories used by this store.
+        // Ignore sale-of-data-only GPC signals, which aren't a banner choice.
+        const saved = ['analytics', 'marketing', 'preferences'].some(
           category => consent?.[category] === 'yes' || consent?.[category] === 'no',
         );
         if (saved) root.setAttribute('data-arcadia-consent', 'saved');
@@ -20,6 +20,27 @@
         // Leave Shopify's normal banner visible when its API is unavailable.
       }
     };
+    const choose = event => {
+      const button = event.target.closest?.('#shopify-pc__banner__btn-accept, #shopify-pc__banner__btn-decline');
+      const privacy = window.Shopify?.customerPrivacy;
+      if (!button || typeof privacy?.setTrackingConsent !== 'function') return;
+      // Handle these two actions directly so dismissal follows the API save.
+      // The preferences button/dialog retains Shopify's existing handlers.
+      event.preventDefault();
+      event.stopImmediatePropagation();
+      const accepted = button.id === 'shopify-pc__banner__btn-accept';
+      button.disabled = true;
+      try {
+        privacy.setTrackingConsent({analytics: accepted, marketing: accepted, preferences: accepted}, error => {
+          button.disabled = false;
+          if (disposed || error) return;
+          root.setAttribute('data-arcadia-consent', 'saved');
+        });
+      } catch (_) {
+        button.disabled = false;
+      }
+    };
+    document.addEventListener('click', choose, true);
     document.addEventListener('visitorConsentCollected', sync);
     window.addEventListener('pageshow', sync);
     sync();
@@ -30,6 +51,7 @@
     }
     return () => {
       disposed = true;
+      document.removeEventListener('click', choose, true);
       document.removeEventListener('visitorConsentCollected', sync);
       window.removeEventListener('pageshow', sync);
     };
