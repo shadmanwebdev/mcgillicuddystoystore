@@ -42,6 +42,10 @@ node .tools/package/bin/npm-cli.js ci --cache .tools/npm-cache
 ## Documentation
 
 - [Agreed development workflow](docs/WORKFLOW.md)
+- [Homepage](docs/pages/home.md)
+- [Find your game settings and Joyfy comparison](docs/sections/shop-by-game.md)
+- [Reusable carousel](docs/features/carousel.md)
+- [Theme styling tokens](docs/DESIGN-TOKENS.md)
 - [Shopify CLI for themes](https://shopify.dev/docs/storefronts/themes/tools/cli)
 - [Theme development preview](https://shopify.dev/docs/api/shopify-cli/theme/theme-dev)
 

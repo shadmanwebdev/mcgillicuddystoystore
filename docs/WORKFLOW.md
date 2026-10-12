@@ -4,9 +4,9 @@ Agreed project workflow, saved 13 October 2026.
 
 ## Direction
 
-Build and refine the theme section by section, starting with the homepage campaign hero. Preserve the existing light and dark palettes and basic visual identity. User-provided images guide the design of the relevant section; clarify material conflicts with the shared styling before implementing them.
+Build and refine the theme section by section, starting with the homepage Find your game (Shop by game) section. Preserve the existing light and dark palettes and basic visual identity. User-provided images guide the design of the relevant section; clarify material conflicts with the shared styling before implementing them.
 
-Use Joyfy's equivalent section as a customization benchmark. Select controls that serve Arcadia's needs and document the comparison. Do not equate matching section names or setting counts with matching functionality.
+Use Joyfy's equivalent section as a customization benchmark for every section without requiring the user to repeat this instruction. Match its relevant customization options, adapt their presentation to Arcadia, and document any differences or unverified behavior. Do not equate matching section names or setting counts with matching functionality.
 
 ## Before implementation begins
 
@@ -91,6 +91,7 @@ docs/
   pages/
     home.md
   sections/
+    shop-by-game.md
     campaign-hero.md
   features/
     theme-mode.md
@@ -125,8 +126,8 @@ Treat creation of store content, upload of a permanent draft, and publishing as 
 ## Initial sequence
 
 1. Establish the Git baseline and document the relevant existing tokens and architecture.
-2. Review and implement the homepage campaign hero using this workflow.
-3. Continue through Shop by game, Featured products, Upcoming events, Community call to action, and Newsletter, adjusting the order to the user's priorities.
+2. Review and implement the homepage Find your game section using this workflow.
+3. Continue through Campaign hero, Featured products, Upcoming events, Community call to action, and Newsletter, adjusting the order to the user's priorities.
 4. Refine shared header/footer components and expand to other pages as directed.
 
-Current status: workflow saved; section-by-section implementation has not started.
+Current status: Git baseline recorded as cf700df. Find your game implemented for development-preview review; see sections/shop-by-game.md. User acceptance is pending.

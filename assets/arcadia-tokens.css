@@ -11,6 +11,17 @@
   --arcadia-space: clamp(3rem, 6vw, 6.5rem);
   --arcadia-font: system-ui, sans-serif;
   --arcadia-heading: var(--arcadia-font);
+  --arcadia-space-xs: 0.5rem;
+  --arcadia-space-sm: 0.75rem;
+  --arcadia-space-md: 1rem;
+  --arcadia-space-lg: 1.5rem;
+  --arcadia-card-gap: 1.5rem;
+  --arcadia-text-small: 0.875rem;
+  --arcadia-text-card: 1.3rem;
+  --arcadia-text-display: clamp(4rem, 10vw, 9rem);
+  --arcadia-weight-bold: 750;
+  --arcadia-watermark-opacity: 0.06;
+  --arcadia-motion-fast: 200ms;
 }
 html[data-mode="light"] {
   --arcadia-bg: #f6f5f0;

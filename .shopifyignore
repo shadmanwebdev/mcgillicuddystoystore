@@ -3,6 +3,7 @@ node_modules/**
 .shopify/**
 .git/**
 docs/**
+tests/**
 package.json
 package-lock.json
 shopify.theme.toml

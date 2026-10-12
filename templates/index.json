@@ -17,8 +17,17 @@
       "type": "arcadia-shop-by-game",
       "settings": {
         "heading": "Find your game.",
-        "eyebrow": "One table. Endless worlds."
-      }
+        "eyebrow": "One table. Endless worlds.",
+        "button_label": "Explore all collections",
+        "button_link": "shopify://collections"
+      },
+      "blocks": {
+        "pokemon": {"type": "collection", "settings": {"collection": "pokemon-tcg", "title": "Pokémon", "description": "Find your next favourite card."}},
+        "magic": {"type": "collection", "settings": {"collection": "magic-the-gathering-tcg", "title": "Magic: The Gathering", "description": "Build a deck. Make it yours."}},
+        "onepiece": {"type": "collection", "settings": {"collection": "one-piece-tcg", "title": "One Piece", "description": "Your next adventure starts here."}},
+        "warhammer": {"type": "collection", "settings": {"collection": "warhammer", "title": "Warhammer", "description": "Build, paint and play."}}
+      },
+      "block_order": ["pokemon", "magic", "onepiece", "warhammer"]
     },
     "products": {
       "type": "arcadia-featured-products",

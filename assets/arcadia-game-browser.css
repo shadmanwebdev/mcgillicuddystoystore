@@ -1,0 +1,30 @@
+.arcadia-game-browser { margin-block: var(--game-margin-top) var(--game-margin-bottom); }
+.arcadia-game-browser__header { position: relative; isolation: isolate; }
+.arcadia-game-browser__watermark { position: absolute; inset: 0; z-index: -1; overflow: hidden; pointer-events: none; font: var(--arcadia-weight-bold) var(--arcadia-text-display)/1 var(--arcadia-heading); color: var(--arcadia-ink); opacity: var(--arcadia-watermark-opacity); white-space: nowrap; }
+.arcadia-game-browser .arcadia-heading[data-align="center"] { flex-direction: column; align-items: center; text-align: center; }
+.arcadia-game-browser .arcadia-heading[data-align="end"] { flex-direction: column; align-items: end; text-align: end; }
+.arcadia-game-browser__track { --game-visible: var(--game-columns); display: grid; grid-template-columns: repeat(var(--game-visible),minmax(0,1fr)); gap: var(--arcadia-card-gap); padding: var(--arcadia-space-xs); margin: calc(-1 * var(--arcadia-space-xs)); list-style: none; }
+.arcadia-game-browser__track > li { min-width: 0; }
+.arcadia-game-browser[data-carousel="true"] .arcadia-game-browser__track { grid-auto-flow: column; grid-template-columns: none; grid-auto-columns: calc((100% - (var(--game-visible) - 1) * var(--arcadia-card-gap)) / var(--game-visible)); overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: thin; scroll-padding-inline: var(--arcadia-space-xs); }
+.arcadia-game-browser__track > li { scroll-snap-align: start; }
+.arcadia-game-browser__controls { display: flex; justify-content: end; gap: var(--arcadia-space-sm); margin-top: var(--arcadia-space-md); }
+.arcadia-game-tile { height: 100%; border: 1px solid var(--arcadia-line); border-radius: var(--arcadia-radius); background: var(--arcadia-surface); transition: transform var(--arcadia-motion-fast), border-color var(--arcadia-motion-fast); }
+.arcadia-game-tile[data-lift="true"]:hover { transform: translateY(-4px); border-color: var(--game-accent,var(--arcadia-accent)); }
+.arcadia-game-tile__link { display: flex; flex-direction: column; height: 100%; text-decoration: none; border-radius: inherit; }
+.arcadia-game-tile__media { position: relative; aspect-ratio: 4/3; overflow: hidden; border-radius: var(--arcadia-radius) var(--arcadia-radius) 0 0; background: var(--arcadia-bg); }
+.arcadia-game-tile__media > img:not(.arcadia-game-tile__logo) { width: 100%; height: 100%; object-fit: cover; }
+.arcadia-game-browser[data-contain="true"] .arcadia-game-tile__media > img:not(.arcadia-game-tile__logo) { object-fit: contain; padding: var(--arcadia-space-md); }
+.arcadia-game-tile__fallback { display: grid; place-items: center; width: 100%; height: 100%; color: var(--game-accent,var(--arcadia-accent)); background: radial-gradient(ellipse at center,color-mix(in srgb,var(--game-accent,var(--arcadia-accent)) 12%,transparent),transparent 70%); }
+.arcadia-game-tile__fallback svg { width: 30%; height: 30%; }
+.arcadia-game-tile__media > .arcadia-game-tile__logo { position: absolute; inset-inline-start: var(--arcadia-space-md); bottom: var(--arcadia-space-md); max-width: 50%; max-height: 30%; object-fit: contain; }
+.arcadia-game-tile__content { position: relative; padding: var(--arcadia-space-lg); padding-inline-end: calc(var(--arcadia-space-lg) + 1.5rem); overflow-wrap: anywhere; }
+.arcadia-game-tile__content h3 { font-size: var(--arcadia-text-card); margin: 0; }
+.arcadia-game-tile__content p { font-size: var(--arcadia-text-small); margin: var(--arcadia-space-sm) 0 0; }
+.arcadia-game-tile__arrow { position: absolute; inset-inline-end: var(--arcadia-space-md); top: var(--arcadia-space-lg); color: var(--game-accent,var(--arcadia-accent)); }
+.arcadia-game-browser[data-layout="horizontal"] .arcadia-game-tile__link { flex-direction: row; align-items: center; }
+.arcadia-game-browser[data-layout="horizontal"] .arcadia-game-tile__media { flex: 0 0 34%; aspect-ratio: 1; border-radius: var(--arcadia-radius); }
+.arcadia-game-browser[data-layout="horizontal"] .arcadia-game-tile__content { flex: 1; min-width: 0; padding: var(--arcadia-space-md); }
+.arcadia-game-browser[data-layout="horizontal"] .arcadia-game-tile__arrow { display: none; }
+@media(max-width:1000px) { .arcadia-game-browser__track { --game-visible: 2; } }
+@media(max-width:600px) { .arcadia-game-browser__track { --game-visible: var(--game-mobile-columns); } .arcadia-game-browser[data-carousel="true"] .arcadia-game-browser__track { grid-auto-columns: calc((90% - (var(--game-visible) - 1) * var(--arcadia-card-gap)) / var(--game-visible)); } }
+@media(prefers-reduced-motion:reduce) { .arcadia-game-tile { transition: none; } .arcadia-game-tile[data-lift="true"]:hover { transform: none; } }

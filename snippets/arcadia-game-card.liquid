@@ -1,0 +1,23 @@
+{% comment %}Reusable collection card. Custom content takes precedence over collection data.{% endcomment %}
+{% liquid
+  assign card_title = title | default: collection.title | default: 'Choose a game'
+  assign card_image = image | default: collection.featured_image
+  assign card_url = url | default: collection.url
+%}
+<article class="arcadia-game-tile" data-lift="{{ lift }}" {% if accent != blank %}style="--game-accent:{{ accent }}"{% endif %}>
+  {% if card_url != blank %}<a class="arcadia-game-tile__link" href="{{ card_url }}">{% else %}<div class="arcadia-game-tile__link">{% endif %}
+    <div class="arcadia-game-tile__media" {% if gradient != blank %}style="background:{{ gradient }}"{% endif %}>
+      {% if card_image != blank %}
+        {{ card_image | image_url: width: 900 | image_tag: loading: 'lazy', widths: '180, 360, 540, 720, 900', sizes: '(max-width: 600px) 85vw, (max-width: 1000px) 45vw, 25vw', alt: '' }}
+      {% else %}
+        <span class="arcadia-game-tile__fallback" aria-hidden="true">{% render 'arcadia-icon' %}</span>
+      {% endif %}
+      {% if logo != blank %}{{ logo | image_url: width: 280 | image_tag: loading: 'lazy', class: 'arcadia-game-tile__logo', alt: '' }}{% endif %}
+    </div>
+    <div class="arcadia-game-tile__content">
+      <h3>{{ card_title | escape }}</h3>
+      {% if description != blank %}<p class="arcadia-muted">{{ description | escape }}</p>{% endif %}
+      {% if card_url != blank %}<span class="arcadia-game-tile__arrow" aria-hidden="true">{% render 'arcadia-icon', name: 'arrow' %}</span>{% endif %}
+    </div>
+  {% if card_url != blank %}</a>{% else %}</div>{% endif %}
+</article>
