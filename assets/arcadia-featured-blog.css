@@ -1,0 +1,33 @@
+.arcadia-journal { padding-block:var(--journal-top) var(--journal-bottom); }
+.arcadia-journal .arcadia-heading h2 { font-size:var(--arcadia-text-section-compact); }
+.arcadia-journal .arcadia-heading[data-align="center"] { flex-direction:column; align-items:center; text-align:center; }
+.arcadia-journal .arcadia-heading[data-align="end"] { flex-direction:column; align-items:end; text-align:end; }
+.arcadia-journal__track { display:grid; grid-template-columns:repeat(var(--journal-columns),minmax(0,1fr)); gap:var(--arcadia-card-gap); padding:var(--arcadia-space-xs); margin:calc(-1 * var(--arcadia-space-xs)); list-style:none; scroll-padding-inline:var(--arcadia-space-xs); scrollbar-width:thin; }
+.arcadia-journal__track > li { min-width:0; scroll-snap-align:start; }
+.arcadia-journal-card { height:100%; display:flex; flex-direction:column; text-align:var(--journal-align,start); }
+.arcadia-journal[data-align="center"] { --journal-align:center; }
+.arcadia-journal[data-align="end"] { --journal-align:end; }
+.arcadia-journal[data-wrap="true"] .arcadia-journal-card { background:var(--arcadia-surface); border:1px solid var(--arcadia-line); border-radius:var(--arcadia-radius); padding:var(--arcadia-space-sm); }
+.arcadia-journal-card__visual { position:relative; }
+.arcadia-journal-card__image { display:block; aspect-ratio:var(--journal-ratio); border-radius:var(--arcadia-radius); overflow:hidden; background:var(--arcadia-surface); }
+.arcadia-journal-card__image img { display:block; width:100%; height:100%; object-fit:cover; transition:transform var(--arcadia-motion-emphasis); }
+.arcadia-journal-card__placeholder { display:grid; place-items:center; min-height:180px; height:100%; color:var(--arcadia-accent); }
+.arcadia-journal-card__tags { position:absolute; inset-block-start:var(--arcadia-space-sm); inset-inline:var(--arcadia-space-sm); display:flex; flex-wrap:wrap; gap:var(--arcadia-space-xs); list-style:none; padding:0; margin:0; pointer-events:none; }
+.arcadia-journal-card__tags li { background:var(--arcadia-bg); color:var(--arcadia-ink); border:1px solid var(--arcadia-line); border-radius:var(--arcadia-radius); padding:.25rem var(--arcadia-space-sm); font-size:var(--arcadia-text-small); max-width:100%; overflow-wrap:anywhere; }
+.arcadia-journal-card__body { display:flex; flex-direction:column; gap:var(--arcadia-space-sm); flex:1; padding-top:var(--arcadia-space-md); }
+.arcadia-journal-card__meta { display:flex; justify-content:space-between; flex-wrap:wrap; gap:var(--arcadia-space-xs); color:var(--arcadia-muted); font-size:var(--arcadia-text-small); overflow-wrap:anywhere; }
+.arcadia-journal-card h3 { font-size:var(--arcadia-text-card); line-height:1.3; margin:0; overflow-wrap:anywhere; }
+.arcadia-journal-card h3 a { text-decoration:none; }
+.arcadia-journal-card__footer { display:flex; align-items:end; gap:var(--arcadia-space-md); margin-top:auto; }
+.arcadia-journal-card__footer p { flex:1; margin:0; color:var(--arcadia-muted); overflow-wrap:anywhere; }
+.arcadia-journal-card__read { flex-shrink:0; margin-inline-start:auto; background:var(--arcadia-button-primary-bg); color:var(--arcadia-button-primary-ink); border-color:var(--arcadia-button-primary-border); }
+.arcadia-journal__controls { display:flex; justify-content:center; gap:var(--arcadia-space-sm); margin-top:var(--arcadia-space-lg); }
+.arcadia-journal__empty { padding:var(--arcadia-space-lg); border:1px dashed var(--arcadia-line); border-radius:var(--arcadia-radius); text-align:center; color:var(--arcadia-muted); }
+@media(hover:hover) and (pointer:fine) { .arcadia-journal-card__image:hover img { transform:scale(1.03); } .arcadia-journal-card h3 a:hover { text-decoration:underline; } }
+@media(max-width:1100px) { .arcadia-journal__track { grid-template-columns:repeat(2,minmax(0,1fr)); } }
+@media(max-width:600px) {
+ .arcadia-journal { --arcadia-card-gap:var(--arcadia-space-md); }
+ .arcadia-journal__track { grid-template-columns:minmax(0,1fr); }
+ .arcadia-journal[data-mobile-carousel="true"] .arcadia-journal__track { grid-template-columns:none; grid-auto-flow:column; grid-auto-columns:88%; overflow-x:auto; scroll-snap-type:x mandatory; }
+}
+@media(prefers-reduced-motion:reduce) { .arcadia-journal-card__image img { transition:none; } .arcadia-journal-card__image:hover img { transform:none; } }

@@ -58,7 +58,7 @@
   padding: 2rem;
   background: var(--arcadia-surface);
   border-block: 1px solid var(--arcadia-line);
-  box-shadow: 0 12px 24px #0003;
+  box-shadow: var(--arcadia-navigation-shadow);
 }
 .arcadia-mega__grid {
   display: grid;
@@ -72,6 +72,38 @@
 .arcadia-mega li {
   margin: 0.7rem 0;
 }
+.arcadia-nav details[open] > summary::after { content: '−'; }
+.arcadia-nav details > summary { cursor: pointer; padding-block: 1rem; }
+.arcadia-nav summary::-webkit-details-marker,.arcadia-mobile-nav summary::-webkit-details-marker { display: none; }
+.arcadia-mega--shop { padding: var(--arcadia-space-lg) 0; background: var(--arcadia-bg); max-height: calc(100dvh - 110px); overflow: auto; }
+.arcadia-shop-menu__container { width: min(calc(100% - 3rem), 1200px); margin-inline: auto; }
+.arcadia-shop-menu { display: grid; grid-template-columns: 220px minmax(0,1fr); gap: var(--arcadia-pause-gap); }
+.arcadia-shop-menu__aside { border-inline-end: 1px solid var(--arcadia-line); padding-inline-end: var(--arcadia-space-lg); }
+.arcadia-shop-menu__aside .arcadia-eyebrow { margin: 0 0 var(--arcadia-space-sm); }
+.arcadia-shop-menu__aside h2 { font-size: var(--arcadia-text-card); line-height: 1.25; margin: 0 0 var(--arcadia-space-md); text-wrap: balance; }
+.arcadia-shop-menu__all { display: flex; align-items: center; justify-content: space-between; gap: var(--arcadia-space-sm); min-height: 46px; padding: var(--arcadia-space-sm); border-radius: var(--arcadia-button-radius); background: var(--arcadia-button-primary-bg); color: var(--arcadia-button-primary-ink); font-weight: var(--arcadia-weight-bold); font-size: var(--arcadia-text-small); }
+.arcadia-shop-menu__all svg { width: 20px; flex: none; }
+.arcadia-shop-menu__links { margin: var(--arcadia-space-md) 0 0!important; padding: 0!important; list-style: none; }
+.arcadia-shop-menu__links li { margin: 0; }
+.arcadia-shop-menu__links a { display: flex; align-items: center; min-height: 40px; font-size: var(--arcadia-text-small); color: var(--arcadia-muted); }
+.arcadia-shop-menu__links a:hover { color: var(--arcadia-accent); text-decoration: underline; text-underline-offset: 4px; }
+.arcadia-shop-menu__browse h3 { margin: 0 0 var(--arcadia-space-md); font-size: var(--arcadia-text-small); color: var(--arcadia-muted); font-weight: var(--arcadia-weight-bold); }
+.arcadia-shop-menu__collections { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); column-gap: var(--arcadia-space-lg); }
+.arcadia-shop-menu__tile { min-width: 0; display: block; border-bottom: 1px solid var(--arcadia-line); text-decoration: none; transition: color var(--arcadia-motion-fast), background var(--arcadia-motion-fast); }
+.arcadia-shop-menu__label { display: flex; justify-content: space-between; align-items: center; gap: var(--arcadia-space-sm); padding: var(--arcadia-space-md) var(--arcadia-space-sm); font-weight: var(--arcadia-weight-bold); font-size: 1rem; line-height: 1.4; min-height: 58px; }
+.arcadia-shop-menu__label > span { color: var(--arcadia-accent); flex: none; }
+.arcadia-shop-menu__tile:hover { color: var(--arcadia-accent); background: var(--arcadia-surface); }
+.arcadia-mobile-menu__root { padding: 0!important; margin: 0; }
+.arcadia-mobile-menu__root > li > a,.arcadia-mobile-menu__root > li > details > summary { min-height: 48px; display: flex; align-items: center; padding: var(--arcadia-space-sm); border-bottom: 1px solid var(--arcadia-line); cursor: pointer; font-weight: var(--arcadia-weight-bold); }
+.arcadia-mobile-menu__root > li > details > summary::after { content: '+'; margin-inline-start: auto; color: var(--arcadia-accent); }
+.arcadia-mobile-menu__root > li > details[open] > summary::after { content: '−'; }
+.arcadia-mobile-menu .arcadia-shop-menu { grid-template-columns: 1fr; gap: var(--arcadia-space-md); padding-block: var(--arcadia-space-md); }
+.arcadia-mobile-menu .arcadia-shop-menu__aside { border: 0; padding: 0; }
+.arcadia-mobile-menu .arcadia-shop-menu__aside h2,.arcadia-mobile-menu .arcadia-shop-menu__aside .arcadia-eyebrow { display: none; }
+.arcadia-mobile-menu .arcadia-shop-menu__links { display: flex; flex-wrap: wrap; gap: var(--arcadia-space-md); }
+.arcadia-mobile-menu .arcadia-shop-menu__collections { grid-template-columns: repeat(2,minmax(0,1fr)); }
+.arcadia-mobile-menu .arcadia-shop-menu__tile { padding: 0; }
+@media (prefers-reduced-motion: reduce) { .arcadia-shop-menu__tile { transition: none; } }
 .arcadia-header__utilities {
   display: flex;
   gap: 0.5rem;

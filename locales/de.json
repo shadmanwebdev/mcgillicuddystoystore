@@ -94,6 +94,7 @@
     "days": "T",
     "details": "Veranstaltungsdetails",
     "empty": "Keine Veranstaltungen entsprechen diesen Filtern.",
+    "upcoming_empty": "Derzeit sind keine kommenden Veranstaltungen verfügbar. Schau bald wieder vorbei.",
     "end": "Ende",
     "format": "Format",
     "google_calendar": "Zu Google Kalender hinzufügen",

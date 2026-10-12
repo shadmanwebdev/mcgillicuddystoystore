@@ -8,7 +8,7 @@
   content: "";
   position: absolute;
   inset: 0;
-  background: #000;
+  background: var(--arcadia-overlay-shade);
   opacity: var(--event-overlay, 0);
   pointer-events: none;
 }

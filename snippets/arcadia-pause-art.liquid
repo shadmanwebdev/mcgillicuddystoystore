@@ -1,0 +1,17 @@
+<svg viewBox="0 0 280 200" fill="none" aria-hidden="true" focusable="false">
+  <circle cx="140" cy="100" r="88" fill="currentColor" opacity=".05"/>
+  {% if variant == 'community' %}
+    <rect x="65" y="85" width="150" height="35" rx="7" fill="var(--arcadia-bg)" stroke="currentColor" stroke-width="3"/>
+    <path d="M77 120v55h126v-55M140 85v90" stroke="currentColor" stroke-width="3"/>
+    <path d="M140 85c-60 0-56-55-27-40 16 8 27 40 27 40Zm0 0c60 0 56-55 27-40-16 8-27 40-27 40Z" stroke="currentColor" stroke-width="3"/>
+    <path d="M46 55v16m-8-8h16M232 135v16m-8-8h16" stroke="currentColor" stroke-width="2"/>
+  {% elsif variant == 'editorial' %}
+    <path d="M140 60c-26-18-57-21-87-12v98c30-9 61-6 87 12 26-18 57-21 87-12V48c-30-9-61-6-87 12Z" stroke="currentColor" stroke-width="3" stroke-linejoin="round"/>
+    <path d="M140 60v98M73 72c18-3 32 0 47 7M73 93c18-3 32 0 47 7M73 114c18-3 32 0 47 7M160 80c16-8 29-10 47-8M160 101c16-8 29-10 47-8" stroke="currentColor" stroke-width="2" opacity=".5"/>
+  {% else %}
+    <rect x="66" y="32" width="86" height="124" rx="12" transform="rotate(-14 109 94)" stroke="currentColor" stroke-width="3"/>
+    <rect x="114" y="51" width="86" height="124" rx="12" transform="rotate(12 157 113)" fill="var(--arcadia-bg)" stroke="currentColor" stroke-width="3"/>
+    <path d="m157 78 22 33-22 33-22-33 22-33Z" stroke="currentColor" stroke-width="2"/>
+    <circle cx="219" cy="45" r="4" fill="currentColor"/><path d="M48 157v18m-9-9h18M231 137v12m-6-6h12" stroke="currentColor" stroke-width="2"/>
+  {% endif %}
+</svg>

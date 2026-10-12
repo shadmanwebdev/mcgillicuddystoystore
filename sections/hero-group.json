@@ -1,0 +1,22 @@
+{
+  "type": "custom.hero",
+  "order": [
+    "hero"
+  ],
+  "name": "Homepage hero",
+  "sections": {
+    "hero": {
+      "type": "arcadia-hero",
+      "settings": {
+        "heading": "Your next great pull starts here.",
+        "eyebrow": "A home for collectors & competitors",
+        "description": "<p>Discover your next deck. Find your people. Make every game a story worth telling.</p>",
+        "heading_tag": "h1",
+        "button_label": "Explore the collection",
+        "button_link": "shopify://collections/all",
+        "secondary_label": "Upcoming events",
+        "secondary_link": "shopify://pages/events"
+      }
+    }
+  }
+}

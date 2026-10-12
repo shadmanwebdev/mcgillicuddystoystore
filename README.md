@@ -2,6 +2,8 @@
 
 Arcadia is a buildless Shopify theme. Liquid, JSON, CSS, and JavaScript source files are served directly by Shopify.
 
+Shared theme styling has one source: `snippets/arcadia-theme-styles.liquid`. Edit palettes, typography, buttons, spacing tokens and merchant-setting mappings there. Section CSS remains modular for layout and behavior. See [design tokens](docs/DESIGN-TOKENS.md).
+
 ## Local preview on Windows
 
 From this project folder, run:
@@ -44,9 +46,14 @@ node .tools/package/bin/npm-cli.js ci --cache .tools/npm-cache
 - [Agreed development workflow](docs/WORKFLOW.md)
 - [Homepage](docs/pages/home.md)
 - [Find your game settings and Joyfy comparison](docs/sections/shop-by-game.md)
+- [Featured products settings and Joyfy comparison](docs/sections/featured-products.md)
+- [Upcoming events settings and Joyfy comparison](docs/sections/upcoming-events.md)
 - [Reusable carousel](docs/features/carousel.md)
+- [Cookie consent styling](docs/features/cookie-consent.md)
 - [Theme styling tokens](docs/DESIGN-TOKENS.md)
 - [Shopify CLI for themes](https://shopify.dev/docs/storefronts/themes/tools/cli)
 - [Theme development preview](https://shopify.dev/docs/api/shopify-cli/theme/theme-dev)
 
 Development tooling is excluded from theme uploads through `.shopifyignore`.
+
+- [Featured blog settings and reference comparison](docs/sections/featured-blog.md)

@@ -94,6 +94,7 @@
     "days": "d",
     "details": "Detalles del evento",
     "empty": "Ningún evento coincide con estos filtros.",
+    "upcoming_empty": "No hay próximos eventos disponibles por ahora. Vuelve pronto.",
     "end": "Fin",
     "format": "Formato",
     "google_calendar": "Añadir a Google Calendar",

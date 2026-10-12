@@ -23,14 +23,11 @@
     {%- endif %}
     {% render 'arcadia-meta-tags' %}
     {{ content_for_header }}
-    {{ 'arcadia-tokens.css' | asset_url | stylesheet_tag }}
-    {{ 'arcadia-base.css' | asset_url | stylesheet_tag }}
-    {{ 'arcadia-layout.css' | asset_url | stylesheet_tag }}
-    {{ 'arcadia-components.css' | asset_url | stylesheet_tag }}
+    {% render 'arcadia-theme-styles' %}
+    {{ 'arcadia-cookie-consent.css' | asset_url | stylesheet_tag }}
     {% if settings.holo_enabled or settings.rarity_enabled -%}
       {{- 'arcadia-effects.css' | asset_url | stylesheet_tag -}}
     {%- endif %}
-    {% render 'arcadia-theme-variables' %}
     <script src="{{ 'arcadia-core.js' | asset_url }}" defer></script>
     <script src="{{ 'arcadia-modules.js' | asset_url }}" defer></script>
     <script src="{{ 'arcadia-modal.js' | asset_url }}" defer></script>
@@ -54,7 +51,14 @@
   <body id="ArcadiaTop">
     <a class="arcadia-skip" href="#MainContent">{{ 'general.skip' | t }}</a>{% sections 'header-group' -%}
     {%- if settings.breadcrumbs and request.page_type != 'index' %}{% render 'arcadia-breadcrumbs' %}{% endif %}
-    <main id="MainContent" tabindex="-1">{{ content_for_layout }}</main>
+    <main id="MainContent" tabindex="-1">
+      {% if request.page_type == 'index' %}
+        {% sections 'hero-group' %}
+        {{ content_for_layout }}
+      {% else %}
+        {{ content_for_layout }}
+      {% endif %}
+    </main>
     {% sections 'footer-group' -%}
     {%- if settings.cart_drawer %}{% render 'arcadia-cart-drawer' %}{% endif -%}
     {%- if settings.age_enabled %}{% render 'arcadia-age-verifier' %}{% endif -%}

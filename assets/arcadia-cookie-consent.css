@@ -1,0 +1,84 @@
+/* Presentation only: Shopify retains consent state, text and event handling.
+   IDs verified on the store's Shopify customer-privacy banner. */
+#shopify-pc__banner {
+  box-sizing: border-box !important;
+  position: fixed !important;
+  width: min(var(--arcadia-consent-width), calc(100% - 2 * var(--arcadia-space-lg))) !important;
+  max-width: none !important;
+  inset: auto 0 var(--arcadia-space-lg) 0 !important;
+  padding: var(--arcadia-consent-padding) !important;
+  margin: 0 auto !important;
+  max-height: calc(100dvh - 2 * var(--arcadia-space-lg)) !important;
+  overflow-y: auto !important;
+  border: 1px solid var(--arcadia-line) !important;
+  border-radius: var(--arcadia-radius) !important;
+  background: var(--arcadia-surface) !important;
+  color: var(--arcadia-ink) !important;
+  box-shadow: var(--arcadia-consent-shadow) !important;
+  font-family: var(--arcadia-font) !important;
+  text-align: start !important;
+}
+html[data-mode="light"] #shopify-pc__banner {
+  background: var(--arcadia-bg) !important;
+}
+#shopify-pc__banner h2,
+#shopify-pc__banner__body-title {
+  font-family: var(--arcadia-heading) !important;
+  font-size: var(--arcadia-consent-title-size) !important;
+  font-weight: var(--arcadia-weight-bold) !important;
+  line-height: 1.2 !important;
+  letter-spacing: -0.025em !important;
+  color: var(--arcadia-ink) !important;
+  margin: 0 0 var(--arcadia-space-sm) !important;
+}
+#shopify-pc__banner p {
+  font-family: var(--arcadia-font) !important;
+  font-size: var(--arcadia-text-small) !important;
+  line-height: 1.65 !important;
+  color: var(--arcadia-muted) !important;
+  margin: 0 0 var(--arcadia-space-lg) !important;
+}
+#shopify-pc__banner a {
+  color: var(--arcadia-ink) !important;
+  text-decoration: underline !important;
+  text-underline-offset: 3px !important;
+}
+#shopify-pc__banner button {
+  box-sizing: border-box !important;
+  min-height: var(--arcadia-button-min-height) !important;
+  padding: var(--arcadia-button-padding-y) var(--arcadia-button-padding-x) !important;
+  font-family: var(--arcadia-font) !important;
+  font-size: var(--arcadia-button-font-size) !important;
+  font-weight: var(--arcadia-button-weight) !important;
+  line-height: var(--arcadia-button-line-height) !important;
+  white-space: normal !important;
+  border: 1px solid var(--arcadia-line) !important;
+  border-radius: var(--arcadia-button-radius) !important;
+  background: var(--arcadia-bg) !important;
+  color: var(--arcadia-ink) !important;
+  box-shadow: none !important;
+  transition: border-color var(--arcadia-motion-fast), background-color var(--arcadia-motion-fast) !important;
+}
+#shopify-pc__banner button:hover { border-color: var(--arcadia-accent) !important; }
+#shopify-pc__banner #shopify-pc__banner__btn-accept,
+#shopify-pc__banner #shopify-pc__banner__btn-decline {
+  background: var(--arcadia-button-primary-bg) !important;
+  color: var(--arcadia-button-primary-ink) !important;
+  border-color: var(--arcadia-button-primary-border) !important;
+}
+#shopify-pc__banner :is(button,a):focus-visible { outline: 3px solid var(--arcadia-accent) !important; outline-offset: 3px !important; }
+@media(max-width:1100px) {
+  #shopify-pc__banner { width: calc(100% - 2 * var(--arcadia-space-md)) !important; inset: auto var(--arcadia-space-md) var(--arcadia-space-md) !important; padding: var(--arcadia-space-lg) !important; max-height: calc(100dvh - 2 * var(--arcadia-space-md)) !important; }
+  #shopify-pc__banner button { min-width: 0 !important; }
+}
+@media(max-width:600px) {
+  #shopify-pc__banner {
+    padding: var(--arcadia-space-md) !important;
+    bottom: max(var(--arcadia-space-md), env(safe-area-inset-bottom)) !important;
+    max-height: min(75dvh, calc(100dvh - 2 * var(--arcadia-space-md) - env(safe-area-inset-bottom))) !important;
+    overscroll-behavior: contain;
+  }
+  #shopify-pc__banner button { width: 100% !important; flex: 1 1 100% !important; margin: var(--arcadia-space-xs) 0 0 !important; }
+  #shopify-pc__banner p { margin-bottom: var(--arcadia-space-sm) !important; overflow-wrap: anywhere; }
+}
+@media(prefers-reduced-motion:reduce) { #shopify-pc__banner button { transition: none !important; } }

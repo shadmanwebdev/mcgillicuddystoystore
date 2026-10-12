@@ -1,0 +1,566 @@
+{% comment %}Single source for shared theme styling and merchant setting mappings. Section layout assets remain modular.{% endcomment %}
+{% style %}
+/* Theme tokens and palettes */
+:root {
+  --arcadia-bg: #111317;
+  --arcadia-surface: #1b1e25;
+  --arcadia-ink: #f4f3ef;
+  --arcadia-muted: #b9b9c4;
+  --arcadia-line: #383c48;
+  --arcadia-accent: #beff50;
+  --arcadia-secondary: #a995ff;
+  --arcadia-radius: 16px;
+  --arcadia-width: 1440px;
+  --arcadia-space: clamp(3rem, 6vw, 6.5rem);
+  --arcadia-font: system-ui, sans-serif;
+  --arcadia-heading: var(--arcadia-font);
+  --arcadia-space-xs: 0.5rem;
+  --arcadia-space-sm: 0.75rem;
+  --arcadia-space-md: 1rem;
+  --arcadia-space-lg: 1.5rem;
+  --arcadia-card-gap: 1.5rem;
+  --arcadia-text-small: 0.875rem;
+  --arcadia-text-card: 1.3rem;
+  --arcadia-text-product-title: 1.25rem;
+  --arcadia-text-product-price: 1.375rem;
+  --arcadia-product-card-padding: clamp(1rem, 1.6vw, 1.5rem);
+  --arcadia-product-card-shadow: 0 4px 12px color-mix(in srgb, var(--arcadia-overlay-shade) 7%, transparent);
+  --arcadia-product-card-hover-shadow: 0 6px 16px color-mix(in srgb, var(--arcadia-overlay-shade) 12%, transparent);
+  --arcadia-text-section-compact: clamp(1.75rem, 3vw, 2.75rem);
+  --arcadia-product-media-bg: #ffffff;
+  --arcadia-text-display: clamp(4rem, 10vw, 9rem);
+  --arcadia-weight-bold: 750;
+  /* Shared primary buttons: light mode inherits its green accent; dark mode its lime accent. */
+  --arcadia-button-primary-bg: var(--arcadia-accent);
+  --arcadia-button-primary-ink: var(--arcadia-bg);
+  --arcadia-button-primary-border: var(--arcadia-button-primary-bg);
+  --arcadia-button-radius: 8px;
+  --arcadia-button-min-height: 46px;
+  --arcadia-button-padding-y: 0.75rem;
+  --arcadia-button-padding-x: 1.35rem;
+  --arcadia-button-font-size: 1rem;
+  --arcadia-button-weight: var(--arcadia-weight-bold);
+  --arcadia-button-line-height: 1.3;
+  --arcadia-watermark-opacity: 0.06;
+  --arcadia-motion-fast: 200ms;
+  --arcadia-motion-emphasis: 280ms;
+  --arcadia-motion-ease: cubic-bezier(0.2, 0.7, 0.2, 1);
+  --arcadia-label-hover-lift: -3px;
+  --arcadia-label-hover-scale: 1.06;
+  --arcadia-overlay-ink: #ffffff;
+  --arcadia-overlay-shade: #000000;
+  --arcadia-overlay-title: clamp(1rem, 2.2vw, 1.6rem);
+  --arcadia-consent-width: 80%;
+  --arcadia-footer-brand-size: 1.5rem;
+  --arcadia-footer-width: 1400px;
+  --arcadia-footer-title-size: 1rem;
+  --arcadia-error: #ffb3b3;
+  --arcadia-dialog-backdrop: #000b;
+  --arcadia-navigation-shadow: 0 12px 24px #0003;
+  --arcadia-popover-shadow: 0 8px 30px #0004;
+  --arcadia-hero-card-shadow: 0 24px 70px #0007;
+  --arcadia-hero-glow: #a995ff33;
+  --arcadia-hero-card-top: #252830;
+  --arcadia-hero-card-bottom: #111317;
+  --arcadia-holo-blue: #b8f4ff55;
+  --arcadia-holo-purple: #d1a9ff55;
+  --arcadia-holo-gold: #fff4a755;
+  --arcadia-rarity-rare: #d4a759;
+  --arcadia-rarity-uncommon: #7bb39a;
+  --arcadia-signup-width: 680px;
+  --arcadia-signup-padding: clamp(1.25rem, 4vw, 3.25rem);
+  --arcadia-pause-gap: clamp(1.5rem, 4vw, 4rem);
+  --arcadia-pause-padding: clamp(1.5rem, 4vw, 3.5rem);
+  --arcadia-pause-body-size: 1.0625rem;
+  --arcadia-consent-padding: 1.75rem;
+  --arcadia-consent-title-size: 1.5rem;
+
+  --arcadia-consent-shadow: 0 12px 40px color-mix(in srgb, var(--arcadia-overlay-shade) 22%, transparent);
+}
+html[data-mode="light"] {
+  --arcadia-error: #a40020;
+  --arcadia-bg: #f6f5f0;
+  --arcadia-surface: #fff;
+  --arcadia-ink: #171921;
+  --arcadia-muted: #525665;
+  --arcadia-line: #d5d6db;
+  --arcadia-accent: #456d00;
+  --arcadia-secondary: #6949c9;
+}
+
+/* Base elements and accessibility */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+body {
+  margin: 0;
+  background: var(--arcadia-bg);
+  color: var(--arcadia-ink);
+  font: 16px/1.6 var(--arcadia-font);
+}
+html {
+  scroll-padding-top: 100px;
+}
+img,
+video,
+svg {
+  max-width: 100%;
+  vertical-align: middle;
+}
+img {
+  height: auto;
+}
+button,
+input,
+select,
+textarea {
+  font: inherit;
+}
+button,
+a,
+input,
+select,
+textarea {
+  touch-action: manipulation;
+}
+button {
+  cursor: pointer;
+}
+a {
+  color: inherit;
+  text-underline-offset: 4px;
+}
+h1,
+h2,
+h3,
+h4 {
+  font-family: var(--arcadia-heading);
+  line-height: 1.12;
+  letter-spacing: -0.035em;
+  margin: 0 0 1rem;
+}
+h1 {
+  font-size: clamp(2.5rem, 6vw, 5.8rem);
+}
+h2 {
+  font-size: clamp(2rem, 3.6vw, 3.5rem);
+}
+h3 {
+  font-size: 1.3rem;
+}
+p {
+  margin: 0 0 1rem;
+}
+summary {
+  cursor: pointer;
+}
+button:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+:focus-visible {
+  outline: 3px solid var(--arcadia-accent);
+  outline-offset: 4px;
+}
+[hidden] {
+  display: none !important;
+}
+.arcadia-visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+.arcadia-skip {
+  position: fixed;
+  inset-block-start: -100px;
+  inset-inline-start: 1rem;
+  z-index: 1000;
+  background: var(--arcadia-accent);
+  color: var(--arcadia-bg);
+  padding: 1rem;
+}
+.arcadia-skip:focus {
+  inset-block-start: 1rem;
+}
+.arcadia-rte {
+  overflow-wrap: anywhere;
+}
+.arcadia-rte img {
+  max-width: 100%;
+}
+.arcadia-rte table {
+  display: block;
+  overflow: auto;
+}
+.arcadia-rte a {
+  text-decoration: underline;
+}
+.arcadia-muted {
+  color: var(--arcadia-muted);
+}
+.arcadia-error {
+  color: var(--arcadia-error);
+}
+
+fieldset {
+  min-width: 0;
+}
+dialog {
+  color: var(--arcadia-ink);
+  background: var(--arcadia-surface);
+  border: 1px solid var(--arcadia-line);
+  border-radius: var(--arcadia-radius);
+  max-width: min(95vw, 1000px);
+  max-height: 90dvh;
+  padding: 1.5rem;
+}
+dialog::backdrop {
+  background: var(--arcadia-dialog-backdrop);
+}
+details > summary {
+  padding: 1rem 0;
+}
+hr {
+  border: 0;
+  border-top: 1px solid var(--arcadia-line);
+}
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation: none !important;
+    transition: none !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Shared containers and layouts */
+.arcadia-container {
+  width: min(calc(100% - 2.5rem), var(--arcadia-width));
+  margin-inline: auto;
+}
+/* Reusable centered frame for dense content sections; banners keep their normal width. */
+.arcadia-container.arcadia-content-container {
+  width: min(calc(100% - 2 * var(--arcadia-content-gutter)), var(--arcadia-content-width));
+  margin-inline: auto;
+}
+@media (max-width: 700px) {
+  .arcadia-container.arcadia-content-container {
+    width: calc(100% - 2 * var(--arcadia-content-gutter-mobile));
+  }
+}
+html[data-mode="light"] .arcadia-section-background {
+  background: var(--arcadia-bg);
+}
+.arcadia-section {
+  padding-block: var(--arcadia-space);
+}
+.arcadia-section--compact {
+  padding-block: 2rem;
+}
+.arcadia-grid {
+  display: grid;
+  grid-template-columns: repeat(var(--arcadia-columns, 4), minmax(0, 1fr));
+  gap: 1.5rem;
+}
+.arcadia-stack {
+  display: grid;
+  gap: 1.25rem;
+}
+.arcadia-row {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+.arcadia-between {
+  justify-content: space-between;
+}
+.arcadia-heading {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+.arcadia-eyebrow {
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  font-weight: 750;
+  font-size: 0.75rem;
+  color: var(--arcadia-accent);
+}
+.arcadia-narrow {
+  max-width: 800px;
+  margin-inline: auto;
+}
+/* Shared responsive heading treatment for the rebuilt homepage sections. */
+.arcadia-section-background .arcadia-heading > div { min-width: 0; }
+.arcadia-section-background .arcadia-heading h2 { overflow-wrap: anywhere; }
+.arcadia-section-background .arcadia-heading > .arcadia-button { flex-shrink: 0; }
+@media (max-width: 1100px) {
+  .arcadia-section-background .arcadia-heading { flex-direction: column; align-items: start; gap: var(--arcadia-space-md); }
+  .arcadia-section-background .arcadia-heading h2 { font-size: var(--arcadia-text-section-compact); }
+}
+@media (max-width: 600px) {
+  .arcadia-section-background .arcadia-heading { margin-bottom: var(--arcadia-space-lg); }
+  .arcadia-section-background .arcadia-heading > .arcadia-button { width: 100%; }
+}
+.arcadia-split {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: clamp(2rem, 5vw, 5rem);
+}
+.arcadia-scroll {
+  display: flex;
+  gap: 1.5rem;
+  overflow: auto;
+  scroll-snap-type: x mandatory;
+  padding-block: 1rem;
+}
+.arcadia-scroll > * {
+  flex: 0 0 min(340px, 85vw);
+  scroll-snap-align: start;
+}
+.arcadia-pagination {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+  margin-top: 2rem;
+}
+@media (max-width: 1000px) {
+  .arcadia-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+@media (max-width: 600px) {
+  .arcadia-container {
+    width: calc(100% - 2rem);
+  }
+  .arcadia-split {
+    grid-template-columns: 1fr;
+  }
+  .arcadia-heading {
+    align-items: start;
+    flex-direction: column;
+  }
+  .arcadia-grid {
+    gap: 1rem;
+  }
+  .arcadia-grid--content {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Shared buttons, forms and components */
+.arcadia-button {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.6rem;
+  min-height: var(--arcadia-button-min-height);
+  padding: var(--arcadia-button-padding-y) var(--arcadia-button-padding-x);
+  border: 1px solid var(--arcadia-button-primary-border);
+  border-radius: var(--arcadia-button-radius);
+  background: var(--arcadia-button-primary-bg);
+  color: var(--arcadia-button-primary-ink);
+  font-family: var(--arcadia-font);
+  font-size: var(--arcadia-button-font-size);
+  text-decoration: none;
+  font-weight: var(--arcadia-button-weight);
+  line-height: var(--arcadia-button-line-height);
+}
+.arcadia-button--secondary {
+  background: transparent;
+  border-color: var(--arcadia-line);
+  color: var(--arcadia-ink);
+}
+.arcadia-icon-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  color: inherit;
+  border: 1px solid var(--arcadia-line);
+  border-radius: 50%;
+  width: 46px;
+  height: 46px;
+}
+.arcadia-icon {
+  width: 22px;
+  height: 22px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.6;
+}
+.arcadia-card {
+  position: relative;
+  isolation: isolate;
+  border: 1px solid var(--arcadia-line);
+  border-radius: var(--arcadia-radius);
+  background: var(--arcadia-surface);
+  overflow: hidden;
+  box-shadow: inset 0 0 0 5px
+    color-mix(in srgb, var(--arcadia-line) 25%, transparent);
+}
+.arcadia-card__media {
+  display: block;
+  aspect-ratio: 1;
+  overflow: hidden;
+  background: color-mix(in srgb, var(--arcadia-line) 20%, transparent);
+}
+.arcadia-card__media img,
+.arcadia-card__media svg {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.arcadia-card__body {
+  padding: 1.3rem;
+}
+.arcadia-card__title {
+  font-size: 1.1rem;
+  letter-spacing: -0.02em;
+  line-height: 1.4;
+}
+.arcadia-card__title a {
+  text-decoration: none;
+}
+.arcadia-badge {
+  display: inline-flex;
+  padding: 0.25rem 0.6rem;
+  border: 1px solid var(--arcadia-line);
+  border-radius: 4px;
+  font-size: 0.7rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--arcadia-muted);
+}
+.arcadia-price {
+  font-weight: 750;
+}
+.arcadia-price s {
+  font-weight: 400;
+  color: var(--arcadia-muted);
+  margin-inline-end: 0.5rem;
+}
+.arcadia-field {
+  display: grid;
+  gap: 0.4rem;
+}
+.arcadia-input,
+select,
+textarea {
+  width: 100%;
+  min-height: 46px;
+  padding: 0.7rem 0.8rem;
+  color: var(--arcadia-ink);
+  background: var(--arcadia-bg);
+  border: 1px solid var(--arcadia-line);
+  border-radius: 7px;
+}
+input[type="checkbox"],
+input[type="radio"] {
+  accent-color: var(--arcadia-accent);
+  width: 1.1rem;
+  height: 1.1rem;
+}
+.arcadia-consent {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.65rem;
+}
+.arcadia-consent input {
+  flex: 0 0 auto;
+  margin-block-start: 0.2em;
+}
+.arcadia-accordion {
+  border-block-end: 1px solid var(--arcadia-line);
+}
+.arcadia-accordion summary {
+  font-weight: 700;
+}
+.arcadia-dialog__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+.arcadia-dialog__header h2 {
+  font-size: 1.6rem;
+  margin: 0;
+}
+.arcadia-breadcrumbs {
+  font-size: 0.8rem;
+  padding-block: 1.2rem;
+  color: var(--arcadia-muted);
+}
+.arcadia-breadcrumbs ol {
+  display: flex;
+  gap: 0.6rem;
+  flex-wrap: wrap;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.arcadia-breadcrumbs li + li::before {
+  content: "/";
+  margin-inline-end: 0.6rem;
+}
+.arcadia-placeholder {
+  background: var(--arcadia-line);
+  fill: var(--arcadia-muted);
+}
+.arcadia-tabs__nav {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+.arcadia-tabs__nav a {
+  padding: 0.6rem 1rem;
+  border: 1px solid var(--arcadia-line);
+  border-radius: 6px;
+}
+.arcadia-tabs__nav [aria-selected="true"] {
+  border-color: var(--arcadia-accent);
+}
+.arcadia-back-top {
+  position: fixed;
+  inset-inline-end: 1rem;
+  inset-block-end: 1rem;
+  z-index: 5;
+  background: var(--arcadia-surface);
+}
+
+/* Countdowns also appear in standalone release and promotion sections. */
+.arcadia-countdown {
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.06em;
+  font-weight: 800;
+  color: var(--arcadia-accent);
+}
+
+/* Merchant-controlled overrides */
+
+  :root {
+    --arcadia-content-width: {{ settings.content_section_width | default: 1400 }}px;
+    --arcadia-content-gutter: {{ settings.content_section_gutter | default: 24 }}px;
+    --arcadia-content-gutter-mobile: {{ settings.content_section_gutter_mobile | default: 20 }}px;
+  }
+  {{ settings.body_font | font_face: font_display: 'swap' }}
+  {{ settings.heading_font | font_face: font_display: 'swap' }}
+  :root { --arcadia-ink: {{ settings.dark_text }}; --arcadia-text: var(--arcadia-ink); --arcadia-border: var(--arcadia-line); --arcadia-muted: {{ settings.dark_muted }}; --arcadia-holo-intensity: {{ settings.holo_intensity | divided_by: 100.0 }}; --arcadia-bg: {{ settings.dark_background }}; --arcadia-surface: {{ settings.dark_surface }}; --arcadia-accent: {{ settings.dark_accent }}; --arcadia-font: {{ settings.body_font.family }}, {{ settings.body_font.fallback_families }}; --arcadia-heading: {{ settings.heading_font.family }}, {{ settings.heading_font.fallback_families }}; --arcadia-width: {{ settings.page_width }}px; --arcadia-radius: {{ settings.card_radius }}px; --arcadia-holo-opacity: {{ settings.holo_opacity | divided_by: 100.0 }}; --arcadia-holo-speed: {{ settings.holo_speed }}s; }
+  html[data-mode=light] { --arcadia-surface: {{ settings.light_surface }}; --arcadia-ink: {{ settings.light_text }}; --arcadia-muted: {{ settings.light_muted }}; --arcadia-bg: {{ settings.light_background }}; --arcadia-accent: {{ settings.light_accent }}; }
+
+
+{% endstyle %}

@@ -1,6 +1,0 @@
-{% style %}
-  {{ settings.body_font | font_face: font_display: 'swap' }}
-  {{ settings.heading_font | font_face: font_display: 'swap' }}
-  :root { --arcadia-ink: {{ settings.dark_text }}; --arcadia-text: var(--arcadia-ink); --arcadia-border: var(--arcadia-line); --arcadia-muted: {{ settings.dark_muted }}; --arcadia-holo-intensity: {{ settings.holo_intensity | divided_by: 100.0 }}; --arcadia-bg: {{ settings.dark_background }}; --arcadia-surface: {{ settings.dark_surface }}; --arcadia-accent: {{ settings.dark_accent }}; --arcadia-font: {{ settings.body_font.family }}, {{ settings.body_font.fallback_families }}; --arcadia-heading: {{ settings.heading_font.family }}, {{ settings.heading_font.fallback_families }}; --arcadia-width: {{ settings.page_width }}px; --arcadia-radius: {{ settings.card_radius }}px; --arcadia-holo-opacity: {{ settings.holo_opacity | divided_by: 100.0 }}; --arcadia-holo-speed: {{ settings.holo_speed }}s; }
-  html[data-mode=light] { --arcadia-surface: {{ settings.light_surface }}; --arcadia-ink: {{ settings.light_text }}; --arcadia-muted: {{ settings.light_muted }}; --arcadia-bg: {{ settings.light_background }}; --arcadia-accent: {{ settings.light_accent }}; }
-{% endstyle %}

@@ -33,3 +33,11 @@ test('editor block selection reveals only cards in its own track',()=>{
  const f=fixture(); let shown=false; const item={valid:true,scrollIntoView:()=>shown=true};
  f.listeners.get('rootshopify:block:select')({target:{closest:()=>item}}); assert.equal(shown,true);
 });
+test('editor can reveal a direct event article and ignores unrelated blocks',()=>{
+ const f=fixture(); let shown=0;
+ const item={valid:true,scrollIntoView:()=>shown++};
+ const select=f.listeners.get('rootshopify:block:select');
+ select({target:{closest:selector=>selector.includes('[data-arcadia-event]')?item:null}});
+ assert.equal(shown,1);
+ item.valid=false;select({target:{closest:()=>item}});assert.equal(shown,1);
+});

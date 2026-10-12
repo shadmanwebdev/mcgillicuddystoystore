@@ -1,61 +1,45 @@
-<section class="arcadia-container arcadia-section">
-  {% render 'arcadia-section-header',
-    heading: section.settings.heading,
-    label: section.settings.link_label,
-    url: section.settings.blog.url
-  %}
-  <div class="arcadia-grid arcadia-grid--content" style="--arcadia-columns:3">
-    {% for article in section.settings.blog.articles limit: 3 -%}
-      {%- render 'arcadia-article-card', article: article -%}
-    {%- endfor %}
-  </div>
+{{ 'arcadia-featured-blog.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'arcadia-carousel.js' | asset_url }}" defer></script>
+<section class="arcadia-container arcadia-content-container arcadia-section-background arcadia-journal" data-arcadia-module="carousel" data-mobile-carousel="{{ section.settings.mobile_carousel }}" data-wrap="{{ section.settings.content_wrap }}" data-align="{{ section.settings.content_alignment }}" style="--journal-columns:{{ section.settings.columns }};--journal-ratio:{{ section.settings.image_ratio }};--journal-top:{{ section.settings.padding_top }}px;--journal-bottom:{{ section.settings.padding_bottom }}px;">
+  {% if section.settings.show_header %}
+    {% render 'arcadia-section-header', heading: section.settings.heading, description: section.settings.description, label: section.settings.link_label, url: section.settings.blog.url, button_secondary: false %}
+  {% endif %}
+  {% if section.settings.blog.articles_count > 0 %}
+    <ul class="arcadia-journal__track" id="BlogTrack-{{ section.id }}" data-carousel-track tabindex="0" aria-label="{{ section.settings.heading | escape }}">
+      {% for article in section.settings.blog.articles limit: section.settings.limit %}
+        <li>{% render 'arcadia-journal-card', article: article, options: section.settings %}</li>
+      {% endfor %}
+    </ul>
+    {% if section.settings.navigation %}<div class="arcadia-journal__controls" data-carousel-controls hidden>
+      <button class="arcadia-icon-button" type="button" data-carousel-direction="-1" aria-label="{{ 'general.previous' | t }}" aria-controls="BlogTrack-{{ section.id }}">←</button>
+      <button class="arcadia-icon-button" type="button" data-carousel-direction="1" aria-label="{{ 'general.next' | t }}" aria-controls="BlogTrack-{{ section.id }}">→</button>
+    </div>{% endif %}
+  {% else %}
+    <p class="arcadia-journal__empty">{{ 'general.empty' | t }}</p>
+    {% if request.design_mode %}<p>Select a blog with published posts to display your stories here.</p>{% endif %}
+  {% endif %}
 </section>
 {% schema %}
-{
-  "name": "Featured blog",
-  "settings": [
-    {
-      "type": "text",
-      "id": "heading",
-      "label": "Heading",
-      "default": "From the community"
-    },
-    {
-      "type": "blog",
-      "id": "blog",
-      "label": "Blog"
-    },
-    {
-      "type": "text",
-      "id": "link_label",
-      "label": "Link label",
-      "default": "Read all stories"
-    },
-    {
-      "type": "select",
-      "id": "heading_alignment",
-      "label": "Heading alignment",
-      "default": "start",
-      "options": [
-        {
-          "value": "start",
-          "label": "Start"
-        },
-        {
-          "value": "center",
-          "label": "Center"
-        },
-        {
-          "value": "end",
-          "label": "End"
-        }
-      ]
-    }
-  ],
-  "presets": [
-    {
-      "name": "Featured blog"
-    }
-  ]
-}
+{"name":"Featured blog","settings":[
+{"type":"blog","id":"blog","label":"Blog"},
+{"type":"checkbox","id":"show_header","label":"Show section header","default":true},
+{"type":"text","id":"heading","label":"Heading","default":"Stories from the table."},
+{"type":"richtext","id":"description","label":"Description","default":"<p>Ideas, inspiration and stories for your next game.</p>"},
+{"type":"text","id":"link_label","label":"View all label","default":"Read all stories"},
+{"type":"select","id":"heading_alignment","label":"Heading alignment","default":"center","options":[{"value":"start","label":"Start"},{"value":"center","label":"Center"},{"value":"end","label":"End"}]},
+{"type":"range","id":"limit","label":"Number of posts","min":2,"max":12,"step":1,"default":4},
+{"type":"range","id":"columns","label":"Desktop columns","min":2,"max":4,"step":1,"default":4},
+{"type":"select","id":"image_ratio","label":"Image ratio","default":"1","options":[{"value":"1","label":"Square"},{"value":"0.8","label":"Portrait"},{"value":"1.5","label":"Landscape"}]},
+{"type":"select","id":"content_alignment","label":"Card alignment","default":"start","options":[{"value":"start","label":"Start"},{"value":"center","label":"Center"},{"value":"end","label":"End"}]},
+{"type":"checkbox","id":"content_wrap","label":"Show card background and border","default":false},
+{"type":"checkbox","id":"show_tags","label":"Show tags over images","default":true},
+{"type":"checkbox","id":"show_date","label":"Show publication date","default":true},
+{"type":"checkbox","id":"show_author","label":"Show author","default":true},
+{"type":"checkbox","id":"show_excerpt","label":"Show excerpt","default":true},
+{"type":"range","id":"excerpt_words","label":"Excerpt length","min":10,"max":40,"step":5,"default":20},
+{"type":"checkbox","id":"mobile_carousel","label":"Mobile carousel","default":true},
+{"type":"checkbox","id":"navigation","label":"Show carousel arrows","default":true},
+{"type":"range","id":"padding_top","label":"Top spacing","min":0,"max":120,"step":4,"default":48,"unit":"px"},
+{"type":"range","id":"padding_bottom","label":"Bottom spacing","min":0,"max":120,"step":4,"default":48,"unit":"px"}
+],"presets":[{"name":"Featured blog"}]}
 {% endschema %}

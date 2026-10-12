@@ -20,7 +20,7 @@
       track.scrollBy({left: Number(button.dataset.carouselDirection) * track.clientWidth * (rtl ? -1 : 1), behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth"});
     };
     const select = (event) => {
-      const item = event.target.closest("li");
+      const item = event.target.closest("li, [data-arcadia-event]");
       if (item && track.contains(item)) item.scrollIntoView({block: "nearest", inline: "nearest", behavior: "auto"});
     };
     controls.addEventListener("click", click);

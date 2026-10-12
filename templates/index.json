@@ -1,38 +1,85 @@
 {
   "sections": {
-    "hero": {
-      "type": "arcadia-hero",
-      "settings": {
-        "heading": "Your next great pull starts here.",
-        "eyebrow": "A home for collectors & competitors",
-        "description": "<p>Discover your next deck. Find your people. Make every game a story worth telling.</p>",
-        "heading_tag": "h1",
-        "button_label": "Explore the collection",
-        "button_link": "shopify://collections/all",
-        "secondary_label": "Upcoming events",
-        "secondary_link": "shopify://pages/events"
-      }
-    },
     "games": {
       "type": "arcadia-shop-by-game",
       "settings": {
         "heading": "Find your game.",
         "eyebrow": "One table. Endless worlds.",
         "button_label": "Explore all collections",
-        "button_link": "shopify://collections"
+        "button_link": "shopify://collections",
+        "layout": "circle",
+        "columns": 6,
+        "show_navigation": true,
+        "transparent_images": false
       },
       "blocks": {
-        "pokemon": {"type": "collection", "settings": {"collection": "pokemon-tcg", "title": "Pokémon", "description": "Find your next favourite card."}},
-        "magic": {"type": "collection", "settings": {"collection": "magic-the-gathering-tcg", "title": "Magic: The Gathering", "description": "Build a deck. Make it yours."}},
-        "onepiece": {"type": "collection", "settings": {"collection": "one-piece-tcg", "title": "One Piece", "description": "Your next adventure starts here."}},
-        "warhammer": {"type": "collection", "settings": {"collection": "warhammer", "title": "Warhammer", "description": "Build, paint and play."}}
+        "pokemon": {
+          "type": "collection",
+          "settings": {
+            "collection": "pokemon-tcg",
+            "title": "Pokémon",
+            "description": "Find your next favourite card.",
+            "artwork": "pokemon"
+          }
+        },
+        "magic": {
+          "type": "collection",
+          "settings": {
+            "collection": "magic-the-gathering-tcg",
+            "title": "Magic: The Gathering",
+            "description": "Build a deck. Make it yours.",
+            "artwork": "magic"
+          }
+        },
+        "onepiece": {
+          "type": "collection",
+          "settings": {
+            "collection": "one-piece-tcg",
+            "title": "One Piece",
+            "description": "Your next adventure starts here.",
+            "artwork": "onepiece"
+          }
+        },
+        "jellycat": {
+          "type": "collection",
+          "settings": {
+            "collection": "jellycat",
+            "title": "Jellycat",
+            "artwork": "jellycat"
+          }
+        },
+        "lego": {
+          "type": "collection",
+          "settings": {
+            "collection": "lego",
+            "title": "LEGO",
+            "artwork": "lego"
+          }
+        },
+        "warhammer": {
+          "type": "collection",
+          "settings": {
+            "collection": "warhammer",
+            "title": "Warhammer",
+            "description": "Build, paint and play.",
+            "artwork": "warhammer"
+          }
+        }
       },
-      "block_order": ["pokemon", "magic", "onepiece", "warhammer"]
+      "block_order": [
+        "pokemon",
+        "magic",
+        "onepiece",
+        "warhammer",
+        "jellycat",
+        "lego"
+      ]
     },
     "products": {
       "type": "arcadia-featured-products",
       "settings": {
         "heading": "The next additions to your collection.",
+        "link_label": "Shop all",
         "eyebrow": "On our radar",
         "collection": "all",
         "limit": 4
@@ -43,6 +90,7 @@
       "settings": {
         "heading": "The table is waiting.",
         "eyebrow": "Play locally. Connect for real.",
+        "calendar": false,
         "source": "both",
         "limit": 6
       }
@@ -62,7 +110,98 @@
         "eyebrow": "Drops. Events. Stories.",
         "description": "<p>Get store news and upcoming events straight to your inbox.</p>"
       }
+    },
+    "journal": {
+      "type": "arcadia-featured-blog",
+      "settings": {
+        "blog": "news",
+        "heading_alignment": "center",
+        "heading": "Stories from the table.",
+        "description": "<p>Ideas, inspiration and stories for your next game.</p>",
+        "columns": 4,
+        "limit": 4
+      }
+    },
+    "discovery_break": {
+      "type": "arcadia-breathing-space",
+      "settings": {
+        "eyebrow": "Follow your curiosity",
+        "padding_bottom": 40,
+        "heading": "Your next favourite is out there.",
+        "destination": "search",
+        "padding_top": 24,
+        "layout": "discovery",
+        "button_label": "Search the store",
+        "alignment": "start"
+      }
+    },
+    "community_break": {
+      "type": "arcadia-shop-moments",
+      "settings": {
+        "button_label": "Explore the shop",
+        "heading": "Little moments. Big adventures.",
+        "description": "<p>Build something. Start a collection. Make time for what you love.</p>",
+        "padding_bottom": 40,
+        "eyebrow": "Find your kind of play",
+        "button_link": "shopify://collections/all",
+        "padding_top": 40
+      },
+      "block_order": [
+        "build",
+        "collect",
+        "paint"
+      ],
+      "blocks": {
+        "paint": {
+          "type": "moment",
+          "settings": {
+            "title": "Build your army",
+            "artwork": "warhammer",
+            "collection": "warhammer"
+          }
+        },
+        "build": {
+          "type": "moment",
+          "settings": {
+            "title": "Make it yours",
+            "artwork": "lego",
+            "collection": "lego"
+          }
+        },
+        "collect": {
+          "type": "moment",
+          "settings": {
+            "title": "Find your next pull",
+            "artwork": "pokemon",
+            "collection": "pokemon-tcg"
+          }
+        }
+      }
+    },
+    "editorial_break": {
+      "type": "arcadia-breathing-space",
+      "settings": {
+        "destination": "custom",
+        "button_label": "Shop Jellycat",
+        "heading": "A little gift. A lot of joy.",
+        "eyebrow": "For someone special. Or yourself.",
+        "layout": "community",
+        "padding_bottom": 40,
+        "button_link": "shopify://collections/jellycat",
+        "padding_top": 32,
+        "description": "<p>Find a cuddly companion to brighten any day.</p>"
+      }
     }
   },
-  "order": ["hero", "games", "products", "events", "community", "newsletter"]
+  "order": [
+    "games",
+    "discovery_break",
+    "products",
+    "community_break",
+    "events",
+    "editorial_break",
+    "journal",
+    "community",
+    "newsletter"
+  ]
 }

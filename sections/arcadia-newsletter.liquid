@@ -1,14 +1,14 @@
-{{ 'arcadia-merchandising.css' | asset_url | stylesheet_tag }}
-<section class="arcadia-section arcadia-newsletter">
-  <div class="arcadia-container arcadia-split">
-    <div>
-      {% render 'arcadia-section-header',
-        heading: section.settings.heading,
-        eyebrow: section.settings.eyebrow,
-        description: section.settings.description
-      %}
+{{ 'arcadia-newsletter.css' | asset_url | stylesheet_tag }}
+<section class="arcadia-signup arcadia-section-background" aria-labelledby="SignupHeading-{{ section.id }}" style="--signup-top:{{ section.settings.padding_top }}px;--signup-bottom:{{ section.settings.padding_bottom }}px;--signup-align:{{ section.settings.heading_alignment }};--signup-image-opacity:{{ section.settings.image_opacity | divided_by: 100.0 }};">
+  <div class="arcadia-signup__panel{% unless section.settings.full_width %} arcadia-container arcadia-content-container{% endunless %}">
+    {% if section.settings.image != blank %}<div class="arcadia-signup__background" aria-hidden="true">{{ section.settings.image | image_url: width: 1800 | image_tag: widths: '600, 1000, 1400, 1800', sizes: '100vw', loading: 'lazy', alt: '' }}</div>{% endif %}
+    <div class="arcadia-signup__inner">
+      {% if section.settings.show_icon %}<div class="arcadia-signup__icon" aria-hidden="true"><svg viewBox="0 0 48 48" fill="none"><rect x="7" y="12" width="34" height="25" rx="5" stroke="currentColor" stroke-width="2"/><path d="m8 15 16 12 16-12M8 35l11-10m21 10L29 25" stroke="currentColor" stroke-width="2"/></svg></div>{% endif %}
+      {% if section.settings.eyebrow != blank %}<p class="arcadia-eyebrow">{{ section.settings.eyebrow | escape }}</p>{% endif %}
+      <h2 id="SignupHeading-{{ section.id }}">{{ section.settings.heading | escape }}</h2>
+      {% if section.settings.description != blank %}<div class="arcadia-signup__description">{{ section.settings.description }}</div>{% endif %}
+      <div class="arcadia-signup__form">{% render 'arcadia-newsletter-form' %}</div>
     </div>
-    <div>{% render 'arcadia-newsletter-form' %}</div>
   </div>
 </section>
 {% schema %}
@@ -36,7 +36,7 @@
       "type": "select",
       "id": "heading_alignment",
       "label": "Heading alignment",
-      "default": "start",
+      "default": "center",
       "options": [
         {
           "value": "start",
@@ -51,6 +51,54 @@
           "label": "End"
         }
       ]
+    },
+    {
+      "type": "checkbox",
+      "default": true,
+      "label": "Show envelope icon",
+      "id": "show_icon"
+    },
+    {
+      "type": "checkbox",
+      "default": false,
+      "label": "Full width",
+      "id": "full_width"
+    },
+    {
+      "type": "image_picker",
+      "label": "Background artwork",
+      "info": "Use people-free artwork unless explicitly requested.",
+      "id": "image"
+    },
+    {
+      "type": "range",
+      "default": 10,
+      "min": 0,
+      "step": 1,
+      "label": "Background image opacity",
+      "max": 30,
+      "unit": "%",
+      "id": "image_opacity"
+    },
+    {
+      "type": "range",
+      "default": 40,
+      "min": 0,
+      "step": 4,
+      "label": "Top spacing",
+      "max": 120,
+      "unit": "px",
+      "id": "padding_top"
+    },
+    {
+      "type": "range",
+      "default": 40,
+      "min": 0,
+      "step": 4,
+      "label": "Bottom spacing",
+      "max": 120,
+      "unit": "px",
+      "id": "padding_bottom"
     }
   ],
   "presets": [

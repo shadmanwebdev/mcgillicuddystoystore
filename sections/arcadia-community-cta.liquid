@@ -1,33 +1,27 @@
-{{ 'arcadia-merchandising.css' | asset_url | stylesheet_tag }}
-<section class="arcadia-container arcadia-section">
-  <div class="arcadia-promo arcadia-split">
-    <div>
-      {% if section.settings.icon != blank -%}
-        <span aria-hidden="true" class="arcadia-community-icon">{{ section.settings.icon | escape }}</span>
-      {%- endif -%}
-      {%- if section.settings.member_count != blank %}
-        <p>{{ section.settings.member_count | escape }}</p>
-      {% endif -%}
-      {%- render 'arcadia-section-header',
-        heading: section.settings.heading,
-        eyebrow: section.settings.eyebrow,
-        description: section.settings.description
-      %}
-      <div class="arcadia-row">
-        {% render 'arcadia-button',
-          label: section.settings.button_label,
-          url: section.settings.button_link,
-          icon: 'arrow'
-        -%}
-        {%- if settings.discord_url != blank -%}
-          <a class="arcadia-button arcadia-button--secondary" href="{{ settings.discord_url }}">
-            {{- section.settings.platform_label | escape -}}
-          </a>
-        {%- endif %}
-      </div>
+{{ 'arcadia-community-cta.css' | asset_url | stylesheet_tag }}
+<section class="arcadia-community arcadia-section-background" style="--community-top:{{ section.settings.padding_top }}px;--community-bottom:{{ section.settings.padding_bottom }}px;--community-align:{{ section.settings.heading_alignment }};" aria-labelledby="CommunityTitle-{{ section.id }}">
+  <div class="arcadia-container arcadia-content-container arcadia-community__panel" data-art="{{ section.settings.show_artwork }}" data-position="{{ section.settings.image_position }}">
+    <div class="arcadia-community__copy">
+      {% if section.settings.icon != blank %}<span class="arcadia-community__symbol" aria-hidden="true">{{ section.settings.icon | escape }}</span>{% endif %}
+      {% if section.settings.eyebrow != blank %}<p class="arcadia-eyebrow">{{ section.settings.eyebrow | escape }}</p>{% endif %}
+      <h2 id="CommunityTitle-{{ section.id }}">{{ section.settings.heading | escape }}</h2>
+      {% if section.settings.description != blank %}<div class="arcadia-community__description">{{ section.settings.description }}</div>{% endif %}
+      {% if section.settings.member_count != blank %}<p>{{ section.settings.member_count | escape }}</p>{% endif %}
+      {% if section.settings.button_link != blank or settings.discord_url != blank %}
+        <div class="arcadia-community__actions">
+          {% render 'arcadia-button', label: section.settings.button_label, url: section.settings.button_link, icon: 'arrow' %}
+          {% render 'arcadia-button', label: section.settings.platform_label, url: settings.discord_url, secondary: true %}
+        </div>
+      {% endif %}
     </div>
-    {% if section.settings.image != blank %}
-      <div>{% render 'arcadia-media', image: section.settings.image, loading: 'lazy', sizes: '50vw' %}</div>
+    {% if section.settings.show_artwork %}
+      <div class="arcadia-community__art" aria-hidden="true">
+        {% if section.settings.image != blank %}
+          {{ section.settings.image | image_url: width: 900 | image_tag: widths: '300, 600, 900', sizes: '(max-width: 700px) 70vw, 30vw', loading: 'lazy', alt: '' }}
+        {% else %}
+          {% render 'arcadia-community-art' %}
+        {% endif %}
+      </div>
     {% endif %}
   </div>
 </section>
@@ -104,6 +98,48 @@
           "label": "End"
         }
       ]
+    },
+    {
+      "id": "show_artwork",
+      "type": "checkbox",
+      "label": "Show artwork",
+      "default": true
+    },
+    {
+      "id": "image_position",
+      "options": [
+        {
+          "value": "start",
+          "label": "Left"
+        },
+        {
+          "value": "end",
+          "label": "Right"
+        }
+      ],
+      "type": "select",
+      "label": "Desktop artwork position",
+      "default": "end"
+    },
+    {
+      "unit": "px",
+      "default": 40,
+      "step": 4,
+      "max": 120,
+      "id": "padding_top",
+      "type": "range",
+      "min": 0,
+      "label": "Top spacing"
+    },
+    {
+      "unit": "px",
+      "default": 40,
+      "step": 4,
+      "max": 120,
+      "id": "padding_bottom",
+      "type": "range",
+      "min": 0,
+      "label": "Bottom spacing"
     }
   ],
   "presets": [

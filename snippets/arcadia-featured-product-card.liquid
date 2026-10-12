@@ -1,0 +1,40 @@
+{% comment %}Compact reusable product tile. Explicit presentation inputs; existing purchase and quick-view modules.{% endcomment %}
+{% liquid
+  assign form_id = 'FeaturedProduct-' | append: instance_id | append: '-' | append: product.id
+  assign priced_variant = product.selected_or_first_available_variant
+  assign sale_percent = 0
+  if product.price_varies == false and priced_variant.compare_at_price > priced_variant.price
+    assign sale_percent = priced_variant.compare_at_price | minus: priced_variant.price | times: 100.0 | divided_by: priced_variant.compare_at_price | round
+  endif
+%}
+<article class="arcadia-product-tile">
+  <div class="arcadia-product-tile__visual">
+    <a class="arcadia-product-tile__image" href="{{ product.url }}" aria-label="{{ product.title | escape }}">
+      {% render 'arcadia-media', image: product.featured_image, sizes: '(max-width: 600px) 85vw, (max-width: 1000px) 50vw, 25vw', loading: 'lazy' %}
+      {% if second_image and product.images.size > 1 %}{{ product.images[1] | image_url: width: 900 | image_tag: loading: 'lazy', class: 'arcadia-product-tile__second', widths: '300, 600, 900', sizes: '(max-width: 600px) 85vw, 25vw', alt: '' }}{% endif %}
+    </a>
+    {% if show_badges %}
+      <div class="arcadia-product-tile__badges">
+        {% unless product.available %}<span class="arcadia-product-tile__badge">{{ 'products.sold_out' | t }}</span>
+        {% else %}{% if sale_percent > 0 %}<span class="arcadia-product-tile__badge">−{{ sale_percent }}%</span>{% endif %}{% endunless %}
+        {% if product.available and product.metafields.arcadia.preorder.value %}<span class="arcadia-product-tile__badge">{{ 'products.preorder' | t }}</span>{% endif %}
+      </div>
+    {% endif %}
+    {% if quick_view %}<a class="arcadia-product-tile__quick" href="{{ product.url }}" data-arcadia-module="quick-view" data-arcadia-product-url="{{ product.url }}" aria-label="{{ 'products.quick_view' | t }}: {{ product.title | escape }}">{{ 'products.quick_view' | t }}</a>{% endif %}
+  </div>
+  <div class="arcadia-product-tile__body">
+    {% if show_vendor and product.vendor != blank %}<p class="arcadia-eyebrow">{{ product.vendor | escape }}</p>{% endif %}
+    <h3><a href="{{ product.url }}">{{ product.title | escape }}</a></h3>
+    <div class="arcadia-product-tile__price">
+      {% if product.price_varies %}<span>{{ 'collections.from' | t }}</span> <strong>{{ product.price_min | money_with_currency }}</strong>
+      {% else %}<strong>{{ product.price | money_with_currency }}</strong>{% if priced_variant.compare_at_price > priced_variant.price %}<s>{{ priced_variant.compare_at_price | money_with_currency }}</s>{% endif %}{% endif %}
+      {% if priced_variant.unit_price_measurement %}<small>{{ priced_variant.unit_price | money }}/{{ priced_variant.unit_price_measurement.reference_value }}{{ priced_variant.unit_price_measurement.reference_unit }}</small>{% endif %}
+    </div>
+    {% if quick_buy %}<div class="arcadia-product-tile__purchase">
+      {% if product.available %}{% render 'arcadia-quick-buy', product: product, form_id: form_id %}
+      {% else %}<button class="arcadia-button arcadia-button--secondary" disabled>{{ 'products.sold_out' | t }}</button>{% endif %}
+    </div>{% endif %}
+    {% render 'arcadia-hook-product-card-actions', product: product %}
+    {% render 'arcadia-hook-product-card', product: product %}
+  </div>
+</article>

@@ -1,19 +1,44 @@
-<section class="arcadia-container arcadia-section">
-  {% render 'arcadia-section-header',
-    heading: section.settings.heading,
-    eyebrow: section.settings.eyebrow,
-    description: section.settings.description,
-    label: section.settings.link_label,
-    url: section.settings.collection.url
-  %}
-  <div class="arcadia-grid">
-    {% for product in section.settings.collection.products limit: section.settings.limit -%}
-      {%- render 'arcadia-product-card', product: product -%}
-    {%- else -%}
-      {%- if request.design_mode %}
-        <p>Select a collection to show products.</p>
-      {% endif -%}
-    {%- endfor %}
+{{ 'arcadia-featured-products.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'arcadia-carousel.js' | asset_url }}" defer></script>
+<script src="{{ 'arcadia-carousel-pagination.js' | asset_url }}" defer></script>
+{% if section.settings.quick_view %}<script src="{{ 'arcadia-quick-view.js' | asset_url }}" defer></script>{% endif %}
+{% liquid
+  assign selected_collection = section.settings.collection
+  assign panel_image = section.settings.collection_image | default: selected_collection.featured_image
+  assign panel_title = section.settings.collection_title | default: selected_collection.title
+%}
+<section class="arcadia-container arcadia-content-container arcadia-section-background arcadia-featured" aria-label="{{ section.settings.heading | default: 'Featured products' | escape }}"
+  data-desktop-carousel="{{ section.settings.desktop_carousel }}" data-mobile-carousel="{{ section.settings.mobile_carousel }}"
+  data-wrap="{{ section.settings.content_wrap }}" data-card-align="{{ section.settings.card_alignment }}" data-card-surface="{{ section.settings.card_surface }}"
+  style="--featured-columns:{{ section.settings.columns }};--featured-mobile-columns:{{ section.settings.mobile_columns }};--featured-ratio:{{ section.settings.image_ratio }};--featured-fit:{{ section.settings.image_fit }};--featured-top:{{ section.settings.padding_top }}px;--featured-bottom:{{ section.settings.padding_bottom }}px;--featured-panel-opacity:{{ section.settings.image_opacity | divided_by: 100.0 }};">
+  {% if section.settings.show_header %}
+    {% render 'arcadia-section-header', heading: section.settings.heading, eyebrow: section.settings.eyebrow, description: section.settings.description, label: section.settings.link_label, url: selected_collection.url %}
+  {% endif %}
+  <div class="arcadia-featured__layout" data-panel="{{ section.settings.show_collection_image }}" data-panel-position="{{ section.settings.image_position }}">
+    {% if section.settings.show_collection_image and selected_collection != blank %}
+      <a class="arcadia-featured__panel" data-surface="{{ section.settings.panel_surface }}" href="{{ selected_collection.url }}">
+        {% if panel_image != blank %}{{ panel_image | image_url: width: 900 | image_tag: loading: 'lazy', widths: '300, 600, 900', sizes: '(max-width: 1000px) 100vw, 25vw' }}{% endif %}
+        <h3 {% if section.settings.uppercase_title %}class="arcadia-featured__uppercase"{% endif %}>{{ panel_title | escape }}</h3>
+      </a>
+    {% endif %}
+    <div class="arcadia-featured__products" data-arcadia-module="carousel carousel-pagination">
+      <ul class="arcadia-featured__track" id="FeaturedTrack-{{ section.id }}" data-carousel-track tabindex="0" aria-label="{{ section.settings.heading | default: 'Featured products' | escape }}">
+        {% for product in selected_collection.products limit: section.settings.limit %}
+          <li>{% render 'arcadia-featured-product-card', product: product, instance_id: section.id, show_vendor: section.settings.show_vendor, show_badges: section.settings.show_badges, quick_buy: section.settings.quick_buy, quick_view: section.settings.quick_view, second_image: section.settings.second_image %}</li>
+        {% else %}
+          {% if request.design_mode %}<li class="arcadia-featured__empty">{{ 'collections.no_products' | t }} Select a collection with products.</li>{% endif %}
+        {% endfor %}
+      </ul>
+      <div class="arcadia-featured__navigation">
+        {% if section.settings.dots %}<div class="arcadia-featured__dots" data-carousel-pagination hidden></div>{% endif %}
+        {% if section.settings.navigation %}
+          <div class="arcadia-featured__arrows" data-carousel-controls hidden>
+            <button class="arcadia-icon-button" type="button" data-carousel-direction="-1" aria-label="Previous products" aria-controls="FeaturedTrack-{{ section.id }}">←</button>
+            <button class="arcadia-icon-button" type="button" data-carousel-direction="1" aria-label="Next products" aria-controls="FeaturedTrack-{{ section.id }}">→</button>
+          </div>
+        {% endif %}
+      </div>
+    </div>
   </div>
 </section>
 {% schema %}
@@ -24,7 +49,7 @@
       "type": "text",
       "id": "heading",
       "label": "Heading",
-      "default": "The next chapter starts here."
+      "default": "The next additions to your collection."
     },
     {
       "type": "text",
@@ -55,7 +80,7 @@
       "type": "text",
       "id": "link_label",
       "label": "Collection link label",
-      "default": "Shop collection"
+      "default": "Shop all"
     },
     {
       "type": "select",
@@ -76,6 +101,252 @@
           "label": "End"
         }
       ]
+    },
+    {
+      "type": "checkbox",
+      "id": "show_header",
+      "label": "Show section header",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "columns",
+      "label": "Desktop columns",
+      "min": 2,
+      "max": 6,
+      "step": 1,
+      "default": 4
+    },
+    {
+      "type": "select",
+      "id": "mobile_columns",
+      "label": "Mobile columns",
+      "default": "1",
+      "options": [
+        {
+          "value": "1",
+          "label": "1"
+        },
+        {
+          "value": "2",
+          "label": "2"
+        }
+      ]
+    },
+    {
+      "type": "checkbox",
+      "id": "desktop_carousel",
+      "label": "Desktop carousel",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "mobile_carousel",
+      "label": "Mobile carousel",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "navigation",
+      "label": "Show navigation arrows",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "dots",
+      "label": "Show pagination dots",
+      "default": true
+    },
+    {
+      "type": "select",
+      "id": "image_ratio",
+      "label": "Product image ratio",
+      "default": "1",
+      "options": [
+        {
+          "value": "1",
+          "label": "Square"
+        },
+        {
+          "value": "0.8",
+          "label": "Portrait"
+        },
+        {
+          "value": "1.25",
+          "label": "Landscape"
+        }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "image_fit",
+      "label": "Product image fit",
+      "default": "contain",
+      "options": [
+        {
+          "value": "contain",
+          "label": "Show entire image"
+        },
+        {
+          "value": "cover",
+          "label": "Fill image area"
+        }
+      ]
+    },
+    {
+      "type": "checkbox",
+      "id": "content_wrap",
+      "label": "Show card background and border",
+      "default": true
+    },
+    {
+      "type": "select",
+      "id": "card_alignment",
+      "label": "Card text alignment",
+      "default": "start",
+      "options": [
+        {
+          "value": "start",
+          "label": "Left"
+        },
+        {
+          "value": "center",
+          "label": "Center"
+        },
+        {
+          "value": "end",
+          "label": "Right"
+        }
+      ]
+    },
+    {
+      "type": "checkbox",
+      "id": "show_vendor",
+      "label": "Show vendor",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "show_badges",
+      "label": "Show sale and sold-out badges",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "quick_buy",
+      "label": "Show purchase buttons",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "quick_view",
+      "label": "Show quick view",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "second_image",
+      "label": "Show second image on hover",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_collection_image",
+      "label": "Show collection image panel",
+      "default": false
+    },
+    {
+      "type": "image_picker",
+      "id": "collection_image",
+      "label": "Collection panel image"
+    },
+    {
+      "type": "text",
+      "id": "collection_title",
+      "label": "Collection panel title"
+    },
+    {
+      "type": "checkbox",
+      "id": "uppercase_title",
+      "label": "Uppercase collection title",
+      "default": false
+    },
+    {
+      "type": "select",
+      "id": "image_position",
+      "label": "Collection panel position",
+      "default": "left",
+      "options": [
+        {
+          "value": "left",
+          "label": "Left"
+        },
+        {
+          "value": "right",
+          "label": "Right"
+        }
+      ]
+    },
+    {
+      "type": "range",
+      "id": "image_opacity",
+      "label": "Collection image opacity",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "default": 75
+    },
+    {
+      "type": "select",
+      "id": "panel_surface",
+      "label": "Collection panel surface",
+      "default": "surface",
+      "options": [
+        {
+          "value": "surface",
+          "label": "Theme surface"
+        },
+        {
+          "value": "background",
+          "label": "Theme background"
+        }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "card_surface",
+      "label": "Card surface",
+      "default": "surface",
+      "options": [
+        {
+          "value": "surface",
+          "label": "Theme surface"
+        },
+        {
+          "value": "background",
+          "label": "Theme background"
+        }
+      ]
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Top spacing",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "default": 48,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Bottom spacing",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "default": 48,
+      "unit": "px"
     }
   ],
   "presets": [

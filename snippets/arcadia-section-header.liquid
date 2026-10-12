@@ -13,5 +13,6 @@
       <div class="arcadia-rte arcadia-muted">{{ description }}</div>
     {% endif %}
   </div>
-  {% render 'arcadia-button', label: label, url: url, secondary: true, icon: 'arrow' %}
+  {% assign header_button_secondary = button_secondary | default: true, allow_false: true %}
+  {% render 'arcadia-button', label: label, url: url, secondary: header_button_secondary, icon: 'arrow' %}
 </div>

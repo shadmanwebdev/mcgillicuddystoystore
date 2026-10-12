@@ -1,0 +1,51 @@
+{{ 'arcadia-breathing-space.css' | asset_url | stylesheet_tag }}
+{% liquid
+  assign destination = section.settings.button_link
+  case section.settings.destination
+    when 'search'
+      assign destination = routes.search_url
+    when 'events'
+      assign destination = '#shopify-section-' | append: section.id | split: '__' | first | append: '__events'
+    when 'stories'
+      assign destination = '#shopify-section-' | append: section.id | split: '__' | first | append: '__journal'
+  endcase
+%}
+<section class="arcadia-pause arcadia-section-background" style="--pause-top:{{ section.settings.padding_top }}px;--pause-bottom:{{ section.settings.padding_bottom }}px;--pause-image-width:{{ section.settings.image_width }}%;" aria-labelledby="PauseTitle-{{ section.id }}">
+  <div class="{% unless section.settings.full_width %}arcadia-container {% endunless %}arcadia-pause__panel arcadia-pause__panel--{{ section.settings.layout }}" data-align="{{ section.settings.alignment }}" data-image-position="{{ section.settings.image_position }}">
+    <div class="arcadia-pause__art" aria-hidden="true">
+      {% if section.settings.image != blank %}
+        {{ section.settings.image | image_url: width: 1600 | image_tag: widths: '400, 600, 900, 1200, 1600', sizes: '(max-width: 700px) 100vw, 50vw', loading: 'lazy', alt: '' }}
+      {% else %}
+        {% render 'arcadia-pause-art', variant: section.settings.layout %}
+      {% endif %}
+    </div>
+    <div class="arcadia-pause__copy">
+      {% if section.settings.eyebrow != blank %}<p class="arcadia-eyebrow">{{ section.settings.eyebrow | escape }}</p>{% endif %}
+      <h2 id="PauseTitle-{{ section.id }}">{{ section.settings.heading | escape }}</h2>
+      {% if section.settings.description != blank %}<div class="arcadia-pause__description">{{ section.settings.description }}</div>{% endif %}
+      {% render 'arcadia-button', label: section.settings.button_label, url: destination, secondary: section.settings.secondary_button, icon: 'arrow' %}
+    </div>
+  </div>
+</section>
+{% schema %}
+{
+  "name":"Breathing space", "settings":[
+    {"type":"select","id":"layout","label":"Style","default":"discovery","options":[{"value":"discovery","label":"Discovery banner"},{"value":"community","label":"Community image with text"},{"value":"editorial","label":"Editorial banner"}]},
+    {"type":"text","id":"eyebrow","label":"Eyebrow"},
+    {"type":"text","id":"heading","label":"Heading","default":"Your next favourite is out there."},
+    {"type":"richtext","id":"description","label":"Description"},
+    {"type":"text","id":"button_label","label":"Button label","default":"Explore the store"},
+    {"type":"select","id":"destination","label":"Button destination","default":"custom","options":[{"value":"custom","label":"Custom link below"},{"value":"search","label":"Store search"},{"value":"events","label":"Homepage events section"},{"value":"stories","label":"Homepage stories section"}]},
+    {"type":"url","id":"button_link","label":"Custom link"},
+    {"type":"checkbox","id":"secondary_button","label":"Outline button","default":false},
+    {"type":"image_picker","id":"image","label":"Image","info":"Optional replacement for the theme artwork. Decorative image; describe essential information in the text."},
+    {"type":"select","id":"image_position","label":"Desktop image position","default":"start","options":[{"value":"start","label":"Left"},{"value":"end","label":"Right"}]},
+    {"type":"range","id":"image_width","label":"Desktop image width","min":30,"max":60,"step":5,"unit":"%","default":50},
+    {"type":"select","id":"alignment","label":"Text alignment","default":"start","options":[{"value":"start","label":"Left"},{"value":"center","label":"Center"},{"value":"end","label":"Right"}]},
+    {"type":"checkbox","id":"full_width","label":"Full width","default":false},
+    {"type":"range","id":"padding_top","label":"Top spacing","min":0,"max":120,"step":4,"unit":"px","default":32},
+    {"type":"range","id":"padding_bottom","label":"Bottom spacing","min":0,"max":120,"step":4,"unit":"px","default":32}
+  ],
+  "presets":[{"name":"Discovery break","settings":{"layout":"discovery","destination":"search","button_label":"Search the store"}},{"name":"Community break","settings":{"layout":"community","heading":"Good games. Better company."}},{"name":"Editorial break","settings":{"layout":"editorial","heading":"A little inspiration for your next game."}}]
+}
+{% endschema %}

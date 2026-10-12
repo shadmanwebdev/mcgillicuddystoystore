@@ -7,9 +7,9 @@
   background: linear-gradient(
     125deg,
     transparent 20%,
-    #b8f4ff55 35%,
-    #d1a9ff55 45%,
-    #fff4a755 52%,
+    var(--arcadia-holo-blue) 35%,
+    var(--arcadia-holo-purple) 45%,
+    var(--arcadia-holo-gold) 52%,
     transparent 70%
   );
   background-size: 250% 250%;
@@ -36,10 +36,10 @@
 }
 .arcadia-card[data-rarity="special"],
 .arcadia-card[data-rarity="promotional"] {
-  border-color: #d4a759;
+  border-color: var(--arcadia-rarity-rare);
 }
 .arcadia-card[data-rarity="uncommon"] {
-  border-color: #7bb39a;
+  border-color: var(--arcadia-rarity-uncommon);
 }
 @keyframes arcadia-foil {
   0%,

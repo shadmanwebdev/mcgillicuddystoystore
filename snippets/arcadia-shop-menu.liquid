@@ -1,0 +1,28 @@
+{% liquid
+  assign browse_links = options.shop_menu.links | default: parent.links
+  assign handles = 'pokemon-tcg,magic-the-gathering-tcg,one-piece-tcg,warhammer,jellycat,lego' | split: ','
+  assign chosen_collections = options.shop_collections
+  assign item_count = chosen_collections.size
+  if chosen_collections == blank
+    assign item_count = handles.size
+  endif
+%}
+<div class="arcadia-shop-menu">
+  <div class="arcadia-shop-menu__aside">
+    <p class="arcadia-eyebrow">{{ options.shop_eyebrow | escape }}</p>
+    <h2>{{ options.shop_heading | escape }}</h2>
+    <a class="arcadia-shop-menu__all" href="{{ parent.url }}">{{ options.shop_all_label | escape }} {% render 'arcadia-icon', name: 'arrow' %}</a>
+    {% if browse_links != blank %}<ul class="arcadia-shop-menu__links">{% for item in browse_links %}<li><a href="{{ item.url }}">{{ item.title | escape }}</a></li>{% endfor %}</ul>{% endif %}
+  </div>
+  <div class="arcadia-shop-menu__browse"><h3>{{ options.shop_collections_heading | escape }}</h3><div class="arcadia-shop-menu__collections">
+    {% for index in (1..item_count) %}
+      {% assign offset = index | minus: 1 %}
+      {% if chosen_collections != blank %}{% assign collection = chosen_collections[offset] %}{% else %}{% assign handle = handles[offset] %}{% assign collection = collections[handle] %}{% endif %}
+      {% if collection != blank %}
+        <a class="arcadia-shop-menu__tile" href="{{ collection.url }}">
+          <span class="arcadia-shop-menu__label">{{ collection.title | escape }} <span aria-hidden="true">↗</span></span>
+        </a>
+      {% endif %}
+    {% endfor %}
+  </div></div>
+</div>

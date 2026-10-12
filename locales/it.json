@@ -94,6 +94,7 @@
     "days": "g",
     "details": "Dettagli dell’evento",
     "empty": "Nessun evento corrisponde ai filtri.",
+    "upcoming_empty": "Al momento non ci sono eventi in programma. Torna presto.",
     "end": "Fine",
     "format": "Formato",
     "google_calendar": "Aggiungi a Google Calendar",

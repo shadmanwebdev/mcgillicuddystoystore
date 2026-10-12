@@ -1,10 +1,10 @@
 {{ 'arcadia-game-browser.css' | asset_url | stylesheet_tag }}
 <script src="{{ 'arcadia-carousel.js' | asset_url }}" defer="defer"></script>
-<section class="arcadia-container arcadia-game-browser" data-arcadia-module="carousel"
+<section class="arcadia-container arcadia-section-background arcadia-game-browser" data-arcadia-module="carousel"
   data-layout="{{ section.settings.layout }}" data-contain="{{ section.settings.transparent_images }}"
   data-carousel="{{ section.settings.show_navigation }}"
   aria-label="{{ section.settings.heading | default: 'Find your game' | escape }}"
-  style="--game-columns:{{ section.settings.columns }};--game-mobile-columns:{{ section.settings.mobile_columns }};--game-margin-top:{{ section.settings.margin_top }}px;--game-margin-bottom:{{ section.settings.margin_bottom }}px;">
+  style="--game-circle-size:{{ section.settings.circle_size }}px;--game-circle-gap:{{ section.settings.circle_gap }}px;--game-columns:{{ section.settings.columns }};--game-mobile-columns:{{ section.settings.mobile_columns }};--game-margin-top:{{ section.settings.margin_top }}px;--game-margin-bottom:{{ section.settings.margin_bottom }}px;">
   {% if section.settings.show_header %}
     <div class="arcadia-game-browser__header">
       {% if section.settings.watermark != blank %}<span class="arcadia-game-browser__watermark" aria-hidden="true">{{ section.settings.watermark | escape }}</span>{% endif %}
@@ -15,7 +15,7 @@
     <ul id="GameTrack-{{ section.id }}" class="arcadia-game-browser__track" data-carousel-track aria-label="Game collections" tabindex="0">
       {% for block in section.blocks %}
         <li {{ block.shopify_attributes }}>
-          {% render 'arcadia-game-card', collection: block.settings.collection, image: block.settings.image, title: block.settings.title, description: block.settings.description, url: block.settings.url, logo: block.settings.logo, accent: block.settings.color, gradient: block.settings.gradient, lift: block.settings.hover %}
+          {% render 'arcadia-game-card', collection: block.settings.collection, image: block.settings.image, artwork: block.settings.artwork, title: block.settings.title, description: block.settings.description, url: block.settings.url, logo: block.settings.logo, accent: block.settings.color, gradient: block.settings.gradient, lift: block.settings.hover %}
         </li>
       {% endfor %}
     </ul>
@@ -106,6 +106,10 @@
         {
           "value": "vertical",
           "label": "Vertical"
+        },
+        {
+          "value": "circle",
+          "label": "Round image with overlay"
         }
       ]
     },
@@ -166,6 +170,26 @@
       "step": 4,
       "unit": "px",
       "default": 32
+    },
+    {
+      "type": "range",
+      "id": "circle_size",
+      "max": 320,
+      "unit": "px",
+      "default": 200,
+      "min": 120,
+      "step": 10,
+      "label": "Maximum circle size"
+    },
+    {
+      "type": "range",
+      "id": "circle_gap",
+      "max": 100,
+      "unit": "px",
+      "default": 64,
+      "min": 24,
+      "step": 4,
+      "label": "Circle spacing"
     }
   ],
   "blocks": [
@@ -220,6 +244,43 @@
           "id": "hover",
           "label": "Lift on hover",
           "default": true
+        },
+        {
+          "info": "Custom artwork overrides this selection.",
+          "type": "select",
+          "default": "collection",
+          "options": [
+            {
+              "value": "collection",
+              "label": "Use collection image"
+            },
+            {
+              "value": "pokemon",
+              "label": "Pikachu"
+            },
+            {
+              "value": "magic",
+              "label": "Magic illustration"
+            },
+            {
+              "value": "onepiece",
+              "label": "Luffy"
+            },
+            {
+              "value": "warhammer",
+              "label": "Space Marine"
+            },
+            {
+              "value": "jellycat",
+              "label": "Jellycat pink bunny"
+            },
+            {
+              "value": "lego",
+              "label": "Colorful LEGO bricks"
+            }
+          ],
+          "id": "artwork",
+          "label": "Included artwork"
         }
       ]
     }

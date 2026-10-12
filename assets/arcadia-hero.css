@@ -69,7 +69,7 @@
   border-radius: 22px;
   padding: 12px;
   background: var(--arcadia-surface);
-  box-shadow: 0 24px 70px #0007;
+  box-shadow: var(--arcadia-hero-card-shadow);
 }
 .arcadia-hero__card:first-child {
   transform: rotate(-14deg) translate(-14%, 3%);
@@ -90,8 +90,8 @@
   display: grid;
   place-items: center;
   background:
-    radial-gradient(circle, #a995ff33, transparent 70%),
-    linear-gradient(150deg, #252830, #111317);
+    radial-gradient(circle, var(--arcadia-hero-glow), transparent 70%),
+    linear-gradient(150deg, var(--arcadia-hero-card-top), var(--arcadia-hero-card-bottom));
   border: 1px solid var(--arcadia-line);
   border-radius: 12px;
   color: var(--arcadia-accent);

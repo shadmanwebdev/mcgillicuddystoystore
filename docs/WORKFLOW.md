@@ -4,6 +4,10 @@ Agreed project workflow, saved 13 October 2026.
 
 ## Direction
 
+Homepage pacing: use useful search, shopping inspiration and promotional breaks. Do not insert a separate events/blog teaser immediately above the corresponding events/blog section; it duplicates the content and adds unnecessary scrolling.
+
+**Imagery preference:** Do not use pictures of people in any section unless the user explicitly requests them or the section obviously requires people imagery. Default to products, game pieces, artwork, objects, or abstract illustrations. A general community message alone does not require a people photo. Applies to generated images, stock photos, and selected store assets.
+
 Build and refine the theme section by section, starting with the homepage Find your game (Shop by game) section. Preserve the existing light and dark palettes and basic visual identity. User-provided images guide the design of the relevant section; clarify material conflicts with the shared styling before implementing them.
 
 Use Joyfy's equivalent section as a customization benchmark for every section without requiring the user to repeat this instruction. Match its relevant customization options, adapt their presentation to Arcadia, and document any differences or unverified behavior. Do not equate matching section names or setting counts with matching functionality.
@@ -71,9 +75,11 @@ Use CSS custom properties as the shared source for reusable styling values:
 - Spacing, component gaps, page widths, and common sizing.
 - Borders, corner radii, shadows, and reusable motion durations.
 
-Build on `assets/arcadia-tokens.css` and `snippets/arcadia-theme-variables.liquid`. Keep baseline values centralized and map merchant-editable global settings to the same tokens. Preserve existing palette values and styling unless the user requests a change.
+Build on `snippets/arcadia-theme-styles.liquid` and `snippets/arcadia-theme-styles.liquid`. Keep baseline values centralized and map merchant-editable global settings to the same tokens. Preserve existing palette values and styling unless the user requests a change.
 
 Use this precedence: shared theme default, then an explicit section-level override. Scope section overrides to the section instance so they cannot change unrelated sections. Shared components inherit the relevant tokens rather than repeat literal theme values.
+
+All sections we build must use `var(--arcadia-bg)` as their light-mode section background (default `#f6f5f0`). Apply the shared `arcadia-section-background` class to each section root; its rule lives in `snippets/arcadia-theme-styles.liquid`. Find your game and Featured products use this foundation. The cookie banner also uses this background in light mode. Cards and image surfaces remain separate component treatments; preserve the existing dark-mode styling.
 
 Expose useful design controls consistently: alignment, width, spacing, media sizing, and responsive layout where appropriate. Avoid adding settings that do not visibly affect the output. Ordinary structural CSS values do not all need tokens; standard media-query breakpoints should remain coordinated in CSS because CSS custom properties cannot be used directly in media-query conditions.
 

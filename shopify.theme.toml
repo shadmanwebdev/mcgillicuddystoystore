@@ -1,2 +1,6 @@
 [environments.default]
 store = "mcgillicuddystoystore.myshopify.com"
+
+[environments.demo]
+store = "mcgillicuddystoystore.myshopify.com"
+theme = "200969650550"

@@ -1,0 +1,18 @@
+.arcadia-community{padding-block:var(--community-top) var(--community-bottom);background:var(--arcadia-bg)}
+.arcadia-community__panel{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(0,1fr);align-items:center;gap:var(--arcadia-pause-gap);padding-block:var(--arcadia-pause-padding);border-block:1px solid var(--arcadia-line)}
+.arcadia-community__copy{min-width:0;text-align:var(--community-align)}
+.arcadia-community__copy .arcadia-eyebrow{margin:0 0 var(--arcadia-space-md)}
+.arcadia-community__copy h2{font-size:var(--arcadia-text-section-compact);line-height:1.15;margin:0;max-width:24ch;text-wrap:balance;overflow-wrap:anywhere}
+.arcadia-community__description{font-size:var(--arcadia-pause-body-size);line-height:1.65;color:var(--arcadia-muted);max-width:54ch;margin-top:var(--arcadia-space-lg)}
+.arcadia-community__description p{margin:0}
+.arcadia-community__actions{display:flex;flex-wrap:wrap;gap:var(--arcadia-space-md);margin-top:var(--arcadia-space-lg);justify-content:var(--community-align)}
+.arcadia-community__symbol{display:block;color:var(--arcadia-accent);font-size:var(--arcadia-text-card);margin-bottom:var(--arcadia-space-sm)}
+.arcadia-community__art{color:var(--arcadia-accent);width:100%;max-width:360px;justify-self:center;line-height:0}
+.arcadia-community__art svg,.arcadia-community__art img{width:100%;height:auto;max-height:280px;object-fit:contain;border-radius:var(--arcadia-radius)}
+.arcadia-community__panel[data-position=start] .arcadia-community__art{grid-column:1;grid-row:1}
+.arcadia-community__panel[data-position=start] .arcadia-community__copy{grid-column:2}
+.arcadia-community__panel[data-art=false]{grid-template-columns:1fr}
+.arcadia-community__panel[data-art=false] .arcadia-community__copy{grid-column:1}
+.arcadia-community[style*="--community-align:center"] h2,.arcadia-community[style*="--community-align:center"] .arcadia-community__description{margin-inline:auto}
+.arcadia-community[style*="--community-align:end"] h2,.arcadia-community[style*="--community-align:end"] .arcadia-community__description{margin-inline-start:auto}
+@media(max-width:700px){.arcadia-community__panel{grid-template-columns:1fr;gap:var(--arcadia-space-lg)}.arcadia-community__art{max-width:220px;grid-row:1}.arcadia-community__panel[data-position=start] .arcadia-community__copy{grid-column:1}.arcadia-community__actions .arcadia-button{width:100%}}

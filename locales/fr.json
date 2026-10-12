@@ -94,6 +94,7 @@
     "days": "j",
     "details": "Détails de l’événement",
     "empty": "Aucun événement ne correspond aux filtres.",
+    "upcoming_empty": "Aucun événement à venir pour le moment. Revenez bientôt.",
     "end": "Fin",
     "format": "Format",
     "google_calendar": "Ajouter à Google Agenda",

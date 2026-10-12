@@ -1,0 +1,9 @@
+# Newsletter
+
+Rebuilt 13 October 2026: a centered, outlined cream panel with a green top rule, optional envelope icon, heading/description, and compact signup form. Content is capped at 680px inside the shared content-section container. Desktop email and submit button share a row; consent sits below. Through 600px, controls stack in natural reading order with a full-width submit button. Colors inherit light/dark tokens; no people imagery.
+
+Files: `sections/arcadia-newsletter.liquid`, `assets/arcadia-newsletter.css`, shared tokens in `snippets/arcadia-theme-styles.liquid`. The existing `arcadia-newsletter-form` snippet is reused unchanged, preserving Shopify customer submission, newsletter tag, required email and consent, translated copy, error output and success status. All styling is scoped to this section; footer, password and popup form layouts are unaffected. No signup was submitted during visual work.
+
+Compared publisher [Newsletter documentation](https://ascent.webvista.studio/sections/newsletter) on 13 October 2026. Adopted full width, optional background image and opacity, editable heading/eyebrow/rich text, plus alignment, icon toggle and vertical spacing. Image opacity is capped at 30% for a subdued backdrop. Shared theme palette replaces independent color-scheme controls. Fixed-background scrolling, social links and arbitrary reorderable text blocks are not implemented; this version prioritizes a focused signup. Exact installed Joyfy editor parity remains unverified.
+
+Theme Check passed. Code reviewed for narrow layouts, independent section IDs, missing background image, consent and error/success rendering. End-to-end signup and live visual checks remain unverified; the browser preview restriction has not been bypassed. Updated development and unpublished demo themes; no live publication.

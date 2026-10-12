@@ -1,0 +1,17 @@
+{% assign search_instance = 'Drawer-' | append: instance_id %}
+<dialog id="SearchDrawer-{{ instance_id }}" class="arcadia-search-drawer" data-arcadia-module="dialog search-drawer" aria-label="{{ 'general.search' | t }}" data-search-url="{{ routes.search_url }}">
+  <div class="arcadia-search-drawer__body">
+    <div class="arcadia-search-drawer__header"><h2>{{ 'general.search' | t }}</h2><button class="arcadia-icon-button" type="button" data-arcadia-close aria-label="{{ 'general.close' | t }}">{% render 'arcadia-icon', name: 'close' %}</button></div>
+    <div class="arcadia-search-drawer__form">{% render 'arcadia-search-form', id: search_instance %}</div>
+    <div class="arcadia-search-drawer__suggestions">
+      <h3>{{ options.search_suggestions_heading | escape }}</h3>
+      <ul>{% if options.search_suggestions_menu != blank %}
+        {% for link in options.search_suggestions_menu.links %}<li><a href="{{ link.url }}">{{ link.title | escape }}</a></li>{% endfor %}
+      {% else %}
+        {% assign terms = 'Pokémon,Magic: The Gathering,One Piece,Warhammer,Jellycat,LEGO' | split: ',' %}
+        {% for term in terms %}<li><a href="{{ routes.search_url }}?q={{ term | url_encode }}&amp;options%5Bprefix%5D=last">{{ term | escape }}</a></li>{% endfor %}
+      {% endif %}</ul>
+    </div>
+    <a class="arcadia-button arcadia-search-drawer__full" href="{{ routes.search_url }}" data-search-full>{{ options.search_page_label | escape }} {% render 'arcadia-icon', name: 'arrow' %}</a>
+  </div>
+</dialog>

@@ -1,14 +1,24 @@
 {{ 'arcadia-navigation.css' | asset_url | stylesheet_tag }}
 <script src="{{ 'arcadia-navigation.js' | asset_url }}" defer></script>
+{{ 'arcadia-search-drawer.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'arcadia-search-drawer.js' | asset_url }}" defer></script>
 {% if settings.predictive_search %}
   <script src="{{ 'arcadia-predictive-search.js' | asset_url }}" defer></script>
 {% endif %}
-<header class="arcadia-header" data-arcadia-module="navigation">
+<header class="arcadia-header" data-arcadia-module="navigation" data-hover-menu="{{ section.settings.hover_menu }}">
   <div class="arcadia-container arcadia-header__main">
     <details class="arcadia-mobile-nav">
       <summary aria-label="{{ 'general.menu' | t }}">{% render 'arcadia-icon', name: 'menu' %}</summary>
       <nav class="arcadia-mobile-menu" aria-label="{{ 'general.menu' | t }}">
-        {% render 'arcadia-menu-links', links: section.settings.menu.links %}
+        <ul class="arcadia-mobile-menu__root">
+          {% for link in section.settings.menu.links %}
+            {% assign title_key = link.title | downcase | strip %}{% assign shop_key = section.settings.shop_menu_title | downcase | strip %}
+            <li>{% if title_key == shop_key and section.settings.shop_mega_enabled %}
+              <details><summary>{{ link.title | escape }}</summary>{% render 'arcadia-shop-menu', parent: link, options: section.settings %}</details>
+            {% elsif link.links != blank %}<details><summary>{{ link.title | escape }}</summary><a href="{{ link.url }}">{{ link.title | escape }}</a>{% render 'arcadia-menu-links', links: link.links %}</details>
+            {% else %}<a href="{{ link.url }}">{{ link.title | escape }}</a>{% endif %}</li>
+          {% endfor %}
+        </ul>
       </nav>
     </details>
     <a href="{{ routes.root_url }}" class="arcadia-logo">
@@ -26,8 +36,14 @@
     <nav class="arcadia-desktop-nav" aria-label="{{ 'general.menu' | t }}">
       <ul class="arcadia-nav">
         {% for link in section.settings.menu.links %}
+          {% assign title_key = link.title | downcase | strip %}{% assign shop_key = section.settings.shop_menu_title | downcase | strip %}
           <li>
-            {% if link.links != blank %}
+            {% if title_key == shop_key and section.settings.shop_mega_enabled %}
+              <details class="arcadia-nav__dropdown">
+                <summary>{{ link.title | escape }}</summary>
+                <div class="arcadia-mega arcadia-mega--shop"><div class="arcadia-shop-menu__container">{% render 'arcadia-shop-menu', parent: link, options: section.settings %}</div></div>
+              </details>
+            {% elsif link.links != blank %}
               <details>
                 <summary>{{ link.title | escape }}</summary>
                 <div class="arcadia-mega">
@@ -58,7 +74,7 @@
         {% endfor %}
       </ul>
     </nav>
-    <div class="arcadia-header__search">{% render 'arcadia-search-form', id: section.id %}</div>
+    <div class="arcadia-header__search"><a class="arcadia-search-launch" href="{{ routes.search_url }}" data-arcadia-search-open aria-haspopup="dialog" aria-controls="SearchDrawer-{{ section.id }}"><span>{{ 'general.search' | t }}</span>{% render 'arcadia-icon', name: 'search' %}</a></div>
     <div class="arcadia-header__utilities">
       {% if settings.mode_toggle -%}
         <button
@@ -90,5 +106,136 @@
       {%- render 'arcadia-hook-header-utilities' %}
     </div>
   </div>
+  {% render 'arcadia-search-drawer', instance_id: section.id, options: section.settings %}
 </header>
-{% schema %}{"name":"Header","class":"arcadia-header-section","settings":[{"type":"image_picker","id":"logo","label":"Logo"},{"type":"range","id":"logo_width","label":"Logo width","min":70,"max":240,"step":10,"default":140,"unit":"px"},{"type":"link_list","id":"menu","label":"Main menu","default":"main-menu"}],"blocks":[{"type":"promotion","name":"Menu promotion","settings":[{"type":"text","id":"menu_title","label":"Exact parent menu title"},{"type":"image_picker","id":"image","label":"Image"},{"type":"text","id":"heading","label":"Heading"},{"type":"url","id":"link","label":"Link"}]}]}{% endschema %}
+{% schema %}
+{
+  "name": "Header",
+  "class": "arcadia-header-section",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "logo",
+      "label": "Logo"
+    },
+    {
+      "type": "range",
+      "id": "logo_width",
+      "label": "Logo width",
+      "min": 70,
+      "max": 240,
+      "step": 10,
+      "default": 140,
+      "unit": "px"
+    },
+    {
+      "type": "link_list",
+      "id": "menu",
+      "label": "Main menu",
+      "default": "main-menu"
+    },
+    {
+      "type": "checkbox",
+      "label": "Enable visual Shop menu",
+      "default": true,
+      "id": "shop_mega_enabled"
+    },
+    {
+      "info": "Matches the navigation title, ignoring capitalization.",
+      "type": "text",
+      "label": "Parent menu title",
+      "default": "Shop",
+      "id": "shop_menu_title"
+    },
+    {
+      "type": "text",
+      "label": "Shop eyebrow",
+      "default": "Find your next favourite",
+      "id": "shop_eyebrow"
+    },
+    {
+      "type": "text",
+      "label": "Shop heading",
+      "default": "Choose your world.",
+      "id": "shop_heading"
+    },
+    {
+      "type": "text",
+      "label": "Browse all label",
+      "default": "Shop everything",
+      "id": "shop_all_label"
+    },
+    {
+      "info": "Optional. Defaults to the immediate child links of the parent menu.",
+      "type": "link_list",
+      "label": "Shop quick links",
+      "id": "shop_menu"
+    },
+    {
+      "info": "Leave empty to use the six homepage collections.",
+      "type": "collection_list",
+      "limit": 6,
+      "label": "Shop collections",
+      "id": "shop_collections"
+    },
+    {
+      "type": "checkbox",
+      "label": "Open desktop menus on hover",
+      "default": true,
+      "id": "hover_menu"
+    },
+    {
+      "type": "text",
+      "default": "Shop by collection",
+      "id": "shop_collections_heading",
+      "label": "Collections heading"
+    },
+    {
+      "type": "text",
+      "default": "Suggested searches",
+      "id": "search_suggestions_heading",
+      "label": "Suggested searches heading"
+    },
+    {
+      "type": "link_list",
+      "id": "search_suggestions_menu",
+      "label": "Suggested search links",
+      "info": "Defaults to the six game and hobby names."
+    },
+    {
+      "type": "text",
+      "default": "View search results",
+      "id": "search_page_label",
+      "label": "Full search page button"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "promotion",
+      "name": "Menu promotion",
+      "settings": [
+        {
+          "type": "text",
+          "id": "menu_title",
+          "label": "Exact parent menu title"
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        },
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "Heading"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Link"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

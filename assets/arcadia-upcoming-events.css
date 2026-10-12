@@ -1,0 +1,51 @@
+/* Upcoming strip presentation; shared event behavior remains reusable on other pages. */
+.arcadia-upcoming { padding-block: var(--upcoming-top) var(--upcoming-bottom); }
+.arcadia-upcoming__header { position: relative; isolation: isolate; }
+.arcadia-upcoming__watermark { position: absolute; inset: 0; overflow: hidden; z-index: -1; pointer-events: none; opacity: var(--arcadia-watermark-opacity); font: var(--arcadia-weight-bold) var(--arcadia-text-display)/1 var(--arcadia-heading); white-space: nowrap; }
+.arcadia-upcoming .arcadia-heading h2 { font-size: var(--arcadia-text-section-compact); }
+.arcadia-upcoming .arcadia-heading[data-align="center"] { flex-direction: column; align-items: center; text-align: center; }
+.arcadia-upcoming .arcadia-heading[data-align="end"] { flex-direction: column; align-items: end; text-align: end; }
+.arcadia-upcoming__track { --upcoming-visible: var(--upcoming-columns); display: grid; grid-template-columns: repeat(var(--upcoming-visible), minmax(0,1fr)); gap: var(--arcadia-card-gap); padding: var(--arcadia-space-xs); margin: calc(-1 * var(--arcadia-space-xs)); scroll-padding-inline: var(--arcadia-space-xs); scrollbar-width: thin; }
+.arcadia-upcoming[data-desktop-carousel="true"] .arcadia-upcoming__track { grid-template-columns: none; grid-auto-flow: column; grid-auto-columns: calc((100% - (var(--upcoming-visible) - 1) * var(--arcadia-card-gap)) / var(--upcoming-visible)); overflow-x: auto; scroll-snap-type: x mandatory; }
+.arcadia-upcoming .arcadia-event-card { min-width: 0; display: flex; flex-direction: column; scroll-snap-align: start; box-shadow: var(--arcadia-product-card-shadow); text-align: var(--upcoming-align,start); }
+.arcadia-upcoming[data-wrap="false"] .arcadia-event-card { background: transparent; border-color: transparent; box-shadow: none; }
+.arcadia-upcoming[data-surface="background"][data-wrap="true"] .arcadia-event-card { background: var(--arcadia-bg); }
+.arcadia-upcoming .arcadia-card__media { aspect-ratio: var(--upcoming-ratio); }
+.arcadia-upcoming .arcadia-card__media img { object-fit: var(--upcoming-fit); }
+.arcadia-upcoming[data-image-ratio="auto"] .arcadia-card__media img { height: auto; }
+.arcadia-upcoming .arcadia-card__body { flex: 1; display: flex; flex-direction: column; gap: var(--arcadia-space-md); padding: var(--arcadia-product-card-padding); overflow-wrap: anywhere; }
+.arcadia-upcoming .arcadia-card__body p { margin: 0; }
+.arcadia-upcoming .arcadia-card__body h3 { font-size: var(--arcadia-text-card); line-height: 1.3; margin: var(--arcadia-space-xs) 0 var(--arcadia-space-sm); }
+.arcadia-upcoming .arcadia-card__body time { display: inline-block; padding-block: var(--arcadia-space-xs); font-weight: var(--arcadia-weight-bold); color: var(--arcadia-accent); font-variant-numeric: tabular-nums; }
+.arcadia-upcoming .arcadia-event-card__description { color: var(--arcadia-muted); line-height: 1.6; }
+.arcadia-upcoming .arcadia-event-card__actions { display: grid; gap: var(--arcadia-space-sm); margin-top: auto; padding-top: var(--arcadia-space-md); border-top: 1px solid var(--arcadia-line); }
+.arcadia-upcoming .arcadia-event-card__actions:not(:has(.arcadia-button, details)) { display: none; }
+.arcadia-upcoming .arcadia-event-card__actions > .arcadia-button { width: 100%; }
+.arcadia-upcoming .arcadia-event-card__calendar summary { min-height: 44px; padding: var(--arcadia-space-sm); cursor: pointer; font-size: var(--arcadia-text-small); text-align: center; }
+.arcadia-upcoming .arcadia-event-card__calendar .arcadia-row { justify-content: center; gap: var(--arcadia-space-xs); }
+.arcadia-upcoming .arcadia-event-card__calendar a { display: inline-flex; align-items: center; min-height: 44px; }
+.arcadia-upcoming[data-align="center"] { --upcoming-align: center; --upcoming-justify: center; }
+.arcadia-upcoming[data-align="end"] { --upcoming-align: end; --upcoming-justify: end; }
+.arcadia-upcoming .arcadia-event-card__badges { justify-content: var(--upcoming-justify,start); }
+.arcadia-upcoming__controls { display: flex; justify-content: end; gap: var(--arcadia-space-sm); margin-top: var(--arcadia-space-lg); }
+.arcadia-upcoming__track:not(:has(.arcadia-event-card:not([hidden]))) { display: none; }
+.arcadia-upcoming__track:not(:has(.arcadia-event-card:not([hidden]))) + .arcadia-upcoming__controls { display: none; }
+.arcadia-upcoming__empty { border: 1px dashed var(--arcadia-line); border-radius: var(--arcadia-radius); padding: var(--arcadia-space-lg); color: var(--arcadia-muted); text-align: center; }
+/* Preserve the existing opt-in card styles alongside the new layout controls. */
+.arcadia-upcoming .arcadia-event-card[data-card-style="neon"] { border-color: var(--event-accent); }
+.arcadia-upcoming .arcadia-event-card[data-card-style="competitive"] { border-top: 5px solid var(--event-accent); }
+.arcadia-upcoming .arcadia-event-card[data-card-style="minimal"] { background: transparent; box-shadow: none; }
+.arcadia-upcoming .arcadia-event-card[data-card-style="compact"] .arcadia-card__media { display: none; }
+@media (hover:hover) and (pointer:fine) {
+ .arcadia-upcoming[data-wrap="true"] .arcadia-event-card:hover { border-color: var(--event-accent); }
+}
+@media (hover:none) { .arcadia-upcoming .arcadia-event-card[data-animate="true"]:hover { transform: none; } }
+@media(max-width:1100px) { .arcadia-upcoming__track { --upcoming-visible: 2; } }
+@media(max-width:600px) {
+ .arcadia-upcoming { --arcadia-card-gap: var(--arcadia-space-md); }
+ .arcadia-upcoming__track { --upcoming-visible: var(--upcoming-mobile-columns); }
+ .arcadia-upcoming[data-mobile-carousel="false"] .arcadia-upcoming__track { grid-auto-flow: row; grid-template-columns: repeat(var(--upcoming-visible),minmax(0,1fr)); grid-auto-columns: auto; overflow: visible; }
+ .arcadia-upcoming[data-mobile-carousel="true"] .arcadia-upcoming__track { grid-template-columns: none; grid-auto-flow: column; grid-auto-columns: calc((90% - (var(--upcoming-visible) - 1) * var(--arcadia-card-gap)) / var(--upcoming-visible)); overflow-x: auto; scroll-snap-type: x mandatory; }
+ .arcadia-upcoming__controls { justify-content: center; }
+ .arcadia-upcoming .arcadia-card__body { padding: var(--arcadia-space-md); }
+}

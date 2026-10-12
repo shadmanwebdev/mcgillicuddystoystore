@@ -7,7 +7,25 @@
 <article class="arcadia-game-tile" data-lift="{{ lift }}" {% if accent != blank %}style="--game-accent:{{ accent }}"{% endif %}>
   {% if card_url != blank %}<a class="arcadia-game-tile__link" href="{{ card_url }}">{% else %}<div class="arcadia-game-tile__link">{% endif %}
     <div class="arcadia-game-tile__media" {% if gradient != blank %}style="background:{{ gradient }}"{% endif %}>
-      {% if card_image != blank %}
+      {% if image == blank and artwork != blank and artwork != 'collection' %}
+        {% liquid
+          case artwork
+            when 'pokemon'
+              assign artwork_file = 'arcadia-game-pokemon.png'
+            when 'magic'
+              assign artwork_file = 'arcadia-game-magic.webp'
+            when 'onepiece'
+              assign artwork_file = 'arcadia-game-onepiece.webp'
+            when 'warhammer'
+              assign artwork_file = 'arcadia-game-warhammer.jpg'
+            when 'jellycat'
+              assign artwork_file = 'arcadia-game-jellycat.jpg'
+            when 'lego'
+              assign artwork_file = 'arcadia-game-lego.jpg'
+          endcase
+        %}
+        <img src="{{ artwork_file | asset_url }}" width="600" height="600" loading="lazy" alt="" class="arcadia-game-tile__art arcadia-game-tile__art--{{ artwork }}">
+      {% elsif card_image != blank %}
         {{ card_image | image_url: width: 900 | image_tag: loading: 'lazy', widths: '180, 360, 540, 720, 900', sizes: '(max-width: 600px) 85vw, (max-width: 1000px) 45vw, 25vw', alt: '' }}
       {% else %}
         <span class="arcadia-game-tile__fallback" aria-hidden="true">{% render 'arcadia-icon' %}</span>

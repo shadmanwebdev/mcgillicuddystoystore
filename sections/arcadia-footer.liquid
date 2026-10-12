@@ -1,59 +1,94 @@
 {{ 'arcadia-footer.css' | asset_url | stylesheet_tag }}
-<footer class="arcadia-footer arcadia-section">
-  <div class="arcadia-container">
+{% liquid
+  assign show_newsletter = section.settings.newsletter
+  if request.page_type == 'index' and section.settings.hide_home_newsletter
+    assign show_newsletter = false
+  endif
+%}
+<footer class="arcadia-footer" data-border="{{ section.settings.top_border }}" data-uppercase="{{ section.settings.uppercase_titles }}" style="--footer-space:{{ section.settings.padding }}px;--footer-image-opacity:{{ section.settings.image_opacity | divided_by: 100.0 }};">
+  {% if section.settings.background_image != blank %}<div class="arcadia-footer__background" aria-hidden="true">{{ section.settings.background_image | image_url: width: 1800 | image_tag: widths: '600, 1200, 1800', sizes: '100vw', loading: 'lazy', alt: '' }}</div>{% endif %}
+  <div class="arcadia-footer__container">
     <div class="arcadia-footer__grid">
-      <div>
-        <p class="arcadia-logo">{{ shop.name | escape }}</p>
-        <div class="arcadia-rte arcadia-muted">{{ section.settings.description }}</div>
-        <div class="arcadia-row">
-          {% if settings.discord_url -%}
-            <a href="{{ settings.discord_url }}">Discord</a>
-          {%- endif -%}
-          {%- if settings.instagram_url -%}
-            <a href="{{ settings.instagram_url }}">Instagram</a>
-          {%- endif -%}
-          {%- if settings.youtube_url -%}
-            <a href="{{ settings.youtube_url }}">YouTube</a>
-          {%- endif %}
-        </div>
+      <div class="arcadia-footer__brand">
+        <a class="arcadia-footer__logo" href="{{ routes.root_url }}">
+          {% if section.settings.logo != blank %}{{ section.settings.logo | image_url: width: 600 | image_tag: widths: '200, 400, 600', sizes: '260px', loading: 'lazy', alt: shop.name }}{% else %}{{ shop.name | escape }}{% endif %}
+        </a>
+        <div class="arcadia-footer__intro">{{ section.settings.description }}</div>
+        {% if section.settings.show_shop_link %}<a class="arcadia-footer__shop" href="{{ routes.all_products_collection_url }}">{{ section.settings.shop_label | escape }} <span aria-hidden="true">↗</span></a>{% endif %}
+        {% if section.settings.show_social %}
+          <div class="arcadia-footer__social">
+            {% if settings.discord_url != blank %}<a href="{{ settings.discord_url }}">Discord <span aria-hidden="true">↗</span></a>{% endif %}
+            {% if settings.instagram_url != blank %}<a href="{{ settings.instagram_url }}">Instagram <span aria-hidden="true">↗</span></a>{% endif %}
+            {% if settings.youtube_url != blank %}<a href="{{ settings.youtube_url }}">YouTube <span aria-hidden="true">↗</span></a>{% endif %}
+          </div>
+        {% endif %}
       </div>
+      <div class="arcadia-footer__navigation">
+      {% if section.settings.show_collections %}
+        <div class="arcadia-footer__column">
+          <h2 id="FooterCollections-{{ section.id }}">{{ section.settings.collections_heading | escape }}</h2>
+          <nav aria-labelledby="FooterCollections-{{ section.id }}"><ul>
+            {% if section.settings.collections != blank %}
+              {% for collection in section.settings.collections %}<li><a href="{{ collection.url }}">{{ collection.title | escape }}</a></li>{% endfor %}
+            {% else %}
+              {% assign collection_handles = 'pokemon-tcg,magic-the-gathering-tcg,one-piece-tcg,warhammer,jellycat,lego' | split: ',' %}
+              {% for handle in collection_handles %}{% assign footer_collection = collections[handle] %}{% if footer_collection != blank %}<li><a href="{{ footer_collection.url }}">{{ footer_collection.title | escape }}</a></li>{% endif %}{% endfor %}
+            {% endif %}
+          </ul></nav>
+        </div>
+      {% endif %}
       {% for block in section.blocks %}
-        <div {{ block.shopify_attributes }}>
-          <h2>{{ block.settings.heading | escape }}</h2>
-          {% render 'arcadia-menu-links', links: block.settings.menu.links %}
-        </div>
-      {% endfor -%}
-      {%- if section.settings.newsletter %}
-        <div>
-          <h2>{{ 'newsletter.title' | t }}</h2>
-          {% render 'arcadia-newsletter-form' %}
-        </div>
+        {% if block.settings.menu != blank or block.type == 'text' or request.design_mode %}
+          <div class="arcadia-footer__column" {{ block.shopify_attributes }}>
+            {% if block.settings.heading != blank %}<h2 id="FooterHeading-{{ block.id }}">{{ block.settings.heading | escape }}</h2>{% endif %}
+            {% if block.type == 'text' %}<div class="arcadia-footer__intro">{{ block.settings.text }}</div>{% else %}
+              <nav {% if block.settings.heading != blank %}aria-labelledby="FooterHeading-{{ block.id }}"{% else %}aria-label="{{ block.settings.menu.title | escape }}"{% endif %}>
+                <ul>{% for link in block.settings.menu.links %}<li><a href="{{ link.url }}"{% if link.current %} aria-current="page"{% endif %}>{{ link.title | escape }}</a></li>{% endfor %}</ul>
+              </nav>
+            {% endif %}
+          </div>
+        {% endif %}
+      {% endfor %}
+      </div>
+      {% if show_newsletter %}
+        <div class="arcadia-footer__signup"><h2>{{ 'newsletter.title' | t }}</h2>{% render 'arcadia-newsletter-form' %}</div>
       {% endif %}
     </div>
     {% render 'arcadia-hook-footer-blocks' %}
-    <div class="arcadia-footer__bottom arcadia-stack">
-      {% render 'arcadia-localization' %}
-      <div class="arcadia-row arcadia-between">
-        <p>
-          © {{ 'now' | date: '%Y' }}
-          {{ shop.name | escape }}. {{ powered_by_link }}
-        </p>
-        <div class="arcadia-payments">
-          {% for type in shop.enabled_payment_types -%}
-            {{- type | payment_type_svg_tag -}}
-          {%- endfor %}
-        </div>
-      </div>
-      <ul class="arcadia-row">
-        {% for policy in shop.policies -%}
-          {%- if policy != blank %}
-            <li>
-              <a href="{{ policy.url }}">{{ policy.title | escape }}</a>
-            </li>
-          {% endif -%}
-        {%- endfor %}
-      </ul>
+    <div class="arcadia-footer__utilities">
+      {% if section.settings.show_localization %}{% render 'arcadia-localization' %}{% endif %}
+      {% if section.settings.show_payments and shop.enabled_payment_types.size > 0 %}<div class="arcadia-payments">{% for type in shop.enabled_payment_types %}{{ type | payment_type_svg_tag }}{% endfor %}</div>{% endif %}
+    </div>
+    <div class="arcadia-footer__bottom">
+      <p>© {{ 'now' | date: '%Y' }} {{ shop.name | escape }}.{% if section.settings.show_powered_by %} {{ powered_by_link }}{% endif %}</p>
+      {% if section.settings.show_policies %}<ul class="arcadia-footer__policies">{% for policy in shop.policies %}{% if policy != blank %}<li><a href="{{ policy.url }}">{{ policy.title | escape }}</a></li>{% endif %}{% endfor %}</ul>{% endif %}
     </div>
   </div>
 </footer>
-{% schema %}{"name":"Footer","settings":[{"type":"richtext","id":"description","label":"Store introduction","default":"<p>A place to collect, play and belong.</p>"},{"type":"checkbox","id":"newsletter","label":"Newsletter","default":true}],"blocks":[{"type":"menu","name":"Menu","limit":3,"settings":[{"type":"text","id":"heading","label":"Heading","default":"Explore"},{"type":"link_list","id":"menu","label":"Menu"}]}]}{% endschema %}
+{% schema %}
+{
+"name":"Footer","max_blocks":4,"settings":[
+{"type":"image_picker","id":"logo","label":"Footer logo"},
+{"type":"checkbox","id":"show_collections","label":"Show collections column","default":true},
+{"type":"text","id":"collections_heading","label":"Collections heading","default":"Shop by collection"},
+{"type":"collection_list","id":"collections","label":"Footer collections","limit":6,"info":"Leave empty to use the six homepage game collections."},
+{"type":"checkbox","id":"show_shop_link","label":"Show shop link","default":true},
+{"type":"text","id":"shop_label","label":"Shop link label","default":"Explore the shop"},
+{"type":"richtext","id":"description","label":"Store introduction","default":"<p>A place to collect, play and belong.</p>"},
+{"type":"checkbox","id":"newsletter","label":"Newsletter","default":true},
+{"type":"checkbox","id":"hide_home_newsletter","label":"Hide footer newsletter on homepage","info":"Avoid repeating the separate homepage newsletter section.","default":true},
+{"type":"checkbox","id":"top_border","label":"Show top border","default":true},
+{"type":"checkbox","id":"uppercase_titles","label":"Uppercase column headings","default":false},
+{"type":"checkbox","id":"show_social","label":"Show configured social links","default":true},
+{"type":"checkbox","id":"show_localization","label":"Show country and language selectors","default":true},
+{"type":"checkbox","id":"show_payments","label":"Show payment icons","default":true},
+{"type":"checkbox","id":"show_policies","label":"Show policy links","default":true},
+{"type":"checkbox","id":"show_powered_by","label":"Show Powered by Shopify","default":true},
+{"type":"image_picker","id":"background_image","label":"Background artwork","info":"Use people-free artwork unless explicitly requested."},
+{"type":"range","id":"image_opacity","label":"Background image opacity","min":0,"max":30,"step":1,"default":5,"unit":"%"},
+{"type":"range","id":"padding","label":"Vertical padding","min":24,"max":96,"step":4,"default":48,"unit":"px"}
+],"blocks":[
+{"type":"menu","name":"Menu","limit":3,"settings":[{"type":"text","id":"heading","label":"Heading","default":"Explore"},{"type":"link_list","id":"menu","label":"Menu"}]},
+{"type":"text","name":"Text","settings":[{"type":"text","id":"heading","label":"Heading","default":"About the store"},{"type":"richtext","id":"text","label":"Text"}]}
+]}
+{% endschema %}

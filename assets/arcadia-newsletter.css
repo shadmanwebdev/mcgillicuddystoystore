@@ -1,0 +1,19 @@
+.arcadia-signup{padding-block:var(--signup-top) var(--signup-bottom);background:var(--arcadia-bg)}
+.arcadia-signup__panel{position:relative;isolation:isolate;overflow:hidden;border:1px solid var(--arcadia-line);border-radius:var(--arcadia-radius);border-top:3px solid var(--arcadia-accent);padding:var(--arcadia-signup-padding);background:var(--arcadia-bg)}
+.arcadia-signup__background{position:absolute;inset:0;z-index:-1;opacity:var(--signup-image-opacity);pointer-events:none}
+.arcadia-signup__background img{width:100%;height:100%;object-fit:cover}
+.arcadia-signup__inner{max-width:var(--arcadia-signup-width);margin-inline:auto;text-align:var(--signup-align)}
+.arcadia-signup__icon{width:56px;height:56px;display:grid;place-items:center;border:1px solid var(--arcadia-line);border-radius:50%;color:var(--arcadia-accent);margin:0 auto var(--arcadia-space-lg);background:var(--arcadia-bg)}
+.arcadia-signup__icon svg{width:36px;height:36px}
+.arcadia-signup .arcadia-eyebrow{margin:0 0 var(--arcadia-space-sm)}
+.arcadia-signup h2{font-size:var(--arcadia-text-section-compact);line-height:1.15;margin:0;text-wrap:balance;overflow-wrap:anywhere}
+.arcadia-signup__description{color:var(--arcadia-muted);font-size:var(--arcadia-pause-body-size);line-height:1.6;margin-block:var(--arcadia-space-md) var(--arcadia-space-lg)}
+.arcadia-signup__form{text-align:start;margin-top:var(--arcadia-space-lg)}
+.arcadia-signup__form form{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:var(--arcadia-space-md);align-items:end}
+.arcadia-signup__form .arcadia-field{grid-column:1;grid-row:1;min-width:0}
+.arcadia-signup__form .arcadia-input{background:var(--arcadia-surface);min-height:52px;font-size:1rem}
+.arcadia-signup__form button{grid-column:2;grid-row:1;min-height:52px;padding-inline:2rem}
+.arcadia-signup__form .arcadia-consent{grid-column:1/-1;grid-row:2;font-size:var(--arcadia-text-small);line-height:1.5;color:var(--arcadia-muted);padding-block:var(--arcadia-space-xs);cursor:pointer}
+.arcadia-signup__form .errors,.arcadia-signup__form [role=status]{grid-column:1/-1;padding:var(--arcadia-space-md);border:1px solid var(--arcadia-accent);border-radius:var(--arcadia-button-radius);margin:0}
+.arcadia-signup__form .errors{grid-row:3}
+@media(max-width:600px){.arcadia-signup__form form{grid-template-columns:minmax(0,1fr)}.arcadia-signup__form button{grid-column:1;grid-row:3;width:100%}.arcadia-signup__form .errors{grid-row:4}.arcadia-signup__icon{margin-bottom:var(--arcadia-space-md)}}

@@ -2,19 +2,24 @@
   "sections": {
     "hero": {
       "type": "arcadia-event-hero",
-      "settings": {}
+      "settings": {
+        "calendar": false
+      }
     },
     "details": {
       "type": "arcadia-event-details",
-      "settings": {}
+      "settings": {},
+      "disabled": true
     },
     "tournament": {
       "type": "arcadia-tournament-details",
-      "settings": {}
+      "settings": {},
+      "disabled": true
     },
     "faq": {
       "type": "arcadia-event-faq",
-      "settings": {}
+      "settings": {},
+      "disabled": true
     },
     "related": {
       "type": "arcadia-upcoming-events",
@@ -25,5 +30,11 @@
       }
     }
   },
-  "order": ["hero", "details", "tournament", "faq", "related"]
+  "order": [
+    "hero",
+    "details",
+    "tournament",
+    "faq",
+    "related"
+  ]
 }

@@ -1,5 +1,14 @@
 [
   {
+    "name": "Content section containers",
+    "settings": [
+      {"type":"paragraph","content":"Centers featured products and featured blog sections. Banners and other sections retain their normal width."},
+      {"type":"range","id":"content_section_width","label":"Maximum content width","min":1000,"max":1800,"step":50,"default":1400,"unit":"px"},
+      {"type":"range","id":"content_section_gutter","label":"Minimum side spacing","min":0,"max":80,"step":2,"default":24,"unit":"px"},
+      {"type":"range","id":"content_section_gutter_mobile","label":"Mobile side spacing","min":0,"max":40,"step":2,"default":20,"unit":"px"}
+    ]
+  },
+  {
     "name": "Appearance",
     "settings": [
       {
