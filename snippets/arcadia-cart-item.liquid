@@ -1,0 +1,49 @@
+<div class="arcadia-cart-item">
+  {% if item.image -%}
+    <a href="{{ item.url }}">{{ item.image | image_url: width: 200 | image_tag: width: 100, loading: 'lazy' }}</a>
+  {%- endif %}
+  <div>
+    <h3 class="arcadia-card__title">
+      <a href="{{ item.url }}">{{ item.product.title | escape }}</a>
+    </h3>
+    {% unless item.product.has_only_default_variant %}
+      <p>{{ item.variant.title | escape }}</p>
+    {% endunless -%}
+    {%- if item.selling_plan_allocation %}
+      <p>{{ item.selling_plan_allocation.selling_plan.name | escape }}</p>
+    {% endif -%}
+    {%- for property in item.properties -%}
+      {%- assign first_character = property.first | slice: 0 -%}
+      {%- if property.last != blank and first_character != '_' %}
+        <p>
+          {{ property.first | escape }}:
+          {% if property.last contains '/uploads/' -%}
+            <a href="{{ property.last }}">{{ property.last | split: '/' | last | escape }}</a>
+          {%- else -%}
+            {{- property.last | escape -}}
+          {%- endif %}
+        </p>
+      {% endif -%}
+    {%- endfor -%}
+    {%- render 'arcadia-price', target: item.variant %}
+    <p>{{ item.final_line_price | money_with_currency }}</p>
+    {% for discount in item.line_level_discount_allocations -%}
+      <small>{{ discount.discount_application.title | escape }} (−{{ discount.amount | money }})</small>
+    {%- endfor %}
+    <div class="arcadia-row">
+      <label class="arcadia-visually-hidden" for="CartQty-{{ section.id }}-{{ index }}">
+        {{- 'cart.quantity' | t: title: item.product.title -}}</label
+      ><input
+        class="arcadia-input arcadia-cart-item__quantity"
+        type="number"
+        name="updates[]"
+        id="CartQty-{{ section.id }}-{{ index }}"
+        value="{{ item.quantity }}"
+        min="0"
+        step="{{ item.variant.quantity_rule.increment | default: 1 }}"
+        data-arcadia-cart-key="{{ item.key | escape }}"
+
+      ><a href="{{ item.url_to_remove }}" data-arcadia-remove="{{ item.key | escape }}">{{ 'cart.remove' | t }}</a>
+    </div>
+  </div>
+</div>

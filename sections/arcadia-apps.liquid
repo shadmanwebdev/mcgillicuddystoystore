@@ -1,0 +1,6 @@
+<section class="arcadia-container arcadia-section">
+  {% for block in section.blocks -%}
+    {%- render block -%}
+  {%- endfor %}
+</section>
+{% schema %}{"name":"App section","settings":[],"blocks":[{"type":"@app"}],"presets":[{"name":"App section"}]}{% endschema %}

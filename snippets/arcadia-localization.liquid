@@ -1,0 +1,39 @@
+{% form 'localization', class: 'arcadia-localization' %}
+  {% if localization.available_countries.size > 1 %}
+    <div class="arcadia-field">
+      <label for="Country-{{ section.id }}">{{ 'general.country' | t }}</label
+      ><select id="Country-{{ section.id }}" name="country_code">
+        {% for country in localization.available_countries %}
+          <option
+            value="{{ country.iso_code }}"
+            {% if country.iso_code == localization.country.iso_code %}
+              selected
+            {% endif %}
+          >
+            {{ country.name }} ({{ country.currency.iso_code }})
+          </option>
+        {% endfor %}
+      </select>
+    </div>
+  {% endif -%}
+  {%- if localization.available_languages.size > 1 %}
+    <div class="arcadia-field">
+      <label for="Language-{{ section.id }}">{{ 'general.language' | t }}</label
+      ><select id="Language-{{ section.id }}" name="locale_code">
+        {% for language in localization.available_languages %}
+          <option
+            value="{{ language.iso_code }}"
+            {% if language.iso_code == localization.language.iso_code %}
+              selected
+            {% endif %}
+          >
+            {{ language.endonym_name | capitalize }}
+          </option>
+        {% endfor %}
+      </select>
+    </div>
+  {% endif -%}
+  {%- if localization.available_countries.size > 1 or localization.available_languages.size > 1 -%}
+    <button class="arcadia-button arcadia-button--secondary" type="submit">{{ 'general.confirm' | t }}</button>
+  {%- endif %}
+{% endform %}

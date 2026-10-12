@@ -1,0 +1,62 @@
+{{ 'arcadia-merchandising.css' | asset_url | stylesheet_tag }}
+<section class="arcadia-section arcadia-newsletter">
+  <div class="arcadia-container arcadia-split">
+    <div>
+      {% render 'arcadia-section-header',
+        heading: section.settings.heading,
+        eyebrow: section.settings.eyebrow,
+        description: section.settings.description
+      %}
+    </div>
+    <div>{% render 'arcadia-newsletter-form' %}</div>
+  </div>
+</section>
+{% schema %}
+{
+  "name": "Newsletter",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "The next chapter starts here."
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "Collect. Play. Belong."
+    },
+    {
+      "type": "richtext",
+      "id": "description",
+      "label": "Description"
+    },
+    {
+      "type": "select",
+      "id": "heading_alignment",
+      "label": "Heading alignment",
+      "default": "start",
+      "options": [
+        {
+          "value": "start",
+          "label": "Start"
+        },
+        {
+          "value": "center",
+          "label": "Center"
+        },
+        {
+          "value": "end",
+          "label": "End"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Newsletter"
+    }
+  ]
+}
+{% endschema %}

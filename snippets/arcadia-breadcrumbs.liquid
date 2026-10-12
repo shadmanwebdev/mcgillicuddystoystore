@@ -1,0 +1,13 @@
+<nav class="arcadia-container arcadia-breadcrumbs" aria-label="{{ 'general.breadcrumbs' | t }}">
+  <ol>
+    <li>
+      <a href="{{ routes.root_url }}">{{ 'general.home' | t }}</a>
+    </li>
+    {% if collection %}
+      <li>
+        <a href="{{ collection.url }}">{{ collection.title | escape }}</a>
+      </li>
+    {% endif %}
+    <li aria-current="page">{{ page_title | escape }}</li>
+  </ol>
+</nav>

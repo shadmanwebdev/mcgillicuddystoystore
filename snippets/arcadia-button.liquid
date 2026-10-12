@@ -1,0 +1,6 @@
+{% if label != blank and url != blank -%}
+  <a class="arcadia-button{% if secondary %} arcadia-button--secondary{% endif %}" href="{{ url }}">
+    {{- label | escape -}}
+    {%- if icon %}{% render 'arcadia-icon', name: icon %}{% endif -%}
+  </a>
+{%- endif %}

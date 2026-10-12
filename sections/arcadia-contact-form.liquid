@@ -1,0 +1,82 @@
+<section class="arcadia-container arcadia-section arcadia-narrow">
+  {% render 'arcadia-section-header', heading: section.settings.heading, description: section.settings.description %}
+  {% form 'contact', class: 'arcadia-stack' %}
+    {{ form.errors | default_errors -}}
+    {%- if form.posted_successfully? %}
+      <p role="status">{{ 'contact.success' | t }}</p>
+    {% endif -%}
+    <label class="arcadia-field">
+      {{- 'general.name' | t -}}
+      <input
+        class="arcadia-input"
+        type="text"
+        name="contact[name]"
+        value="{{ form.name | default: customer.name | escape }}"
+        autocomplete="name"
+        required></label
+    ><label class="arcadia-field">
+      {{- 'general.email' | t -}}
+      <input
+        class="arcadia-input"
+        type="email"
+        name="contact[email]"
+        value="{{ form.email | default: customer.email | escape }}"
+        autocomplete="email"
+        required></label
+    ><label class="arcadia-field">
+      {{- 'contact.phone' | t -}}
+      <input
+        class="arcadia-input"
+        type="tel"
+        name="contact[phone]"
+        value="{{ form.phone | escape }}"
+        autocomplete="tel"></label
+    ><label class="arcadia-field">
+      {{- 'general.message' | t -}}
+      <textarea name="contact[body]" rows="7" required>{{ form.body | escape }}</textarea></label
+    ><button type="submit" class="arcadia-button">{{ 'general.submit' | t }}</button>
+  {% endform %}
+</section>
+{% schema %}
+{
+  "name": "Contact form",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Let's talk."
+    },
+    {
+      "type": "richtext",
+      "id": "description",
+      "label": "Description"
+    },
+    {
+      "type": "select",
+      "id": "heading_alignment",
+      "label": "Heading alignment",
+      "default": "start",
+      "options": [
+        {
+          "value": "start",
+          "label": "Start"
+        },
+        {
+          "value": "center",
+          "label": "Center"
+        },
+        {
+          "value": "end",
+          "label": "End"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Contact form"
+    }
+  ]
+}
+{% endschema %}

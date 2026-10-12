@@ -1,0 +1,49 @@
+{{ 'arcadia-slideshow.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'arcadia-slider.js' | asset_url }}" defer></script>
+<section class="arcadia-section" data-arcadia-module="slider">
+  <div class="arcadia-container">{% render 'arcadia-slider-controls' %}</div>
+  <div class="arcadia-slideshow arcadia-scroll" data-arcadia-slider-track>
+    {% for block in section.blocks %}
+      <article class="arcadia-slide" {{ block.shopify_attributes }}>
+        <div class="arcadia-slide__media">
+          {% render 'arcadia-media',
+            image: block.settings.image,
+            video: block.settings.video,
+            external_video: block.settings.external_video,
+            title: block.settings.heading,
+            loading: 'lazy',
+            sizes: '100vw'
+          %}
+        </div>
+        <div class="arcadia-slide__copy arcadia-container arcadia-stack">
+          <h2>{{ block.settings.heading | escape }}</h2>
+          <div class="arcadia-rte">{{ block.settings.description }}</div>
+          {% render 'arcadia-button', label: block.settings.label, url: block.settings.url %}
+        </div>
+      </article>
+    {% endfor %}
+  </div>
+</section>
+{% schema %}
+{
+  "name": "Media slideshow",
+  "settings": [],
+  "blocks": [
+    {
+      "type": "slide",
+      "name": "Slide",
+      "settings": [
+        { "type": "image_picker", "id": "image", "label": "Artwork" },
+        { "type": "video", "id": "video", "label": "Hosted video" },
+        { "type": "video_url", "id": "external_video", "label": "External video", "accept": ["youtube", "vimeo"] },
+        { "type": "text", "id": "heading", "label": "Heading", "default": "Your next game starts here" },
+        { "type": "richtext", "id": "description", "label": "Description" },
+        { "type": "text", "id": "label", "label": "Button label", "default": "Explore" },
+        { "type": "url", "id": "url", "label": "Button URL" }
+      ]
+    }
+  ],
+  "max_blocks": 8,
+  "presets": [{ "name": "Media slideshow", "blocks": [{ "type": "slide" }] }]
+}
+{% endschema %}

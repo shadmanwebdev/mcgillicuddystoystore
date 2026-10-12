@@ -1,0 +1,61 @@
+<section class="arcadia-container arcadia-section">
+  {% render 'arcadia-section-header',
+    heading: section.settings.heading,
+    label: section.settings.link_label,
+    url: section.settings.blog.url
+  %}
+  <div class="arcadia-grid arcadia-grid--content" style="--arcadia-columns:3">
+    {% for article in section.settings.blog.articles limit: 3 -%}
+      {%- render 'arcadia-article-card', article: article -%}
+    {%- endfor %}
+  </div>
+</section>
+{% schema %}
+{
+  "name": "Featured blog",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "From the community"
+    },
+    {
+      "type": "blog",
+      "id": "blog",
+      "label": "Blog"
+    },
+    {
+      "type": "text",
+      "id": "link_label",
+      "label": "Link label",
+      "default": "Read all stories"
+    },
+    {
+      "type": "select",
+      "id": "heading_alignment",
+      "label": "Heading alignment",
+      "default": "start",
+      "options": [
+        {
+          "value": "start",
+          "label": "Start"
+        },
+        {
+          "value": "center",
+          "label": "Center"
+        },
+        {
+          "value": "end",
+          "label": "End"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Featured blog"
+    }
+  ]
+}
+{% endschema %}

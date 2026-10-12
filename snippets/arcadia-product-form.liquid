@@ -1,0 +1,97 @@
+{% assign form_id = 'ArcadiaProductForm-' | append: section.id | append: '-' | append: product.id %}
+<div
+  data-arcadia-module="product-form"
+  data-arcadia-retry-label="{{ 'general.retry' | t | escape }}"
+  data-arcadia-requires-plan="{{ product.requires_selling_plan }}"
+  data-arcadia-product-id="{{ product.id }}"
+  data-arcadia-product-url="{{ product.url }}"
+  data-arcadia-update-url="{{ update_url }}"
+  data-arcadia-add-label="{% if product.metafields.arcadia.preorder.value %}{{ 'products.preorder' | t }}{% else %}{{ 'products.add' | t }}{% endif %}"
+  data-arcadia-sold-label="{{ 'products.sold_out' | t }}"
+  data-arcadia-in-stock="{{ 'products.in_stock' | t }}"
+>
+  {% assign initial_price = product.selected_selling_plan_allocation
+    | default: product.selected_or_first_available_variant
+  %}
+  <div data-arcadia-price>
+    {% render 'arcadia-price',
+      target: initial_price,
+      measurement: product.selected_or_first_available_variant.unit_price_measurement
+    %}
+  </div>
+  {% render 'arcadia-stock-status', product: product %}
+  {% render 'arcadia-hook-before-product-form', product: product %}
+  {% form 'product', product, id: form_id, class: 'arcadia-stack' %}
+    {{ form.errors | default_errors }}
+    {% render 'arcadia-variant-picker', product: product, form_id: form_id %}
+    {% if product.selling_plan_groups.size > 0 %}
+      <div class="arcadia-field">
+        <label for="Plan-{{ form_id }}">{{ 'products.selling_plan' | t }}</label
+        ><select name="selling_plan" id="Plan-{{ form_id }}" data-arcadia-selling-plan>
+          {% unless product.requires_selling_plan %}
+            <option value="">{{ 'products.one_time' | t }}</option>
+          {% endunless -%}
+          {%- for group in product.selling_plan_groups %}
+            <optgroup label="{{ group.name | escape }}">
+              {% for plan in group.selling_plans %}
+                <option
+                  value="{{ plan.id }}"
+                  {% if product.selected_selling_plan.id == plan.id %}
+                    selected
+                  {% endif %}
+                >
+                  {{ plan.name | escape }}
+                </option>
+              {% endfor %}
+            </optgroup>
+          {% endfor %}
+        </select>
+      </div>
+    {% endif %}
+    <div class="arcadia-field">
+      <label for="Quantity-{{ form_id }}">{{ 'products.quantity' | t }}</label
+      ><input
+        class="arcadia-input"
+        id="Quantity-{{ form_id }}"
+        type="number"
+        name="quantity"
+        value="{{ product.selected_or_first_available_variant.quantity_rule.min | default: 1 }}"
+        min="{{ product.selected_or_first_available_variant.quantity_rule.min | default: 1 }}"
+        step="{{ product.selected_or_first_available_variant.quantity_rule.increment | default: 1 }}"
+        {% if product.selected_or_first_available_variant.quantity_rule.max %}
+          max="{{ product.selected_or_first_available_variant.quantity_rule.max }}"
+        {% endif %}
+        data-arcadia-quantity
+      >
+    </div>
+    {% if product.metafields.arcadia.preorder.value -%}
+      {%- if product.metafields.arcadia.preorder_message != blank %}
+        <div class="arcadia-rte">{{ product.metafields.arcadia.preorder_message | metafield_tag }}</div>
+      {% endif -%}
+    {%- endif %}
+    <button
+      class="arcadia-button"
+      type="submit"
+      data-arcadia-add
+      {% unless product.selected_or_first_available_variant.available %}
+        disabled
+      {% endunless %}
+    >
+      {% if product.selected_or_first_available_variant.available -%}
+        {%- if product.metafields.arcadia.preorder.value -%}
+          {{- 'products.preorder' | t -}}
+        {%- else -%}
+          {{- 'products.add' | t -}}
+        {%- endif -%}
+      {%- else -%}
+        {{- 'products.sold_out' | t -}}
+      {%- endif %}
+    </button>
+    {% if dynamic_checkout %}{{ form | payment_button }}{% endif %}
+    <p role="status" aria-live="polite" data-arcadia-form-status></p>
+  {% endform %}
+  {% render 'arcadia-hook-after-product-form', product: product %}
+  <script type="application/json" data-arcadia-variants>
+    {{ product.variants | json }}
+  </script>
+</div>

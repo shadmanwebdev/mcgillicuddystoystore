@@ -1,0 +1,56 @@
+.arcadia-footer {
+  border-top: 1px solid var(--arcadia-line);
+  background: var(--arcadia-surface);
+}
+.arcadia-footer__grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1.5fr;
+  gap: 2rem;
+}
+.arcadia-footer ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.arcadia-footer li {
+  margin: 0.6rem 0;
+}
+.arcadia-footer a {
+  text-decoration: none;
+}
+.arcadia-footer h2 {
+  font-size: 1.1rem;
+}
+.arcadia-footer__bottom {
+  margin-top: 3rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--arcadia-line);
+  font-size: 0.8rem;
+}
+.arcadia-localization {
+  display: flex;
+  gap: 0.6rem;
+  align-items: end;
+  flex-wrap: wrap;
+}
+.arcadia-localization label {
+  font-size: 0.75rem;
+}
+.arcadia-payments {
+  display: flex;
+  gap: 0.4rem;
+  flex-wrap: wrap;
+}
+.arcadia-payments svg {
+  width: 38px;
+}
+@media (max-width: 850px) {
+  .arcadia-footer__grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+@media (max-width: 500px) {
+  .arcadia-footer__grid {
+    grid-template-columns: 1fr;
+  }
+}

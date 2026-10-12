@@ -1,0 +1,17 @@
+<div
+  class="arcadia-heading"
+  data-align="{{ alignment | default: section.settings.heading_alignment | default: 'start' }}"
+>
+  <div>
+    {% if eyebrow != blank %}
+      <p class="arcadia-eyebrow">{{ eyebrow | escape }}</p>
+    {% endif -%}
+    {%- if heading != blank %}
+      <h2>{{ heading }}</h2>
+    {% endif -%}
+    {%- if description != blank %}
+      <div class="arcadia-rte arcadia-muted">{{ description }}</div>
+    {% endif %}
+  </div>
+  {% render 'arcadia-button', label: label, url: url, secondary: true, icon: 'arrow' %}
+</div>

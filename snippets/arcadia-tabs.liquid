@@ -1,0 +1,13 @@
+<div data-arcadia-module="tabs">
+  <nav class="arcadia-tabs__nav" data-arcadia-tab-list>
+    {% for block in blocks -%}
+      <a href="#Tab-{{ section.id }}-{{ block.id }}" data-arcadia-tab>{{ block.settings.heading | escape }}</a>
+    {%- endfor %}
+  </nav>
+  {% for block in blocks %}
+    <div id="Tab-{{ section.id }}-{{ block.id }}" data-arcadia-panel {{ block.shopify_attributes }}>
+      <h3>{{ block.settings.heading | escape }}</h3>
+      <div class="arcadia-rte">{{ block.settings.content }}</div>
+    </div>
+  {% endfor %}
+</div>

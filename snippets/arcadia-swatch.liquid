@@ -1,0 +1,7 @@
+{% if swatch.image != blank -%}
+  <span class="arcadia-swatch" aria-hidden="true">
+    {{- swatch.image | image_url: width: 64 | image_tag: loading: 'lazy', alt: '' -}}
+  </span>
+{%- elsif swatch.color != blank -%}
+  <span class="arcadia-swatch" aria-hidden="true" style="background:{{ swatch.color }}"></span>
+{%- endif %}

@@ -1,0 +1,7 @@
+{% if start_at != blank %}
+  <p>
+    <time datetime="{{ start_at | escape }}">
+      {{- start_at | date: format: 'abbreviated_date' }} · {{ start_at | date: '%H:%M %z' -}}
+    </time>
+  </p>
+{% endif %}

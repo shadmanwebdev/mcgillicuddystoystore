@@ -1,0 +1,29 @@
+{
+  "sections": {
+    "hero": {
+      "type": "arcadia-event-hero",
+      "settings": {}
+    },
+    "details": {
+      "type": "arcadia-event-details",
+      "settings": {}
+    },
+    "tournament": {
+      "type": "arcadia-tournament-details",
+      "settings": {}
+    },
+    "faq": {
+      "type": "arcadia-event-faq",
+      "settings": {}
+    },
+    "related": {
+      "type": "arcadia-upcoming-events",
+      "settings": {
+        "heading": "Keep playing.",
+        "source": "metaobjects",
+        "limit": 6
+      }
+    }
+  },
+  "order": ["hero", "details", "tournament", "faq", "related"]
+}

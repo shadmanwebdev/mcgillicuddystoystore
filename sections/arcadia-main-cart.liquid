@@ -1,0 +1,10 @@
+{{ 'arcadia-cart.css' | asset_url | stylesheet_tag }}
+<section class="arcadia-section arcadia-container arcadia-stack">
+  <h1>{{ 'cart.title' | t }}</h1>
+  {% render 'arcadia-cart-content' -%}
+  {%- render 'arcadia-cart-upsells' -%}
+  {%- for block in section.blocks -%}
+    {%- render block -%}
+  {%- endfor %}
+</section>
+{% schema %}{"name":"Cart","settings":[],"blocks":[{"type":"@app"}]}{% endschema %}

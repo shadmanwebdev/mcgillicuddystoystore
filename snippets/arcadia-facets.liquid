@@ -1,0 +1,73 @@
+<form method="get" action="{{ filter_url }}" class="arcadia-facets arcadia-stack" data-arcadia-module="facets">
+  {% if search.performed -%}
+    <input type="hidden" name="q" value="{{ search.terms | escape }}"
+    ><input type="hidden" name="options[prefix]" value="last">
+  {%- endif %}
+  <h2>{{ 'collections.filter' | t }}</h2>
+  {% for filter in filters %}
+    <details
+      class="arcadia-accordion"
+      {% if filter.active_values.size > 0 %}
+        open
+      {% endif %}
+    >
+      <summary>{{ filter.label | escape }}</summary>
+      {% case filter.type -%}
+        {%- when 'boolean', 'list' %}
+          <ul class="arcadia-facets__values">
+            {% for value in filter.values %}
+              <li>
+                <label class="arcadia-row"
+                  ><input
+                    type="checkbox"
+                    name="{{ value.param_name }}"
+                    value="{{ value.value | escape }}"
+                    {% if value.active %}
+                      checked
+                    {% endif -%}
+                    {% if value.count == 0 and value.active == false %}
+                      disabled
+                    {% endif %}
+                  >
+                  {%- if settings.swatches and value.swatch != blank -%}
+                    {%- render 'arcadia-swatch', swatch: value.swatch -%}
+                  {%- endif -%}
+                  {{- value.label | escape }} ({{ value.count }})</label
+                >
+              </li>
+            {% endfor %}
+          </ul>
+        {% when 'price_range' %}
+          <div class="arcadia-row">
+            <label class="arcadia-field">
+              {{- 'collections.from' | t -}}
+              <input
+                class="arcadia-input"
+                name="{{ filter.min_value.param_name }}"
+                type="number"
+                min="0"
+                max="{{ filter.range_max | divided_by: 100.0 }}"
+                step="0.01"
+                {% if filter.min_value.value %}
+                  value="{{ filter.min_value.value | divided_by: 100.0 }}"
+                {% endif %}></label
+            ><label class="arcadia-field">
+              {{- 'collections.to' | t -}}
+              <input
+                class="arcadia-input"
+                name="{{ filter.max_value.param_name }}"
+                type="number"
+                min="0"
+                max="{{ filter.range_max | divided_by: 100.0 }}"
+                step="0.01"
+                {% if filter.max_value.value %}
+                  value="{{ filter.max_value.value | divided_by: 100.0 }}"
+                {% endif %}
+            ></label>
+          </div>
+      {% endcase %}
+    </details>
+  {% endfor -%}
+  {%- render 'arcadia-sort', sort_options: sort_options, sort_by: sort_by -%}
+  <button type="submit" class="arcadia-button">{{ 'collections.apply' | t }}</button>
+</form>

@@ -1,0 +1,10 @@
+{% if settings.cart_upsell_collection != blank %}
+  <div>
+    <h2>{{ 'cart.upsells' | t }}</h2>
+    <div class="arcadia-grid" style="--arcadia-columns: 3">
+      {% for product in settings.cart_upsell_collection.products limit: 3 -%}
+        {%- render 'arcadia-product-card', product: product -%}
+      {%- endfor %}
+    </div>
+  </div>
+{% endif %}

@@ -1,0 +1,8 @@
+<section class="arcadia-container arcadia-section arcadia-narrow arcadia-stack">
+  <p class="arcadia-eyebrow">404</p>
+  <h1>{{ section.settings.heading | escape }}</h1>
+  <div class="arcadia-rte">{{ section.settings.description }}</div>
+  <a class="arcadia-button" href="{{ routes.all_products_collection_url }}">{{ 'general.continue' | t }}</a>
+  {%- render 'arcadia-search-form', id: section.id %}
+</section>
+{% schema %}{"name":"Not found","settings":[{"type":"text","id":"heading","label":"Heading","default":"This card isn't in the deck."},{"type":"richtext","id":"description","label":"Description","default":"<p>The page may have moved. Find your next favourite below.</p>"}]} {% endschema %}

@@ -1,0 +1,59 @@
+{{ 'arcadia-footer.css' | asset_url | stylesheet_tag }}
+<footer class="arcadia-footer arcadia-section">
+  <div class="arcadia-container">
+    <div class="arcadia-footer__grid">
+      <div>
+        <p class="arcadia-logo">{{ shop.name | escape }}</p>
+        <div class="arcadia-rte arcadia-muted">{{ section.settings.description }}</div>
+        <div class="arcadia-row">
+          {% if settings.discord_url -%}
+            <a href="{{ settings.discord_url }}">Discord</a>
+          {%- endif -%}
+          {%- if settings.instagram_url -%}
+            <a href="{{ settings.instagram_url }}">Instagram</a>
+          {%- endif -%}
+          {%- if settings.youtube_url -%}
+            <a href="{{ settings.youtube_url }}">YouTube</a>
+          {%- endif %}
+        </div>
+      </div>
+      {% for block in section.blocks %}
+        <div {{ block.shopify_attributes }}>
+          <h2>{{ block.settings.heading | escape }}</h2>
+          {% render 'arcadia-menu-links', links: block.settings.menu.links %}
+        </div>
+      {% endfor -%}
+      {%- if section.settings.newsletter %}
+        <div>
+          <h2>{{ 'newsletter.title' | t }}</h2>
+          {% render 'arcadia-newsletter-form' %}
+        </div>
+      {% endif %}
+    </div>
+    {% render 'arcadia-hook-footer-blocks' %}
+    <div class="arcadia-footer__bottom arcadia-stack">
+      {% render 'arcadia-localization' %}
+      <div class="arcadia-row arcadia-between">
+        <p>
+          © {{ 'now' | date: '%Y' }}
+          {{ shop.name | escape }}. {{ powered_by_link }}
+        </p>
+        <div class="arcadia-payments">
+          {% for type in shop.enabled_payment_types -%}
+            {{- type | payment_type_svg_tag -}}
+          {%- endfor %}
+        </div>
+      </div>
+      <ul class="arcadia-row">
+        {% for policy in shop.policies -%}
+          {%- if policy != blank %}
+            <li>
+              <a href="{{ policy.url }}">{{ policy.title | escape }}</a>
+            </li>
+          {% endif -%}
+        {%- endfor %}
+      </ul>
+    </div>
+  </div>
+</footer>
+{% schema %}{"name":"Footer","settings":[{"type":"richtext","id":"description","label":"Store introduction","default":"<p>A place to collect, play and belong.</p>"},{"type":"checkbox","id":"newsletter","label":"Newsletter","default":true}],"blocks":[{"type":"menu","name":"Menu","limit":3,"settings":[{"type":"text","id":"heading","label":"Heading","default":"Explore"},{"type":"link_list","id":"menu","label":"Menu"}]}]}{% endschema %}

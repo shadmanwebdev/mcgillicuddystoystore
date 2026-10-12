@@ -1,0 +1,31 @@
+<div data-arcadia-module="cart" data-arcadia-cart-section="{{ section.id }}">
+  <p role="status" data-arcadia-cart-status></p>
+  {% if cart.item_count > 0 %}
+    <form action="{{ routes.cart_url }}" method="post" class="arcadia-stack" data-arcadia-cart-form>
+      <div class="arcadia-stack">
+        {% for item in cart.items -%}
+          {%- render 'arcadia-cart-item', item: item, index: forloop.index -%}
+        {%- endfor %}
+      </div>
+      {% render 'arcadia-cart-note' %}
+      <div>
+        {% for discount in cart.cart_level_discount_applications %}
+          <p>{{ discount.title | escape }}: −{{ discount.total_allocated_amount | money }}</p>
+        {% endfor %}
+        <p class="arcadia-row arcadia-between">
+          <strong>{{ 'cart.subtotal' | t }}</strong><strong>{{ cart.total_price | money_with_currency }}</strong>
+        </p>
+        <p class="arcadia-muted">{{ 'cart.shipping' | t }}</p>
+        <div class="arcadia-row">
+          <button class="arcadia-button arcadia-button--secondary" type="submit" name="update" data-arcadia-cart-update>
+            {{ 'cart.update' | t }}</button
+          ><button class="arcadia-button" type="submit" name="checkout">{{ 'cart.checkout' | t }}</button>
+        </div>
+      </div>
+      {% render 'arcadia-hook-cart', cart: cart %}
+    </form>
+  {% else %}
+    <p>{{ 'cart.empty' | t }}</p>
+    <a class="arcadia-button" href="{{ routes.all_products_collection_url }}">{{ 'general.continue' | t }}</a>
+  {%- endif %}
+</div>

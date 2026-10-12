@@ -1,0 +1,43 @@
+.arcadia-lookbook {
+  position: relative;
+}
+.arcadia-lookbook > img,
+.arcadia-lookbook > svg {
+  width: 100%;
+  height: auto;
+}
+.arcadia-lookbook__point {
+  position: absolute;
+  left: var(--x);
+  top: var(--y);
+  transform: translate(-50%, -50%);
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: var(--arcadia-accent);
+  color: var(--arcadia-bg);
+  border: 2px solid var(--arcadia-bg);
+  z-index: 2;
+}
+.arcadia-lookbook__label {
+  position: absolute;
+  bottom: 100%;
+  width: 180px;
+  max-width: 50vw;
+  background: var(--arcadia-surface);
+  color: var(--arcadia-text);
+  padding: 1rem;
+  border-radius: var(--arcadia-radius);
+  opacity: 0;
+  pointer-events: none;
+}
+.arcadia-lookbook__point:hover,
+.arcadia-lookbook__point:focus {
+  z-index: 3;
+}
+.arcadia-lookbook__point:hover .arcadia-lookbook__label,
+.arcadia-lookbook__point:focus .arcadia-lookbook__label {
+  opacity: 1;
+}

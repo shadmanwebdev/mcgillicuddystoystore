@@ -1,0 +1,9 @@
+{
+  "sections": {
+    "main": {
+      "type": "arcadia-main-page",
+      "settings": {}
+    }
+  },
+  "order": ["main"]
+}

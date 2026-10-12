@@ -1,0 +1,20 @@
+<dialog
+  id="ArcadiaCartDrawer"
+  class="arcadia-cart-drawer"
+  data-arcadia-module="dialog cart-drawer"
+  aria-label="{{ 'cart.title' | t }}"
+>
+  <div>
+    <div class="arcadia-dialog__header">
+      <h2>{{ 'cart.title' | t }}</h2>
+      <button class="arcadia-icon-button" type="button" data-arcadia-close aria-label="{{ 'general.close' | t }}">
+        {% render 'arcadia-icon', name: 'close' %}
+      </button>
+    </div>
+    <div data-arcadia-drawer-content></div>
+    {% render 'arcadia-hook-cart-drawer-footer', cart: cart %}
+    <p>
+      <a href="{{ routes.cart_url }}">{{ 'cart.title' | t }}</a>
+    </p>
+  </div>
+</dialog>

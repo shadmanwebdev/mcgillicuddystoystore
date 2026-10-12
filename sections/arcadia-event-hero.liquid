@@ -1,0 +1,254 @@
+{{ 'arcadia-events.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'arcadia-countdown.js' | asset_url }}" defer></script>
+<script src="{{ 'arcadia-calendar.js' | asset_url }}" defer></script>
+{% liquid
+  assign event = section.settings.event | default: metaobject
+  assign title = event.title.value | default: section.settings.title
+  assign description = event.short_description.value | default: section.settings.short_description
+  assign image = event.banner.value | default: event.image.value | default: section.settings.image
+  assign mobile_image = event.mobile_image.value | default: section.settings.mobile_image
+  assign start_at = section.settings.start_at
+  assign end_at = section.settings.end_at
+  if event.start_at.value != blank
+    assign start_at = event.start_at.value | date: '%Y-%m-%dT%H:%M:%S%z'
+  endif
+  if event.end_at.value != blank
+    assign end_at = event.end_at.value | date: '%Y-%m-%dT%H:%M:%S%z'
+  endif
+  assign venue = event.venue.value | default: section.settings.venue
+  assign address = event.address.value | default: section.settings.address
+  assign registration = event.registration_link.value | default: section.settings.registration_link
+  assign ticket = event.ticket_link.value | default: section.settings.ticket_link
+  assign entry_product = event.product.value | default: section.settings.product
+  assign status = event.status.value | default: section.settings.status
+%}
+<section class="arcadia-container arcadia-section">
+  <div class="arcadia-split">
+    <div class="arcadia-stack">
+      {% render 'arcadia-event-status', status: status -%}
+      {%- assign event_badge = event.badge.value | default: section.settings.badge -%}
+      {%- render 'arcadia-badge', label: event_badge, variant: 'premium' %}
+      <h1>{{ title | escape }}</h1>
+      <p>{{ description | escape }}</p>
+      {% render 'arcadia-event-date', start_at: start_at %}
+      <p>{{ venue | escape }}</p>
+      {% if section.settings.countdown -%}
+        {%- render 'arcadia-countdown',
+          target: start_at,
+          completion_message: section.settings.completion_message,
+          completion_action: section.settings.completion_action
+        -%}
+      {%- endif %}
+      <div class="arcadia-row">
+        {% assign register_label = 'events.register' | t -%}
+        {%- render 'arcadia-button', label: register_label, url: registration -%}
+        {%- assign ticket_label = 'events.tickets' | t -%}
+        {%- assign ticket_url = entry_product.url | default: ticket -%}
+        {%- render 'arcadia-button', label: ticket_label, url: ticket_url, secondary: true %}
+      </div>
+      {% if section.settings.calendar -%}
+        {%- render 'arcadia-calendar-links',
+          title: title,
+          start_at: start_at,
+          end_at: end_at,
+          location: address,
+          description: description
+        -%}
+      {%- endif %}
+    </div>
+    <div
+      class="arcadia-event-hero__media{% if settings.holo_enabled and settings.holo_heroes %} arcadia-holo{% endif %}"
+      data-holo-static="{{ settings.holo_static }}"
+      data-holo-hover="{{ settings.holo_hover }}"
+      style="position:relative;isolation:isolate"
+    >
+      {% if section.settings.video != blank -%}
+        {%- render 'arcadia-media', video: section.settings.video -%}
+      {%- elsif image != blank -%}
+        <picture>
+          {%- if mobile_image != blank %}
+            <source media="(max-width: 749px)" srcset="{{ mobile_image | image_url: width: 900 }}">
+          {% endif -%}
+          {{-
+            image
+            | image_url: width: 1500
+            | image_tag: widths: '500, 900, 1500', sizes: '(min-width: 750px) 50vw, 100vw', loading: 'eager'
+          -}}
+        </picture>
+      {%- endif -%}
+      <span
+        aria-hidden="true"
+        style="position:absolute;inset:0;pointer-events:none;background:#000;opacity:{{ section.settings.overlay | divided_by: 100.0 }}"
+      ></span>
+    </div>
+  </div>
+</section>
+{% schema %}
+{
+  "name": "Event hero",
+  "settings": [
+    {
+      "default": "Community event",
+      "id": "title",
+      "label": "Title",
+      "type": "text"
+    },
+    {
+      "id": "short_description",
+      "label": "Short description",
+      "type": "textarea"
+    },
+    {
+      "id": "image",
+      "label": "Artwork",
+      "type": "image_picker"
+    },
+    {
+      "id": "start_at",
+      "info": "Example: 2027-04-10T19:00:00+01:00",
+      "label": "Start (ISO 8601 with offset)",
+      "type": "text"
+    },
+    {
+      "id": "end_at",
+      "label": "End (ISO 8601 with offset)",
+      "type": "text"
+    },
+    {
+      "id": "venue",
+      "label": "Venue",
+      "type": "text"
+    },
+    {
+      "id": "address",
+      "label": "Address",
+      "type": "textarea"
+    },
+    {
+      "default": "upcoming",
+      "id": "status",
+      "label": "Status (merchant supplied)",
+      "options": [
+        {
+          "label": "upcoming",
+          "value": "upcoming"
+        },
+        {
+          "label": "registration open",
+          "value": "registration-open"
+        },
+        {
+          "label": "filling fast",
+          "value": "filling-fast"
+        },
+        {
+          "label": "sold out",
+          "value": "sold-out"
+        },
+        {
+          "label": "today",
+          "value": "today"
+        },
+        {
+          "label": "live",
+          "value": "live"
+        },
+        {
+          "label": "completed",
+          "value": "completed"
+        },
+        {
+          "label": "cancelled",
+          "value": "cancelled"
+        }
+      ],
+      "type": "select"
+    },
+    {
+      "id": "registration_link",
+      "label": "Registration URL",
+      "type": "url"
+    },
+    {
+      "id": "ticket_link",
+      "label": "Ticket URL",
+      "type": "url"
+    },
+    {
+      "id": "product",
+      "label": "Entry product",
+      "type": "product"
+    },
+    {
+      "type": "image_picker",
+      "id": "mobile_image",
+      "label": "Mobile artwork"
+    },
+    {
+      "type": "video",
+      "id": "video",
+      "label": "Hosted event video"
+    },
+    {
+      "type": "checkbox",
+      "id": "countdown",
+      "label": "Countdown",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "calendar",
+      "label": "Calendar links",
+      "default": true
+    },
+    {
+      "type": "metaobject",
+      "id": "event",
+      "label": "Event",
+      "metaobject_type": "arcadia_event"
+    },
+    {
+      "type": "text",
+      "id": "badge",
+      "label": "Badge"
+    },
+    {
+      "type": "range",
+      "id": "overlay",
+      "label": "Artwork darkening",
+      "min": 0,
+      "max": 80,
+      "step": 5,
+      "default": 20,
+      "unit": "%"
+    },
+    {
+      "type": "text",
+      "id": "completion_message",
+      "label": "Completion message",
+      "default": "Now available"
+    },
+    {
+      "type": "select",
+      "id": "completion_action",
+      "label": "Completion behavior",
+      "default": "message",
+      "options": [
+        {
+          "value": "message",
+          "label": "Show message"
+        },
+        {
+          "value": "hide",
+          "label": "Hide countdown"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Event hero"
+    }
+  ]
+}
+{% endschema %}

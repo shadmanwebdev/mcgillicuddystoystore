@@ -1,0 +1,8 @@
+<section class="arcadia-container arcadia-section arcadia-narrow">
+  <h1>{{ page.title | escape }}</h1>
+  <div class="arcadia-rte">{{ page.content }}</div>
+  {% for block in section.blocks -%}
+    {%- render block -%}
+  {%- endfor %}
+</section>
+{% schema %}{"name":"Page","settings":[],"blocks":[{"type":"@app"}]} {% endschema %}

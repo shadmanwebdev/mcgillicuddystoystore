@@ -1,0 +1,46 @@
+<script src="{{ 'arcadia-facets.js' | asset_url }}" defer></script>
+{{ 'arcadia-collection.css' | asset_url | stylesheet_tag }}
+<section class="arcadia-container arcadia-section arcadia-stack">
+  <h1>{{ 'general.search' | t }}</h1>
+  {% render 'arcadia-search-form', id: section.id -%}
+  {%- if search.performed %}
+    <p>{{ 'general.results' | t: count: search.results_count }}</p>
+    <div class="arcadia-collection-layout">
+      {% assign sort_by = search.sort_by | default: search.default_sort_by -%}
+      {%- render 'arcadia-facets',
+        filters: search.filters,
+        filter_url: routes.search_url,
+        sort_options: search.sort_options,
+        sort_by: sort_by
+      %}
+      <div>
+        {% render 'arcadia-active-facets', filters: search.filters -%}
+        {%- paginate search.results by 24 %}
+          <div class="arcadia-grid">
+            {% for item in search.results -%}
+              {%- case item.object_type -%}
+                {%- when 'product' -%}
+                  {%- render 'arcadia-product-card', product: item -%}
+                {%- when 'article' -%}
+                  {%- render 'arcadia-article-card', article: item -%}
+                {%- else %}
+                  <article class="arcadia-card">
+                    <div class="arcadia-card__body">
+                      <h2 class="arcadia-card__title">
+                        <a href="{{ item.url }}">{{ item.title | escape }}</a>
+                      </h2>
+                      <p>{{ item.content | strip_html | truncatewords: 25 }}</p>
+                    </div>
+                  </article>
+              {% endcase -%}
+            {%- else %}
+              <p>{{ 'general.no_results' | t }}</p>
+            {% endfor %}
+          </div>
+          {% render 'arcadia-pagination', paginate: paginate -%}
+        {%- endpaginate %}
+      </div>
+    </div>
+  {% endif %}
+</section>
+{% schema %}{"name":"Search","settings":[]} {% endschema %}

@@ -1,0 +1,17 @@
+{% if product.has_only_default_variant and product.available and product.requires_selling_plan == false %}
+  <div data-arcadia-module="product-form">
+    {% form 'product', product, id: form_id %}
+      <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}"
+      ><button class="arcadia-button" type="submit" data-arcadia-add>
+        {% if product.metafields.arcadia.preorder.value -%}
+          {{- 'products.preorder' | t -}}
+        {%- else -%}
+          {{- 'products.add' | t -}}
+        {%- endif %}
+      </button>
+      <p role="status" data-arcadia-form-status></p>
+    {% endform %}
+  </div>
+{% else -%}
+  <a class="arcadia-button arcadia-button--secondary" href="{{ product.url }}">{{ 'products.choose' | t }}</a>
+{%- endif %}

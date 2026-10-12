@@ -1,0 +1,10 @@
+{% if block.settings.image != blank -%}
+  <a
+    href="{{ block.settings.link | default: routes.all_products_collection_url }}"
+    class="arcadia-card"
+    {{ block.shopify_attributes }}
+  >
+    {%- render 'arcadia-media', image: block.settings.image, sizes: '25vw', loading: 'lazy' %}
+    <div class="arcadia-card__body">{{ block.settings.heading | escape }}</div>
+  </a>
+{%- endif %}

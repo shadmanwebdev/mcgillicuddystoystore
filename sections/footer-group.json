@@ -1,0 +1,28 @@
+{
+  "type": "footer",
+  "name": "Footer",
+  "sections": {
+    "footer": {
+      "type": "arcadia-footer",
+      "settings": {},
+      "blocks": {
+        "block0": {
+          "type": "menu",
+          "settings": {
+            "heading": "Explore",
+            "menu": "main-menu"
+          }
+        },
+        "block1": {
+          "type": "menu",
+          "settings": {
+            "heading": "Information",
+            "menu": "footer"
+          }
+        }
+      },
+      "block_order": ["block0", "block1"]
+    }
+  },
+  "order": ["footer"]
+}

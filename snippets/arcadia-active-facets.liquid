@@ -1,0 +1,14 @@
+<div class="arcadia-row">
+  {% for filter in filters -%}
+    {%- for value in filter.active_values -%}
+      <a class="arcadia-badge" href="{{ value.url_to_remove }}">
+        {{- filter.label | escape }}: {{ value.label | escape }} ×</a
+      >
+    {%- endfor -%}
+    {%- if filter.type == 'price_range' -%}
+      {%- if filter.min_value.value != blank or filter.max_value.value != blank -%}
+        <a class="arcadia-badge" href="{{ filter.url_to_remove }}">{{ filter.label | escape }} ×</a>
+      {%- endif -%}
+    {%- endif -%}
+  {%- endfor %}
+</div>

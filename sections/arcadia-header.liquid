@@ -1,0 +1,94 @@
+{{ 'arcadia-navigation.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'arcadia-navigation.js' | asset_url }}" defer></script>
+{% if settings.predictive_search %}
+  <script src="{{ 'arcadia-predictive-search.js' | asset_url }}" defer></script>
+{% endif %}
+<header class="arcadia-header" data-arcadia-module="navigation">
+  <div class="arcadia-container arcadia-header__main">
+    <details class="arcadia-mobile-nav">
+      <summary aria-label="{{ 'general.menu' | t }}">{% render 'arcadia-icon', name: 'menu' %}</summary>
+      <nav class="arcadia-mobile-menu" aria-label="{{ 'general.menu' | t }}">
+        {% render 'arcadia-menu-links', links: section.settings.menu.links %}
+      </nav>
+    </details>
+    <a href="{{ routes.root_url }}" class="arcadia-logo">
+      {%- if section.settings.logo -%}
+        {{-
+          section.settings.logo
+          | image_url: width: 400
+          | image_tag: width: section.settings.logo_width, loading: 'eager', alt: shop.name
+        -}}
+      {%- else -%}
+        {%- render 'arcadia-icon', name: 'brand' -%}
+        {{- shop.name | escape -}}
+      {%- endif -%}
+    </a>
+    <nav class="arcadia-desktop-nav" aria-label="{{ 'general.menu' | t }}">
+      <ul class="arcadia-nav">
+        {% for link in section.settings.menu.links %}
+          <li>
+            {% if link.links != blank %}
+              <details>
+                <summary>{{ link.title | escape }}</summary>
+                <div class="arcadia-mega">
+                  <div class="arcadia-container arcadia-mega__grid">
+                    <div>
+                      <a href="{{ link.url }}">{{ link.title | escape }}</a>
+                      {%- render 'arcadia-menu-links', links: link.links %}
+                    </div>
+                    {% for block in section.blocks -%}
+                      {%- if block.settings.menu_title == link.title -%}
+                        {%- render 'arcadia-menu-promotion', block: block -%}
+                      {%- endif -%}
+                    {%- endfor %}
+                  </div>
+                </div>
+              </details>
+            {% else -%}
+              <a
+                href="{{ link.url }}"
+                {% if link.current %}
+                  aria-current="page"
+                {% endif %}
+              >
+                {{- link.title | escape -}}
+              </a>
+            {%- endif %}
+          </li>
+        {% endfor %}
+      </ul>
+    </nav>
+    <div class="arcadia-header__search">{% render 'arcadia-search-form', id: section.id %}</div>
+    <div class="arcadia-header__utilities">
+      {% if settings.mode_toggle -%}
+        <button
+          class="arcadia-icon-button"
+          type="button"
+          data-arcadia-module="theme-mode"
+          aria-label="{{ 'general.theme' | t }}"
+          aria-pressed="false"
+        >
+          {% render 'arcadia-icon', name: 'sun' %}
+        </button>
+      {%- endif -%}
+      {%- if shop.customer_accounts_enabled -%}
+        <a href="{{ routes.account_url }}" class="arcadia-icon-button" aria-label="{{ 'general.account' | t }}">
+          {%- render 'arcadia-icon', name: 'account' -%}
+        </a>
+      {%- endif -%}
+      <a
+        href="{{ routes.cart_url }}"
+        class="arcadia-icon-button"
+        aria-label="{{ 'general.cart' | t }}"
+        {% if settings.cart_drawer %}
+          data-arcadia-cart-open
+        {% endif %}
+      >
+        {%- render 'arcadia-icon', name: 'cart' -%}
+        <span data-arcadia-module="cart-count">{{ cart.item_count }}</span></a
+      >
+      {%- render 'arcadia-hook-header-utilities' %}
+    </div>
+  </div>
+</header>
+{% schema %}{"name":"Header","class":"arcadia-header-section","settings":[{"type":"image_picker","id":"logo","label":"Logo"},{"type":"range","id":"logo_width","label":"Logo width","min":70,"max":240,"step":10,"default":140,"unit":"px"},{"type":"link_list","id":"menu","label":"Main menu","default":"main-menu"}],"blocks":[{"type":"promotion","name":"Menu promotion","settings":[{"type":"text","id":"menu_title","label":"Exact parent menu title"},{"type":"image_picker","id":"image","label":"Image"},{"type":"text","id":"heading","label":"Heading"},{"type":"url","id":"link","label":"Link"}]}]}{% endschema %}

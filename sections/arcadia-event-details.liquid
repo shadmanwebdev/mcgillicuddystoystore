@@ -1,0 +1,138 @@
+{{ 'arcadia-events.css' | asset_url | stylesheet_tag -}}
+{%- assign entry_product = metaobject.product.value | default: section.settings.product %}
+<section class="arcadia-container arcadia-section arcadia-event-details">
+  {% render 'arcadia-section-header', heading: section.settings.heading %}
+  <div class="arcadia-split">
+    <div class="arcadia-stack">
+      <div class="arcadia-rte">
+        {% if metaobject.full_description != blank -%}
+          {{- metaobject.full_description | metafield_tag -}}
+        {%- else -%}
+          {{- section.settings.description -}}
+        {%- endif %}
+      </div>
+      <dl>
+        {% assign venue = metaobject.venue.value | default: section.settings.venue -%}
+        {%- if venue != blank %}
+          <dt>{{ 'events.venue' | t }}</dt>
+          <dd>
+            {{ venue | escape -}}
+            <br>
+            {{ metaobject.address.value | default: section.settings.address | escape | newline_to_br }}
+          </dd>
+        {% endif -%}
+        {%- assign organizer = metaobject.organizer.value | default: section.settings.organizer -%}
+        {%- if organizer != blank %}
+          <dt>{{ 'events.organizer' | t }}</dt>
+          <dd>{{ organizer | escape }}</dd>
+        {% endif %}
+      </dl>
+      {% if section.settings.map_url != blank -%}
+        <a href="{{ section.settings.map_url }}">{{ section.settings.map_label | escape }}</a>
+      {%- endif -%}
+      {%- if metaobject.age_guidance.value != blank %}
+        <p>{{ metaobject.age_guidance.value | escape }}</p>
+      {% endif -%}
+      {%- assign rules_link = metaobject.rules_link.value | default: section.settings.rules_link -%}
+      {%- assign rules_label = 'events.rules' | t -%}
+      {%- render 'arcadia-button', label: rules_label, url: rules_link, secondary: true -%}
+      {%- for block in section.blocks -%}
+        {%- render block -%}
+      {%- endfor %}
+    </div>
+    <div>
+      {% if entry_product != blank %}{% render 'arcadia-product-card', product: entry_product %}{% endif -%}
+      {%- assign event_collection = metaobject.collection.value | default: section.settings.collection -%}
+      {%- if event_collection != blank %}{% render 'arcadia-collection-card', collection: event_collection %}{% endif %}
+    </div>
+  </div>
+</section>
+{% schema %}
+{
+  "name": "Event details",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "The details"
+    },
+    {
+      "type": "richtext",
+      "id": "description",
+      "label": "Overview"
+    },
+    {
+      "type": "text",
+      "id": "venue",
+      "label": "Venue"
+    },
+    {
+      "type": "textarea",
+      "id": "address",
+      "label": "Address"
+    },
+    {
+      "type": "text",
+      "id": "organizer",
+      "label": "Organizer"
+    },
+    {
+      "type": "url",
+      "id": "map_url",
+      "label": "Map link"
+    },
+    {
+      "type": "text",
+      "id": "map_label",
+      "label": "Map link label",
+      "default": "Get directions"
+    },
+    {
+      "type": "url",
+      "id": "rules_link",
+      "label": "Rules link"
+    },
+    {
+      "type": "product",
+      "id": "product",
+      "label": "Entry product"
+    },
+    {
+      "type": "collection",
+      "id": "collection",
+      "label": "Event collection"
+    },
+    {
+      "type": "select",
+      "id": "heading_alignment",
+      "label": "Heading alignment",
+      "default": "start",
+      "options": [
+        {
+          "value": "start",
+          "label": "Start"
+        },
+        {
+          "value": "center",
+          "label": "Center"
+        },
+        {
+          "value": "end",
+          "label": "End"
+        }
+      ]
+    }
+  ],
+  "blocks": [
+    {
+      "type": "@app"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Event details"
+    }
+  ]
+}
+{% endschema %}

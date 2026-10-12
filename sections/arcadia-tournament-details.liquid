@@ -1,0 +1,141 @@
+{{ 'arcadia-events.css' | asset_url | stylesheet_tag -}}
+{%- if section.settings.enabled %}
+  <section class="arcadia-container arcadia-section arcadia-event-details">
+    {% render 'arcadia-section-header', heading: section.settings.heading %}
+    <div class="arcadia-split">
+      <div>
+        <dl>
+          {% assign format = metaobject.format.value | default: section.settings.format -%}
+          {%- if format != blank %}
+            <dt>{{ 'events.format' | t }}</dt>
+            <dd>{{ format | escape }}</dd>
+          {% endif -%}
+          {%- assign rounds = metaobject.rounds.value | default: section.settings.rounds -%}
+          {%- if rounds != blank %}
+            <dt>{{ 'events.rounds' | t }}</dt>
+            <dd>{{ rounds | escape }}</dd>
+          {% endif -%}
+          {%- assign registration = metaobject.registration_time.value | default: section.settings.registration_time -%}
+          {%- if registration != blank %}
+            <dt>{{ 'events.registration' | t }}</dt>
+            <dd>{{ registration | escape }}</dd>
+          {% endif -%}
+          {%- assign player_cap = metaobject.player_cap.value | default: section.settings.player_cap -%}
+          {%- if player_cap != blank %}
+            <dt>{{ 'events.capacity' | t: count: player_cap }}</dt>
+            <dd></dd>
+          {% endif %}
+        </dl>
+        <h3>{{ 'events.prizes' | t }}</h3>
+        <div class="arcadia-rte">
+          {% if metaobject.prizes != blank -%}
+            {{- metaobject.prizes | metafield_tag -}}
+          {%- else -%}
+            {{- section.settings.prizes -}}
+          {%- endif %}
+        </div>
+      </div>
+      <div>
+        <h3>{{ 'events.schedule' | t }}</h3>
+        <div class="arcadia-rte">
+          {% if metaobject.schedule != blank -%}
+            {{- metaobject.schedule | metafield_tag -}}
+          {%- else -%}
+            {{- section.settings.schedule -}}
+          {%- endif %}
+        </div>
+        {% render 'arcadia-button',
+          label: section.settings.platform_label,
+          url: section.settings.platform_url,
+          secondary: true
+        -%}
+        {%- render 'arcadia-hook-tournament', event: metaobject %}
+      </div>
+    </div>
+  </section>
+{% endif -%}
+{% schema %}
+{
+  "name": "Tournament briefing",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "enabled",
+      "label": "Enable tournament briefing",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Tournament briefing"
+    },
+    {
+      "type": "text",
+      "id": "format",
+      "label": "Format"
+    },
+    {
+      "type": "text",
+      "id": "rounds",
+      "label": "Rounds"
+    },
+    {
+      "type": "text",
+      "id": "registration_time",
+      "label": "Registration time"
+    },
+    {
+      "type": "text",
+      "id": "player_cap",
+      "label": "Player cap"
+    },
+    {
+      "type": "richtext",
+      "id": "prizes",
+      "label": "Prizes"
+    },
+    {
+      "type": "richtext",
+      "id": "schedule",
+      "label": "Schedule"
+    },
+    {
+      "type": "url",
+      "id": "platform_url",
+      "label": "Tournament platform URL"
+    },
+    {
+      "type": "text",
+      "id": "platform_label",
+      "label": "Platform label",
+      "default": "Tournament platform"
+    },
+    {
+      "type": "select",
+      "id": "heading_alignment",
+      "label": "Heading alignment",
+      "default": "start",
+      "options": [
+        {
+          "value": "start",
+          "label": "Start"
+        },
+        {
+          "value": "center",
+          "label": "Center"
+        },
+        {
+          "value": "end",
+          "label": "End"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Tournament briefing"
+    }
+  ]
+}
+{% endschema %}

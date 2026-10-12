@@ -1,0 +1,23 @@
+:root {
+  --arcadia-bg: #111317;
+  --arcadia-surface: #1b1e25;
+  --arcadia-ink: #f4f3ef;
+  --arcadia-muted: #b9b9c4;
+  --arcadia-line: #383c48;
+  --arcadia-accent: #beff50;
+  --arcadia-secondary: #a995ff;
+  --arcadia-radius: 16px;
+  --arcadia-width: 1440px;
+  --arcadia-space: clamp(3rem, 6vw, 6.5rem);
+  --arcadia-font: system-ui, sans-serif;
+  --arcadia-heading: var(--arcadia-font);
+}
+html[data-mode="light"] {
+  --arcadia-bg: #f6f5f0;
+  --arcadia-surface: #fff;
+  --arcadia-ink: #171921;
+  --arcadia-muted: #525665;
+  --arcadia-line: #d5d6db;
+  --arcadia-accent: #456d00;
+  --arcadia-secondary: #6949c9;
+}

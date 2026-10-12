@@ -1,0 +1,19 @@
+<div class="arcadia-hero__cards" aria-hidden="true">
+  <div class="arcadia-hero__card"></div>
+  <div class="arcadia-hero__card"></div>
+  <div
+    class="arcadia-hero__card{% if settings.holo_enabled %} arcadia-holo{% endif %}"
+    data-holo-static="{{ settings.holo_static }}"
+    data-holo-hover="{{ settings.holo_hover }}"
+  >
+    <div class="arcadia-hero__card-label">
+      <span>{{ shop.name | escape }}</span><span>◇</span>
+    </div>
+    <div class="arcadia-hero__sigil">
+      <svg viewBox="0 0 200 240" fill="none">
+        <path d="m100 10 82 47v108l-82 65-82-65V57Z" stroke="currentColor" stroke-width="2"/><path d="m100 36 59 34v83l-59 48-59-48V70Z" stroke="currentColor" stroke-opacity=".3"/><path d="m100 60 46 26v54l-46 35-46-35V86Z" fill="currentColor" fill-opacity=".08" stroke="currentColor"/><path d="m54 86 46 29 46-29M100 115v60M100 60v55" stroke="currentColor"/><circle cx="100" cy="115" r="10" fill="currentColor"/>
+      </svg>
+    </div>
+    <div class="arcadia-hero__card-lines"></div>
+  </div>
+</div>

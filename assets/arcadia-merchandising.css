@@ -1,0 +1,55 @@
+.arcadia-collection-card .arcadia-card__media {
+  aspect-ratio: 4/3;
+}
+.arcadia-category-card .arcadia-card__media {
+  aspect-ratio: 1;
+}
+.arcadia-community-card .arcadia-card__media {
+  aspect-ratio: 4/3;
+}
+.arcadia-community-card blockquote {
+  margin: 0;
+  font-size: 1.1rem;
+}
+.arcadia-community-card cite {
+  display: block;
+  margin-top: 1rem;
+  font-style: normal;
+  color: var(--arcadia-muted);
+}
+.arcadia-promo {
+  padding: clamp(2rem, 5vw, 5rem);
+  border: 1px solid var(--arcadia-line);
+  border-radius: var(--arcadia-radius);
+  background: linear-gradient(
+    130deg,
+    color-mix(in srgb, var(--arcadia-secondary) 12%, var(--arcadia-surface)),
+    var(--arcadia-surface)
+  );
+}
+.arcadia-promo h2 {
+  max-width: 18ch;
+}
+.arcadia-release-date {
+  font-size: 0.8rem;
+  color: var(--arcadia-accent);
+}
+.arcadia-release-timeline {
+  border-inline-start: 2px solid var(--arcadia-line);
+  padding-inline-start: 2rem;
+  display: grid;
+  gap: 2rem;
+}
+.arcadia-release-timeline .arcadia-card {
+  max-width: 900px;
+}
+.arcadia-release-timeline .arcadia-card__media {
+  aspect-ratio: 16/7;
+}
+.arcadia-team-card .arcadia-card__media {
+  aspect-ratio: 4/5;
+}
+.arcadia-newsletter {
+  background: var(--arcadia-surface);
+  border-block: 1px solid var(--arcadia-line);
+}

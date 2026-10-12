@@ -1,0 +1,190 @@
+.arcadia-header {
+  border-bottom: 1px solid var(--arcadia-line);
+  background: var(--arcadia-bg);
+  position: relative;
+  z-index: 20;
+}
+.arcadia-header-section {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+}
+.arcadia-header__main {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+  min-height: 88px;
+}
+.arcadia-logo {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  text-decoration: none;
+  font-weight: 900;
+  font-size: 1.8rem;
+  letter-spacing: -0.06em;
+}
+.arcadia-logo svg {
+  width: 34px;
+  height: 40px;
+  color: var(--arcadia-accent);
+}
+.arcadia-nav {
+  display: flex;
+  gap: 1.5rem;
+  align-items: center;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.arcadia-nav a {
+  text-decoration: none;
+}
+.arcadia-nav details > summary {
+  list-style: none;
+  font-size: 0.9rem;
+  font-weight: 650;
+}
+.arcadia-nav details > summary::after {
+  content: "+";
+  margin-inline-start: 0.4rem;
+  color: var(--arcadia-accent);
+}
+.arcadia-mega {
+  position: absolute;
+  inset-inline: 0;
+  top: 100%;
+  padding: 2rem;
+  background: var(--arcadia-surface);
+  border-block: 1px solid var(--arcadia-line);
+  box-shadow: 0 12px 24px #0003;
+}
+.arcadia-mega__grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 2rem;
+}
+.arcadia-mega ul {
+  list-style: none;
+  padding: 0;
+}
+.arcadia-mega li {
+  margin: 0.7rem 0;
+}
+.arcadia-header__utilities {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+.arcadia-mobile-nav {
+  display: none;
+}
+.arcadia-mobile-nav > summary {
+  list-style: none;
+}
+.arcadia-mobile-menu {
+  position: absolute;
+  inset-inline: 0;
+  top: 100%;
+  background: var(--arcadia-surface);
+  padding: 1.5rem;
+  max-height: 75dvh;
+  overflow: auto;
+  border-bottom: 1px solid var(--arcadia-line);
+}
+.arcadia-mobile-menu ul {
+  list-style: none;
+  padding-inline-start: 1rem;
+}
+.arcadia-mobile-menu a {
+  display: block;
+  padding: 0.5rem;
+}
+.arcadia-header__search {
+  max-width: 300px;
+  position: relative;
+}
+.arcadia-search-form {
+  display: flex;
+  gap: 0.5rem;
+}
+.arcadia-search-form .arcadia-input {
+  min-width: 0;
+}
+.arcadia-predictive {
+  position: absolute;
+  inset-inline: 0;
+  top: 100%;
+  min-width: min(450px, 85vw);
+  max-height: 70dvh;
+  overflow: auto;
+  background: var(--arcadia-surface);
+  border: 1px solid var(--arcadia-line);
+  border-radius: 8px;
+  z-index: 30;
+  padding: 1rem;
+}
+.arcadia-predictive ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.arcadia-predictive a {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  text-decoration: none;
+  padding: 0.7rem;
+}
+.arcadia-predictive a:hover,
+.arcadia-predictive a:focus {
+  background: var(--arcadia-bg);
+}
+.arcadia-predictive img {
+  width: 50px;
+  height: 50px;
+  object-fit: cover;
+}
+.arcadia-announcement {
+  padding: 0.55rem 1rem;
+  text-align: center;
+  font-size: 0.78rem;
+  letter-spacing: 0.03em;
+  background: var(--arcadia-accent);
+  color: var(--arcadia-bg);
+}
+@media (max-width: 1100px) {
+  .arcadia-desktop-nav {
+    display: none;
+  }
+  .arcadia-mobile-nav {
+    display: block;
+  }
+  .arcadia-header__search {
+    max-width: 220px;
+  }
+}
+@media (max-width: 650px) {
+  .arcadia-header__main {
+    min-height: 76px;
+    gap: 0.6rem;
+    flex-wrap: wrap;
+    padding-block: 0.8rem;
+  }
+  .arcadia-header__search {
+    order: 5;
+    max-width: none;
+    width: 100%;
+  }
+  .arcadia-header__utilities {
+    gap: 0.3rem;
+  }
+  .arcadia-header__utilities .arcadia-icon-button {
+    width: 40px;
+    height: 40px;
+  }
+  .arcadia-logo {
+    font-size: 1.5rem;
+  }
+}

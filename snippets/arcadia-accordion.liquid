@@ -1,0 +1,9 @@
+<details
+  class="arcadia-accordion"
+  {% if open %}
+    open
+  {% endif %}
+>
+  <summary>{{ heading | escape }}</summary>
+  <div class="arcadia-rte">{{ content }}</div>
+</details>

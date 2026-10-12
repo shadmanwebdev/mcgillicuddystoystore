@@ -1,0 +1,21 @@
+{% unless product.available %}
+  <details class="arcadia-accordion">
+    <summary>{{ 'products.notify' | t }}</summary>
+    <p class="arcadia-muted">{{ 'products.notify_note' | t }}</p>
+    {% form 'contact' %}
+      {{ form.errors | default_errors -}}
+      {%- if form.posted_successfully? %}
+        <p role="status">{{ 'contact.success' | t }}</p>
+      {% endif -%}
+      <input
+        type="hidden"
+        name="contact[body]"
+        value="{{ 'products.notify_body' | t: product: product.title, url: product.url | escape }}"
+
+      ><label class="arcadia-field">
+        {{- 'general.email' | t -}}
+        <input class="arcadia-input" name="contact[email]" type="email" autocomplete="email" required></label
+      ><button class="arcadia-button" type="submit">{{ 'general.submit' | t }}</button>
+    {% endform %}
+  </details>
+{% endunless %}

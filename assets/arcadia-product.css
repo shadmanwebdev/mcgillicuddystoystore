@@ -1,0 +1,57 @@
+.arcadia-product__info {
+  align-self: start;
+  position: sticky;
+  top: 100px;
+}
+.arcadia-product__title {
+  font-size: clamp(2rem, 4vw, 3.7rem);
+}
+.arcadia-product-gallery__main {
+  display: grid;
+  gap: 1rem;
+}
+.arcadia-product-gallery__item {
+  border-radius: var(--arcadia-radius);
+  overflow: hidden;
+  background: var(--arcadia-surface);
+  scroll-margin-top: 100px;
+}
+.arcadia-product-gallery__item img {
+  width: 100%;
+  object-fit: contain;
+}
+.arcadia-product-gallery__item iframe,
+.arcadia-product-gallery__item model-viewer {
+  width: 100%;
+  min-height: 400px;
+}
+.arcadia-product-gallery__thumbs {
+  display: flex;
+  gap: 0.6rem;
+  overflow: auto;
+}
+.arcadia-product-gallery__thumbs a {
+  flex: 0 0 80px;
+  border: 1px solid var(--arcadia-line);
+  border-radius: 6px;
+  overflow: hidden;
+}
+.arcadia-product-gallery__thumbs [aria-current="true"] {
+  border-color: var(--arcadia-accent);
+}
+.arcadia-product-gallery__thumbs img {
+  object-fit: cover;
+}
+.arcadia-trust {
+  border: 1px solid var(--arcadia-line);
+  padding: 1rem;
+  border-radius: 8px;
+}
+.arcadia-product__info .arcadia-price {
+  font-size: 1.5rem;
+}
+@media (max-width: 749px) {
+  .arcadia-product__info {
+    position: static;
+  }
+}

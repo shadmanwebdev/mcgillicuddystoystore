@@ -1,0 +1,42 @@
+{
+  "sections": {
+    "main": {
+      "type": "arcadia-main-product",
+      "settings": {},
+      "blocks": {
+        "block0": {
+          "type": "title",
+          "settings": {}
+        },
+        "block1": {
+          "type": "buy",
+          "settings": {
+            "dynamic_checkout": true
+          }
+        },
+        "block2": {
+          "type": "description",
+          "settings": {}
+        },
+        "block3": {
+          "type": "pickup",
+          "settings": {}
+        },
+        "block4": {
+          "type": "availability",
+          "settings": {}
+        }
+      },
+      "block_order": ["block0", "block1", "block2", "block3", "block4"]
+    },
+    "recommendations": {
+      "type": "arcadia-product-recommendations",
+      "settings": {}
+    },
+    "recent": {
+      "type": "arcadia-recently-viewed",
+      "settings": {}
+    }
+  },
+  "order": ["main", "recommendations", "recent"]
+}

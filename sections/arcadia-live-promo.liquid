@@ -1,0 +1,56 @@
+{% if section.settings.enabled %}
+  {% if section.settings.deadline != blank %}
+    <script src="{{ 'arcadia-countdown.js' | asset_url }}" defer></script>
+  {% endif %}
+  <aside
+    class="arcadia-live-promo"
+    style="background:{{ section.settings.background }};color:{{ section.settings.color }}"
+  >
+    <div class="arcadia-container arcadia-row">
+      {% render 'arcadia-badge', label: section.settings.badge, icon: section.settings.icon -%}
+      {%- if section.settings.url != blank -%}
+        <a href="{{ section.settings.url }}">{{ section.settings.message | escape }}</a>
+      {%- else -%}
+        <span>{{ section.settings.message | escape }}</span>
+      {%- endif -%}
+      {%- render 'arcadia-countdown',
+        target: section.settings.deadline,
+        completion_message: section.settings.completion_message,
+        completion_action: section.settings.completion_action
+      %}
+    </div>
+  </aside>
+{% endif %}
+{% schema %}
+{
+  "name": "Live promotion strip",
+  "enabled_on": { "groups": ["header"] },
+  "settings": [
+    { "type": "checkbox", "id": "enabled", "label": "Enable promotion", "default": false },
+    { "type": "text", "id": "message", "label": "Message", "default": "Discover what is happening in store" },
+    { "type": "text", "id": "badge", "label": "Badge" },
+    { "type": "text", "id": "icon", "label": "Symbol" },
+    { "type": "url", "id": "url", "label": "Link" },
+    { "type": "text", "id": "deadline", "label": "Deadline (ISO 8601 with offset)" },
+    {
+      "type": "text",
+      "id": "completion_message",
+      "label": "Completion message",
+      "default": "This promotion has ended"
+    },
+    {
+      "type": "select",
+      "id": "completion_action",
+      "label": "Completion action",
+      "default": "hide",
+      "options": [
+        { "value": "message", "label": "Show message" },
+        { "value": "hide", "label": "Hide countdown" }
+      ]
+    },
+    { "type": "color", "id": "background", "label": "Background", "default": "#beff50" },
+    { "type": "color", "id": "color", "label": "Text", "default": "#111317" }
+  ],
+  "presets": [{ "name": "Live promotion strip" }]
+}
+{% endschema %}

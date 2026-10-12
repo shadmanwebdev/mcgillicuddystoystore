@@ -1,0 +1,12 @@
+<section class="arcadia-container arcadia-section">
+  <h1>{{ 'collections.collections' | t }}</h1>
+  {% paginate collections by 24 %}
+    <div class="arcadia-grid">
+      {% for collection in collections -%}
+        {%- render 'arcadia-collection-card', collection: collection -%}
+      {%- endfor %}
+    </div>
+    {% render 'arcadia-pagination', paginate: paginate -%}
+  {%- endpaginate %}
+</section>
+{% schema %}{"name":"Collections list","settings":[]} {% endschema %}

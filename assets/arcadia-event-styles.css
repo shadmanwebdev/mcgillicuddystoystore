@@ -1,0 +1,68 @@
+.arcadia-event-card {
+  --event-accent: var(--arcadia-accent);
+}
+.arcadia-event-card .arcadia-card__media {
+  position: relative;
+}
+.arcadia-event-card .arcadia-card__media::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: #000;
+  opacity: var(--event-overlay, 0);
+  pointer-events: none;
+}
+.arcadia-event-card[data-card-style="neon"] {
+  border-color: var(--event-accent);
+  box-shadow: 0 0 22px color-mix(in srgb, var(--event-accent) 20%, transparent);
+}
+.arcadia-event-card[data-card-style="poster"] .arcadia-card__media {
+  aspect-ratio: 3/4;
+}
+.arcadia-event-card[data-card-style="poster"] h3 {
+  font-size: clamp(1.7rem, 3vw, 2.7rem);
+  text-transform: uppercase;
+}
+.arcadia-event-card[data-card-style="competitive"] {
+  border-top: 5px solid var(--event-accent);
+  border-radius: 0;
+}
+.arcadia-event-card[data-card-style="competitive"] h3 {
+  text-transform: uppercase;
+  letter-spacing: -0.03em;
+}
+.arcadia-event-card[data-card-style="compact"] {
+  display: grid;
+  grid-template-columns: 5rem 1fr;
+}
+.arcadia-event-card[data-card-style="compact"] .arcadia-card__body {
+  padding: 1rem;
+}
+.arcadia-event-card[data-card-style="compact"] .arcadia-card__media {
+  height: 100%;
+  aspect-ratio: auto;
+}
+.arcadia-event-card[data-card-style="minimal"] {
+  background: transparent;
+  border: 0;
+  border-bottom: 1px solid var(--arcadia-border);
+  border-radius: 0;
+  box-shadow: none;
+}
+.arcadia-event-card[data-animate="true"] {
+  transition: transform 0.2s ease;
+}
+.arcadia-event-card[data-animate="true"]:hover {
+  transform: translateY(-4px);
+}
+.arcadia-event-card--completed {
+  opacity: 0.7;
+}
+@media (prefers-reduced-motion: reduce) {
+  .arcadia-event-card[data-animate="true"] {
+    transition: none;
+  }
+  .arcadia-event-card[data-animate="true"]:hover {
+    transform: none;
+  }
+}

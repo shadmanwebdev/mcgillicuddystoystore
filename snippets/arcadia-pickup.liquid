@@ -1,0 +1,15 @@
+{% assign pickups = product.selected_or_first_available_variant.store_availabilities
+  | where: 'pick_up_enabled', true
+-%}
+{%- if pickups.size > 0 %}
+  <details class="arcadia-accordion">
+    <summary>{{ 'products.pickup' | t }}</summary>
+    {% for pickup in pickups -%}
+      {%- if pickup.available %}
+        <p>{{ 'products.pickup_ready' | t: location: pickup.location.name }}</p>
+        <p class="arcadia-muted">{{ 'products.pickup_time' | t: time: pickup.pick_up_time }}</p>
+        <address>{{ pickup.location.address | format_address }}</address>
+      {% endif -%}
+    {%- endfor %}
+  </details>
+{% endif %}

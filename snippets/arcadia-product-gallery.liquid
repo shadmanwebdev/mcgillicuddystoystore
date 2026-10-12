@@ -1,0 +1,62 @@
+<div class="arcadia-product-gallery arcadia-stack" data-arcadia-module="product-gallery">
+  <div class="arcadia-product-gallery__main">
+    {% for media in product.media %}
+      <div
+        class="arcadia-product-gallery__item"
+        id="Media-{{ section.id }}-{{ media.id }}"
+        data-arcadia-media="{{ media.id }}"
+      >
+        {% case media.media_type -%}
+          {%- when 'image' -%}
+            <a href="{{ media | image_url: width: 2400 }}" data-arcadia-zoom aria-label="{{ 'products.zoom' | t }}">
+              {%- if forloop.first -%}
+                {{-
+                  media
+                  | image_url: width: 1600
+                  | image_tag: widths: '400, 800, 1200, 1600', sizes: '(min-width: 750px) 50vw, 100vw', loading: 'eager'
+                -}}
+              {%- else -%}
+                {{-
+                  media
+                  | image_url: width: 1600
+                  | image_tag: widths: '400, 800, 1200, 1600', sizes: '(min-width: 750px) 50vw, 100vw', loading: 'lazy'
+                -}}
+              {%- endif -%}
+            </a>
+          {%- when 'video' -%}
+            {{- media | video_tag: controls: true, preload: 'metadata', image_size: '1200x' -}}
+          {%- when 'external_video' -%}
+            {{- media | external_video_tag: loading: 'lazy' -}}
+          {%- when 'model' -%}
+            {{- media | model_viewer_tag: reveal: 'interaction', toggleable: true -}}
+        {%- endcase %}
+      </div>
+    {% else -%}
+      {{- 'product-1' | placeholder_svg_tag: 'arcadia-placeholder' -}}
+    {%- endfor %}
+  </div>
+  {% if product.media.size > 1 %}
+    <nav class="arcadia-product-gallery__thumbs" aria-label="{{ 'products.media' | t }}">
+      {% for media in product.media -%}
+        <a
+          href="#Media-{{ section.id }}-{{ media.id }}"
+          data-arcadia-thumb="{{ media.id }}"
+          aria-label="{{ media.alt | default: product.title | escape }}"
+        >
+          {{- media.preview_image | image_url: width: 160 | image_tag: loading: 'lazy', width: 80, height: 80 -}}
+        </a>
+      {%- endfor %}
+    </nav>
+  {% endif %}
+  <dialog
+    id="Zoom-{{ section.id }}-{{ product.id }}"
+    data-arcadia-module="dialog"
+    data-arcadia-zoom-dialog
+    aria-label="{{ 'products.zoom' | t }}"
+  >
+    <button type="button" class="arcadia-icon-button" data-arcadia-close aria-label="{{ 'general.close' | t }}">
+      {% render 'arcadia-icon', name: 'close' %}
+    </button>
+    <div data-arcadia-zoom-content></div>
+  </dialog>
+</div>

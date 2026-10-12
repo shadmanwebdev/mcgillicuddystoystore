@@ -1,0 +1,80 @@
+.arcadia-event-card .arcadia-card__media {
+  aspect-ratio: 4/3;
+}
+.arcadia-event-card .arcadia-card__media a {
+  display: block;
+  height: 100%;
+}
+.arcadia-event-card h3 a {
+  text-decoration: none;
+}
+.arcadia-countdown {
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.06em;
+  font-weight: 800;
+  color: var(--arcadia-accent);
+}
+.arcadia-event-filters {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  margin-bottom: 2rem;
+}
+.arcadia-event-filters label {
+  flex: 1;
+  min-width: 140px;
+}
+.arcadia-events[data-layout="list"] .arcadia-grid,
+.arcadia-events[data-layout="compact"] .arcadia-grid {
+  grid-template-columns: 1fr;
+}
+.arcadia-events[data-layout="list"] .arcadia-event-card {
+  display: grid;
+  grid-template-columns: 240px 1fr;
+}
+.arcadia-events[data-layout="compact"] .arcadia-event-card .arcadia-card__media,
+.arcadia-events[data-layout="compact"] .arcadia-event-card__description {
+  display: none;
+}
+.arcadia-events[data-layout="compact"] .arcadia-card__body {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+.arcadia-events[data-layout="poster"] .arcadia-event-card .arcadia-card__media {
+  aspect-ratio: 2/3;
+}
+.arcadia-events[data-layout="calendar"] .arcadia-card {
+  border-top: 6px solid var(--arcadia-secondary);
+}
+.arcadia-event-hero__media {
+  border-radius: var(--arcadia-radius);
+  overflow: hidden;
+  position: relative;
+}
+.arcadia-event-hero__media img {
+  width: 100%;
+}
+.arcadia-event-details dl {
+  display: grid;
+  grid-template-columns: 140px 1fr;
+  gap: 1rem;
+}
+.arcadia-event-details dt {
+  color: var(--arcadia-muted);
+}
+.arcadia-event-details dd {
+  margin: 0;
+}
+@media (max-width: 600px) {
+  .arcadia-events[data-layout="list"] .arcadia-event-card {
+    grid-template-columns: 1fr;
+  }
+  .arcadia-event-details dl {
+    grid-template-columns: 1fr;
+  }
+  .arcadia-event-details dd {
+    margin-bottom: 1rem;
+  }
+}

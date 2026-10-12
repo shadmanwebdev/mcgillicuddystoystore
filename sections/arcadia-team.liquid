@@ -1,0 +1,131 @@
+{{ 'arcadia-merchandising.css' | asset_url | stylesheet_tag }}
+<section class="arcadia-container arcadia-section">
+  {% render 'arcadia-section-header',
+    heading: section.settings.heading,
+    eyebrow: section.settings.eyebrow,
+    description: section.settings.description
+  %}
+  <div class="arcadia-grid arcadia-grid--content" style="--arcadia-columns:{{ section.settings.columns }}">
+    {% for block in section.blocks %}
+      <article class="arcadia-card arcadia-community-card arcadia-team-card" {{ block.shopify_attributes }}>
+        {% if block.settings.image %}
+          <div class="arcadia-card__media">
+            {% render 'arcadia-media',
+              image: block.settings.image,
+              loading: 'lazy',
+              sizes: '(min-width: 1000px) 33vw, 100vw'
+            %}
+          </div>
+        {% endif %}
+        <div class="arcadia-card__body">
+          <h3>{{ block.settings.title | escape }}</h3>
+          <p class="arcadia-eyebrow">{{ block.settings.subtitle | escape }}</p>
+          <div class="arcadia-rte">{{ block.settings.text }}</div>
+          {% render 'arcadia-button', label: block.settings.link_label, url: block.settings.url, secondary: true %}
+        </div>
+      </article>
+    {% endfor %}
+  </div>
+</section>
+{% schema %}
+{
+  "name": "Team",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "The next chapter starts here."
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "Collect. Play. Belong."
+    },
+    {
+      "type": "richtext",
+      "id": "description",
+      "label": "Description"
+    },
+    {
+      "type": "range",
+      "id": "columns",
+      "label": "Desktop columns",
+      "min": 2,
+      "max": 4,
+      "step": 1,
+      "default": 3
+    },
+    {
+      "type": "paragraph",
+      "content": "Use real, permission-cleared photos, verified testimonials and accurate event results. No placeholder people or statistics are published."
+    },
+    {
+      "type": "select",
+      "id": "heading_alignment",
+      "label": "Heading alignment",
+      "default": "start",
+      "options": [
+        {
+          "value": "start",
+          "label": "Start"
+        },
+        {
+          "value": "center",
+          "label": "Center"
+        },
+        {
+          "value": "end",
+          "label": "End"
+        }
+      ]
+    }
+  ],
+  "blocks": [
+    {
+      "type": "item",
+      "name": "Item",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title / name"
+        },
+        {
+          "type": "text",
+          "id": "subtitle",
+          "label": "Subtitle / role"
+        },
+        {
+          "type": "richtext",
+          "id": "text",
+          "label": "Description"
+        },
+        {
+          "type": "url",
+          "id": "url",
+          "label": "Link"
+        },
+        {
+          "type": "text",
+          "id": "link_label",
+          "label": "Link label",
+          "default": "Learn more"
+        }
+      ]
+    }
+  ],
+  "max_blocks": 16,
+  "presets": [
+    {
+      "name": "Team"
+    }
+  ]
+}
+{% endschema %}

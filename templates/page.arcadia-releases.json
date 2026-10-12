@@ -1,0 +1,19 @@
+{
+  "sections": {
+    "hero": {
+      "type": "arcadia-release-hero",
+      "settings": {
+        "heading": "The next chapter.",
+        "eyebrow": "Upcoming releases",
+        "description": "<p>Explore what is coming next. Release dates and preorder details are supplied by the store.</p>"
+      }
+    },
+    "timeline": {
+      "type": "arcadia-release-timeline",
+      "settings": {
+        "heading": "Release calendar"
+      }
+    }
+  },
+  "order": ["hero", "timeline"]
+}

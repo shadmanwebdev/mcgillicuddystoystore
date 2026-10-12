@@ -1,0 +1,122 @@
+{{ 'arcadia-hero.css' | asset_url | stylesheet_tag }}
+<section
+  class="arcadia-hero{% if settings.holo_enabled and settings.holo_heroes %} arcadia-holo{% endif %}"
+  data-holo-static="{{ settings.holo_static }}"
+  data-holo-hover="{{ settings.holo_hover }}"
+>
+  <div class="arcadia-container arcadia-hero__inner">
+    <div class="arcadia-hero__copy">
+      <p class="arcadia-eyebrow">{{ section.settings.eyebrow | escape }}</p>
+      {% if section.settings.heading_tag == 'h1' %}
+        <h1>{{ section.settings.heading }}</h1>
+      {% else %}
+        <h2>{{ section.settings.heading }}</h2>
+      {% endif %}
+      <div class="arcadia-rte">{{ section.settings.description }}</div>
+      <div class="arcadia-row">
+        {% render 'arcadia-button',
+          label: section.settings.button_label,
+          url: section.settings.button_link,
+          icon: 'arrow'
+        -%}
+        {%- render 'arcadia-button',
+          label: section.settings.secondary_label,
+          url: section.settings.secondary_link,
+          secondary: true
+        %}
+      </div>
+    </div>
+    <div class="arcadia-hero__art">
+      {% if section.settings.video != blank %}
+        <div class="arcadia-hero__image">{% render 'arcadia-media', video: section.settings.video %}</div>
+      {% elsif section.settings.image != blank %}
+        <div class="arcadia-hero__image">
+          {% render 'arcadia-media',
+            image: section.settings.image,
+            loading: 'eager',
+            sizes: '(min-width: 750px) 50vw, 100vw'
+          %}
+        </div>
+      {% else -%}
+        {%- render 'arcadia-hero-art' -%}
+      {%- endif %}
+    </div>
+  </div>
+</section>
+{% schema %}
+{
+  "name": "Campaign hero",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "The next chapter starts here."
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "Collect. Play. Belong."
+    },
+    {
+      "type": "richtext",
+      "id": "description",
+      "label": "Description"
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Button label",
+      "default": "Explore the store"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button link"
+    },
+    {
+      "type": "select",
+      "id": "heading_tag",
+      "label": "Heading level",
+      "default": "h2",
+      "options": [
+        {
+          "value": "h1",
+          "label": "Page title (use once)"
+        },
+        {
+          "value": "h2",
+          "label": "Section title"
+        }
+      ]
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Campaign artwork"
+    },
+    {
+      "type": "video",
+      "id": "video",
+      "label": "Hosted video (overrides image)"
+    },
+    {
+      "type": "text",
+      "id": "secondary_label",
+      "label": "Secondary button label",
+      "default": "Find your next event"
+    },
+    {
+      "type": "url",
+      "id": "secondary_link",
+      "label": "Secondary link"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Campaign hero"
+    }
+  ]
+}
+{% endschema %}

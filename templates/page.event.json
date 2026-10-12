@@ -1,0 +1,23 @@
+{
+  "sections": {
+    "hero": {
+      "type": "arcadia-event-hero",
+      "settings": {}
+    },
+    "details": {
+      "type": "arcadia-event-details",
+      "settings": {}
+    },
+    "tournament": {
+      "type": "arcadia-tournament-details",
+      "settings": {
+        "enabled": false
+      }
+    },
+    "faq": {
+      "type": "arcadia-event-faq",
+      "settings": {}
+    }
+  },
+  "order": ["hero", "details", "tournament", "faq"]
+}

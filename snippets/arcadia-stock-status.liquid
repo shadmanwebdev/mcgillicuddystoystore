@@ -1,0 +1,12 @@
+{% assign variant = product.selected_or_first_available_variant %}
+<p data-arcadia-stock>
+  {% if variant.available -%}
+    {%- if settings.show_stock and variant.inventory_management != blank and variant.inventory_quantity > 0 -%}
+      {{- 'products.stock' | t: count: variant.inventory_quantity -}}
+    {%- else -%}
+      {{- 'products.in_stock' | t -}}
+    {%- endif -%}
+  {%- else -%}
+    {{- 'products.sold_out' | t -}}
+  {%- endif %}
+</p>

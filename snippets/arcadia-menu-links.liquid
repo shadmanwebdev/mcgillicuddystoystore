@@ -1,0 +1,32 @@
+<ul>
+  {% for link in links %}
+    <li>
+      <a
+        href="{{ link.url }}"
+        {% if link.current %}
+          aria-current="page"
+        {% endif %}
+      >
+        {{- link.title | escape -}}
+      </a>
+      {%- if link.links != blank %}
+        <ul>
+          {% for child in link.links %}
+            <li>
+              <a href="{{ child.url }}">{{ child.title | escape }}</a>
+              {%- if child.links != blank %}
+                <ul>
+                  {% for grandchild in child.links %}
+                    <li>
+                      <a href="{{ grandchild.url }}">{{ grandchild.title | escape }}</a>
+                    </li>
+                  {% endfor %}
+                </ul>
+              {% endif %}
+            </li>
+          {% endfor %}
+        </ul>
+      {% endif %}
+    </li>
+  {% endfor %}
+</ul>

@@ -1,0 +1,14 @@
+<span data-arcadia-event-status-label data-arcadia-completed-label="{{ 'events.status_completed' | t | escape }}">
+  {% if status != blank -%}
+    {%- assign status_key = status | replace: '-', '_' | prepend: 'events.status_' -%}
+    {%- assign known_statuses = 'upcoming,registration-open,filling-fast,sold-out,today,live,completed,cancelled'
+      | split: ','
+    -%}
+    {%- if known_statuses contains status -%}
+      {%- assign status_label = status_key | t -%}
+    {%- else -%}
+      {%- assign status_label = status -%}
+    {%- endif -%}
+    {%- render 'arcadia-badge', label: status_label -%}
+  {%- endif %}
+</span>

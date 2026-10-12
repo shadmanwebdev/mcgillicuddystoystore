@@ -1,0 +1,89 @@
+.arcadia-holo::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 2;
+  background: linear-gradient(
+    125deg,
+    transparent 20%,
+    #b8f4ff55 35%,
+    #d1a9ff55 45%,
+    #fff4a755 52%,
+    transparent 70%
+  );
+  background-size: 250% 250%;
+  opacity: var(--arcadia-holo-opacity, 0.25);
+  mix-blend-mode: screen;
+  animation: arcadia-foil var(--arcadia-holo-speed, 12s) ease-in-out infinite;
+}
+.arcadia-holo[data-holo-static="true"]::after {
+  animation: none;
+}
+.arcadia-holo[data-holo-hover="true"]::after {
+  opacity: 0;
+}
+.arcadia-holo[data-holo-hover="true"]:hover::after,
+.arcadia-holo[data-holo-hover="true"]:focus-within::after {
+  opacity: var(--arcadia-holo-opacity, 0.25);
+}
+.arcadia-card[data-rarity="rare"] {
+  border-color: var(--arcadia-secondary);
+}
+.arcadia-card[data-rarity="ultra"],
+.arcadia-card[data-rarity="exclusive"] {
+  border-color: var(--arcadia-accent);
+}
+.arcadia-card[data-rarity="special"],
+.arcadia-card[data-rarity="promotional"] {
+  border-color: #d4a759;
+}
+.arcadia-card[data-rarity="uncommon"] {
+  border-color: #7bb39a;
+}
+@keyframes arcadia-foil {
+  0%,
+  100% {
+    background-position: 0 0;
+  }
+  50% {
+    background-position: 100% 100%;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .arcadia-holo::after {
+    animation: none;
+  }
+}
+.arcadia-holo {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+}
+.arcadia-holo::after {
+  filter: saturate(var(--arcadia-holo-intensity, 1));
+}
+.arcadia-card[data-rarity] {
+  border-color: var(--rarity-border, var(--arcadia-border));
+  box-shadow: 0 0 var(--rarity-glow, 0px)
+    color-mix(in srgb, var(--rarity-color, transparent) 35%, transparent);
+}
+.arcadia-badge[data-rarity] {
+  color: var(--rarity-color, inherit);
+  background: var(--rarity-gradient, transparent);
+  border-color: var(--rarity-border, currentColor);
+}
+.arcadia-badge--solid {
+  background: var(--arcadia-accent);
+  color: var(--arcadia-bg);
+}
+.arcadia-badge--outline {
+  background: transparent;
+}
+.arcadia-badge--premium {
+  background: linear-gradient(
+    120deg,
+    var(--arcadia-surface),
+    color-mix(in srgb, var(--arcadia-accent) 20%, var(--arcadia-surface))
+  );
+}

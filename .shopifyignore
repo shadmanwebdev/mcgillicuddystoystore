@@ -1,0 +1,13 @@
+node_modules/**
+.tools/**
+.shopify/**
+.git/**
+docs/**
+package.json
+package-lock.json
+shopify.theme.toml
+*.ps1
+*.md
+*.zip
+*.log
+.env*

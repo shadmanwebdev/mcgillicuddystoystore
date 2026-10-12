@@ -1,0 +1,22 @@
+{% assign newsletter_id = 'Newsletter-' | append: section.id %}
+{% form 'customer', id: newsletter_id, class: 'arcadia-stack' %}
+  <input type="hidden" name="contact[tags]" value="newsletter">{{ form.errors | default_errors -}}
+  {%- if form.posted_successfully? %}
+    <p role="status">{{ 'newsletter.success' | t }}</p>
+  {% else %}
+    <div class="arcadia-field">
+      <label for="Email-{{ section.id }}">{{ 'general.email' | t }}</label
+      ><input
+        class="arcadia-input"
+        type="email"
+        name="contact[email]"
+        id="Email-{{ section.id }}"
+        autocomplete="email"
+        required
+      >
+    </div>
+    <label class="arcadia-consent"
+      ><input type="checkbox" required> <span>{{ 'newsletter.consent' | t }}</span></label
+    ><button type="submit" class="arcadia-button">{{ 'newsletter.subscribe' | t }}</button>
+  {%- endif %}
+{% endform %}

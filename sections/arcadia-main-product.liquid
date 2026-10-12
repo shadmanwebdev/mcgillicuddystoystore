@@ -1,0 +1,60 @@
+{{ 'arcadia-product.css' | asset_url | stylesheet_tag }}
+<section
+  class="arcadia-section arcadia-container"
+  data-arcadia-product-root
+  data-arcadia-module="recent-product"
+  data-arcadia-product-handle="{{ product.handle }}"
+>
+  <div class="arcadia-split">
+    {% render 'arcadia-product-gallery', product: product %}
+    <div class="arcadia-product__info arcadia-stack">
+      {% for block in section.blocks %}
+        <div {{ block.shopify_attributes }}>
+          {% case block.type -%}
+            {%- when '@app' -%}
+              {%- render block -%}
+            {%- when 'title' -%}
+              {%- if settings.show_vendor %}
+                <p class="arcadia-eyebrow">{{ product.vendor | escape }}</p>
+              {% endif %}
+              <h1 class="arcadia-product__title">{{ product.title | escape }}</h1>
+            {% when 'buy' -%}
+              {%- render 'arcadia-product-form',
+                product: product,
+                update_url: true,
+                dynamic_checkout: block.settings.dynamic_checkout
+              -%}
+              {%- if cart.taxes_included -%}
+                <small>{{ 'products.tax_included' | t }}</small>
+              {%- endif -%}
+              <small>{{ 'products.shipping' | t }}</small>
+            {%- when 'description' %}
+              <details class="arcadia-accordion" open>
+                <summary>{{ 'products.description' | t }}</summary>
+                <div class="arcadia-rte">{{ product.description }}</div>
+              </details>
+            {% when 'tab' %}
+              <details class="arcadia-accordion">
+                <summary>{{ block.settings.heading | escape }}</summary>
+                <div class="arcadia-rte">
+                  {{ block.settings.content -}}
+                  {{- block.settings.page.content }}
+                </div>
+              </details>
+            {% when 'trust' -%}
+              {%- render 'arcadia-trust-badges', content: block.settings.content -%}
+            {%- when 'pickup' %}
+              <div data-arcadia-pickup-container>{% render 'arcadia-pickup', product: product %}</div>
+            {% when 'availability' -%}
+              {%- render 'arcadia-back-in-stock', product: product -%}
+          {%- endcase %}
+        </div>
+      {% endfor %}
+      {% render 'arcadia-hook-product-info', product: product %}
+    </div>
+  </div>
+  <script type="application/ld+json">
+    {{ product | structured_data }}
+  </script>
+</section>
+{% schema %}{"name":"Product","settings":[],"blocks":[{"type":"@app"},{"type":"title","name":"Title","limit":1},{"type":"buy","name":"Buy buttons","limit":1,"settings":[{"type":"checkbox","id":"dynamic_checkout","label":"Dynamic checkout","default":true}]},{"type":"description","name":"Description","limit":1},{"type":"tab","name":"Information accordion","settings":[{"type":"text","id":"heading","label":"Heading","default":"Shipping and returns"},{"type":"richtext","id":"content","label":"Content"},{"type":"page","id":"page","label":"Page"}]},{"type":"trust","name":"Trust information","settings":[{"type":"richtext","id":"content","label":"Verified store policies"}]},{"type":"pickup","name":"Pickup","limit":1},{"type":"availability","name":"Availability inquiry","limit":1}]}{% endschema %}

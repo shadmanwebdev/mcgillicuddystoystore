@@ -1,0 +1,68 @@
+<!doctype html>
+<html
+  lang="{{ request.locale.iso_code }}"
+  dir="{% if request.locale.iso_code == 'ar' or request.locale.iso_code == 'he' or request.locale.iso_code == 'fa' %}rtl{% else %}ltr{% endif %}"
+  data-mode="{{ settings.default_mode }}"
+  data-currency="{{ cart.currency.iso_code }}"
+  data-added="{{ 'products.added' | t }}"
+  data-error="{{ 'general.error' | t }}"
+>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <link rel="canonical" href="{{ canonical_url }}">
+    <title>
+      {{ page_title | escape }}
+      {% if current_tags %} — {{ current_tags | join: ', ' | escape }}{% endif %}
+      {% if current_page != 1 %} — {{ current_page }}{% endif %}
+      {% unless page_title contains shop.name %} — {{ shop.name | escape }}{% endunless %}
+    </title>
+    {% if page_description %}<meta name="description" content="{{ page_description | escape }}">{% endif %}
+    {% if settings.favicon -%}
+      <link rel="icon" type="image/png" href="{{ settings.favicon | image_url: width: 32, height: 32 }}">
+    {%- endif %}
+    {% render 'arcadia-meta-tags' %}
+    {{ content_for_header }}
+    {{ 'arcadia-tokens.css' | asset_url | stylesheet_tag }}
+    {{ 'arcadia-base.css' | asset_url | stylesheet_tag }}
+    {{ 'arcadia-layout.css' | asset_url | stylesheet_tag }}
+    {{ 'arcadia-components.css' | asset_url | stylesheet_tag }}
+    {% if settings.holo_enabled or settings.rarity_enabled -%}
+      {{- 'arcadia-effects.css' | asset_url | stylesheet_tag -}}
+    {%- endif %}
+    {% render 'arcadia-theme-variables' %}
+    <script src="{{ 'arcadia-core.js' | asset_url }}" defer></script>
+    <script src="{{ 'arcadia-modules.js' | asset_url }}" defer></script>
+    <script src="{{ 'arcadia-modal.js' | asset_url }}" defer></script>
+    <script src="{{ 'arcadia-section-lifecycle.js' | asset_url }}" defer></script>
+    <script src="{{ 'arcadia-theme-mode.js' | asset_url }}" defer></script>
+    {{ 'arcadia-merchandising-controls.css' | asset_url | stylesheet_tag }}
+    <script src="{{ 'arcadia-section-rendering.js' | asset_url }}" defer></script>
+    <script src="{{ 'arcadia-cart-api.js' | asset_url }}" defer></script>
+    <script src="{{ 'arcadia-product-form.js' | asset_url }}" defer></script>
+    <script src="{{ 'arcadia-product-gallery.js' | asset_url }}" defer></script>
+    <script src="{{ 'arcadia-cart.js' | asset_url }}" defer></script>
+    {% if settings.quick_view %}<script src="{{ 'arcadia-quick-view.js' | asset_url }}" defer></script>{% endif %}
+    {% if settings.recently_viewed %}
+      <script src="{{ 'arcadia-recently-viewed.js' | asset_url }}" defer></script>
+    {% endif %}
+    {% if settings.cart_drawer -%}
+      {{- 'arcadia-cart.css' | asset_url | stylesheet_tag }}
+      <script src="{{ 'arcadia-cart-drawer.js' | asset_url }}" defer></script>
+    {% endif %}
+  </head>
+  <body id="ArcadiaTop">
+    <a class="arcadia-skip" href="#MainContent">{{ 'general.skip' | t }}</a>{% sections 'header-group' -%}
+    {%- if settings.breadcrumbs and request.page_type != 'index' %}{% render 'arcadia-breadcrumbs' %}{% endif %}
+    <main id="MainContent" tabindex="-1">{{ content_for_layout }}</main>
+    {% sections 'footer-group' -%}
+    {%- if settings.cart_drawer %}{% render 'arcadia-cart-drawer' %}{% endif -%}
+    {%- if settings.age_enabled %}{% render 'arcadia-age-verifier' %}{% endif -%}
+    {%- if settings.back_to_top -%}
+      <a class="arcadia-icon-button arcadia-back-top" href="#ArcadiaTop" aria-label="{{ 'general.back_top' | t }}">
+        {%- render 'arcadia-icon', name: 'up' -%}
+      </a>
+    {%- endif -%}
+    {%- if settings.sticky_cart %}{% render 'arcadia-sticky-cart' %}{% endif %}
+  </body>
+</html>

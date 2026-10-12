@@ -1,0 +1,9 @@
+{
+  "sections": {
+    "main": {
+      "type": "arcadia-main-cart",
+      "settings": {}
+    }
+  },
+  "order": ["main"]
+}

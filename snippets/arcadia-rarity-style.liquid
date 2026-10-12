@@ -1,0 +1,20 @@
+{% liquid
+  assign tiers = 'common,uncommon,rare,ultra,special,promotional,exclusive' | split: ','
+  for tier in tiers
+    assign prefix = 'rarity_' | append: tier
+    assign value_key = prefix | append: '_value'
+    assign mapped_value = settings[value_key] | handleize
+    if rarity == mapped_value
+      assign color_key = prefix | append: '_color'
+      assign gradient_key = prefix | append: '_gradient'
+      assign glow_key = prefix | append: '_glow'
+      assign border_key = prefix | append: '_border'
+      break
+    endif
+  endfor
+%}
+{% if color_key -%}
+  style="--rarity-color: {{ settings[color_key] }}; --rarity-glow: {{ settings[glow_key] }}px;
+  {%- if settings[gradient_key] != blank %} --rarity-gradient: {{ settings[gradient_key] }};{% endif -%}
+  {%- if settings[border_key] %} --rarity-border: {{ settings[color_key] }};{% endif %}"
+{%- endif %}

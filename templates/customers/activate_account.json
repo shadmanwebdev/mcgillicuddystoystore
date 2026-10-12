@@ -1,0 +1,9 @@
+{
+  "sections": {
+    "main": {
+      "type": "arcadia-main-activate-account",
+      "settings": {}
+    }
+  },
+  "order": ["main"]
+}

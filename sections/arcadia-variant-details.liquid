@@ -1,0 +1,13 @@
+{% assign variant = product.selected_or_first_available_variant %}
+{% assign priced_variant = product.selected_selling_plan_allocation | default: variant %}
+<div data-arcadia-variant-details>
+  <div data-arcadia-price>
+    {% render 'arcadia-price', target: priced_variant, measurement: variant.unit_price_measurement %}
+  </div>
+  {% render 'arcadia-stock-status', product: product %}
+  <div data-arcadia-pickup-container>{% render 'arcadia-pickup', product: product %}</div>
+  <script type="application/json" data-arcadia-variant-rules>
+    {"available":{{ variant.available | json }},"min":{{ variant.quantity_rule.min | default: 1 | json }},"max":{{ variant.quantity_rule.max | json }},"increment":{{ variant.quantity_rule.increment | default: 1 | json }},"plans":[{% for allocation in variant.selling_plan_allocations %}{{ allocation.selling_plan.id | append: '' | json }}{% unless forloop.last %},{% endunless %}{% endfor %}]}
+  </script>
+</div>
+{% schema %}{"name":"Variant details endpoint","settings":[]}{% endschema %}

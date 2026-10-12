@@ -1,0 +1,142 @@
+<script src="{{ 'arcadia-slider.js' | asset_url }}" defer></script>
+{{ 'arcadia-merchandising.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'arcadia-countdown.js' | asset_url }}" defer></script>
+<section class="arcadia-container arcadia-section">
+  {% render 'arcadia-section-header',
+    heading: section.settings.heading,
+    eyebrow: section.settings.eyebrow,
+    description: section.settings.description
+  %}
+  <div class="arcadia-release-timeline" style="--arcadia-columns:3">
+    {% for block in section.blocks -%}
+      {%- render 'arcadia-release-card', block: block -%}
+    {%- endfor %}
+  </div>
+</section>
+{% schema %}
+{
+  "name": "Release timeline",
+  "settings": [
+    {
+      "default": "The next chapter starts here.",
+      "id": "heading",
+      "label": "Heading",
+      "type": "text"
+    },
+    {
+      "default": "Collect. Play. Belong.",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "type": "text"
+    },
+    {
+      "id": "description",
+      "label": "Description",
+      "type": "richtext"
+    },
+    {
+      "type": "paragraph",
+      "content": "Order blocks chronologically. Preorder buttons use normal Shopify product availability and configured preorder messaging; the theme does not bypass inventory policies."
+    },
+    {
+      "type": "select",
+      "id": "heading_alignment",
+      "label": "Heading alignment",
+      "default": "start",
+      "options": [
+        {
+          "value": "start",
+          "label": "Start"
+        },
+        {
+          "value": "center",
+          "label": "Center"
+        },
+        {
+          "value": "end",
+          "label": "End"
+        }
+      ]
+    }
+  ],
+  "blocks": [
+    {
+      "type": "release",
+      "name": "Release",
+      "settings": [
+        {
+          "type": "product",
+          "id": "product",
+          "label": "Product"
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Artwork"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Custom title"
+        },
+        {
+          "type": "text",
+          "id": "date_label",
+          "label": "Release date display"
+        },
+        {
+          "type": "text",
+          "id": "target",
+          "label": "Countdown (ISO 8601 with offset)"
+        },
+        {
+          "type": "richtext",
+          "id": "description",
+          "label": "Description"
+        },
+        {
+          "type": "url",
+          "id": "url",
+          "label": "Custom URL"
+        },
+        {
+          "type": "text",
+          "id": "button_label",
+          "label": "Button label",
+          "default": "Explore release"
+        },
+        {
+          "type": "text",
+          "id": "preorder_date",
+          "label": "Preorder opens display"
+        },
+        {
+          "type": "text",
+          "id": "availability_badge",
+          "label": "Availability badge (manual)"
+        },
+        {
+          "type": "image_picker",
+          "id": "set_logo",
+          "label": "Set logo"
+        },
+        {
+          "type": "collection",
+          "id": "collection",
+          "label": "Linked product collection"
+        },
+        {
+          "type": "text",
+          "id": "category",
+          "label": "Category label"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Release timeline"
+    }
+  ]
+}
+{% endschema %}

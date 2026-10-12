@@ -1,0 +1,62 @@
+<script src="{{ 'arcadia-tabs.js' | asset_url }}" defer></script>
+<section class="arcadia-container arcadia-section">
+  {% render 'arcadia-section-header', heading: section.settings.heading -%}
+  {%- render 'arcadia-tabs', blocks: section.blocks %}
+</section>
+{% schema %}
+{
+  "name": "Content tabs",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Everything you need to know"
+    },
+    {
+      "type": "select",
+      "id": "heading_alignment",
+      "label": "Heading alignment",
+      "default": "start",
+      "options": [
+        {
+          "value": "start",
+          "label": "Start"
+        },
+        {
+          "value": "center",
+          "label": "Center"
+        },
+        {
+          "value": "end",
+          "label": "End"
+        }
+      ]
+    }
+  ],
+  "blocks": [
+    {
+      "type": "tab",
+      "name": "Tab",
+      "settings": [
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "Heading",
+          "default": "Information"
+        },
+        {
+          "type": "richtext",
+          "id": "content",
+          "label": "Content"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Content tabs"
+    }
+  ]
+}
+{% endschema %}

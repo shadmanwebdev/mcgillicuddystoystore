@@ -1,0 +1,15 @@
+<article class="arcadia-card">
+  {% if article.image -%}
+    <a href="{{ article.url }}" class="arcadia-card__media" aria-label="{{ article.title | escape }}">
+      {%- render 'arcadia-media', image: article.image, loading: 'lazy', sizes: '(min-width: 1000px) 33vw, 100vw' -%}
+    </a>
+  {%- endif %}
+  <div class="arcadia-card__body">
+    <p class="arcadia-eyebrow">{{ article.published_at | date: format: 'abbreviated_date' }}</p>
+    <h3 class="arcadia-card__title">
+      <a href="{{ article.url }}">{{ article.title | escape }}</a>
+    </h3>
+    <p class="arcadia-muted">{{ article.excerpt_or_content | strip_html | truncatewords: 25 }}</p>
+    <a href="{{ article.url }}">{{ 'blog.read' | t }}</a>
+  </div>
+</article>

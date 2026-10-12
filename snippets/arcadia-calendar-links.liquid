@@ -1,0 +1,15 @@
+<div
+  class="arcadia-row"
+  data-arcadia-module="calendar"
+  data-arcadia-title="{{ title | escape }}"
+  data-arcadia-start="{{ start_at | escape }}"
+  data-arcadia-end="{{ end_at | escape }}"
+  data-arcadia-location="{{ location | escape }}"
+  data-arcadia-description="{{ description | strip_html | escape }}"
+  data-arcadia-url="{{ url | escape }}"
+  hidden
+>
+  <button type="button" class="arcadia-button arcadia-button--secondary" data-arcadia-ics>
+    {{ 'events.calendar_download' | t }}</button
+  ><a data-arcadia-google hidden>{{ 'events.google_calendar' | t }}</a>
+</div>

@@ -1,0 +1,27 @@
+<section class="arcadia-container arcadia-section arcadia-narrow arcadia-stack">
+  <h1>{{ 'customer.activate' | t }}</h1>
+  {% form 'activate_customer_password', class: 'arcadia-stack' %}
+    {{ form.errors | default_errors -}}
+    <label class="arcadia-field">
+      {{- 'customer.password' | t -}}
+      <input
+        class="arcadia-input"
+        type="password"
+        name="customer[password]"
+        autocomplete="new-password"
+        required></label
+    ><label class="arcadia-field">
+      {{- 'customer.password_confirm' | t -}}
+      <input
+        class="arcadia-input"
+        type="password"
+        name="customer[password_confirmation]"
+        autocomplete="new-password"
+        required></label
+    ><button type="submit" class="arcadia-button">{{ 'customer.activate' | t }}</button
+    ><button type="submit" class="arcadia-button arcadia-button--secondary" name="decline" formnovalidate>
+      {{ 'customer.decline' | t }}
+    </button>
+  {% endform %}
+</section>
+{% schema %}{"name":"Activate account","settings":[]} {% endschema %}

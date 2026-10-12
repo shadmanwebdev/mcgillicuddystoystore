@@ -1,0 +1,16 @@
+<div data-arcadia-quick-content data-arcadia-product-root>
+  <div class="arcadia-dialog__header">
+    <h2>{{ product.title | escape }}</h2>
+    <button type="button" class="arcadia-icon-button" data-arcadia-close aria-label="{{ 'general.close' | t }}">
+      {% render 'arcadia-icon', name: 'close' %}
+    </button>
+  </div>
+  <div class="arcadia-split">
+    <div>{% render 'arcadia-media', image: product.featured_image, loading: 'lazy', sizes: '50vw' %}</div>
+    <div class="arcadia-stack">
+      {% render 'arcadia-product-form', product: product, update_url: false -%}
+      <a href="{{ product.url }}">{{ 'products.back' | t }}</a>
+    </div>
+  </div>
+</div>
+{% schema %}{"name":"Quick view","settings":[]}{% endschema %}

@@ -1,0 +1,21 @@
+<script src="{{ 'arcadia-age-verifier.js' | asset_url }}" defer></script>
+<dialog
+  data-arcadia-module="age-verifier"
+  data-arcadia-minimum="{{ settings.minimum_age }}"
+  aria-labelledby="ArcadiaAgeHeading"
+>
+  <div class="arcadia-stack">
+    <h2 id="ArcadiaAgeHeading">{{ 'general.age' | t: age: settings.minimum_age }}</h2>
+    <p>{{ settings.age_message | escape }}</p>
+    <button class="arcadia-button" type="button" data-arcadia-age-confirm>{{ 'general.confirm' | t }}</button>
+    {%- if settings.age_exit != blank -%}
+      <a href="{{ settings.age_exit }}">{{ 'general.exit' | t }}</a>
+    {%- endif %}
+  </div>
+</dialog>
+<noscript>
+  <p class="arcadia-container">
+    {{ settings.age_message | escape }}
+    {{ 'general.age' | t: age: settings.minimum_age }}
+  </p>
+</noscript>

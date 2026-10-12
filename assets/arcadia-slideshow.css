@@ -1,0 +1,37 @@
+.arcadia-slideshow {
+  gap: 0;
+}
+.arcadia-slide {
+  flex: 0 0 100%;
+  scroll-snap-align: start;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+  background: var(--arcadia-surface);
+}
+.arcadia-slide__media {
+  min-width: 0;
+}
+.arcadia-slide__media img,
+.arcadia-slide__media video,
+.arcadia-slide__media iframe,
+.arcadia-slide__media svg {
+  width: 100%;
+  aspect-ratio: 16/10;
+  object-fit: cover;
+  border: 0;
+}
+.arcadia-slide__copy {
+  padding: 3rem;
+}
+.arcadia-slide__copy h2 {
+  font-size: clamp(2rem, 4vw, 4rem);
+}
+@media (max-width: 749px) {
+  .arcadia-slide {
+    grid-template-columns: 1fr;
+  }
+  .arcadia-slide__copy {
+    padding: 1.5rem;
+  }
+}

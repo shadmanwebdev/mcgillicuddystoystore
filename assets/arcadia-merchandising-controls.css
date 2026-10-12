@@ -1,0 +1,122 @@
+.arcadia-heading[data-align="center"] {
+  justify-content: center;
+  text-align: center;
+  flex-direction: column;
+  align-items: center;
+}
+.arcadia-heading[data-align="end"] {
+  justify-content: flex-end;
+  text-align: end;
+}
+.arcadia-promotion-media {
+  display: grid;
+  grid-template-columns: 1.3fr 1fr;
+  gap: 2rem;
+  align-items: center;
+}
+.arcadia-promotion-media:has(> div:only-child) {
+  grid-template-columns: 1fr;
+}
+.arcadia-promotion-media img,
+.arcadia-promotion-media video {
+  width: 100%;
+  height: auto;
+  border-radius: var(--arcadia-radius);
+}
+.arcadia-game-card {
+  border: 1px solid var(--game-color);
+  overflow: hidden;
+  transition: transform 0.2s ease;
+}
+.arcadia-game-card[data-lift="true"]:hover {
+  transform: translateY(-4px);
+}
+.arcadia-game-logo {
+  display: block;
+  max-width: 140px;
+  height: 64px;
+  object-fit: contain;
+  margin: 1rem;
+}
+.arcadia-community-icon {
+  font-size: 3rem;
+}
+.arcadia-release-product {
+  flex: 0 0 160px;
+  display: grid;
+  gap: 0.5rem;
+}
+.arcadia-release-product img {
+  width: 100%;
+  aspect-ratio: 1;
+  object-fit: contain;
+}
+@media (max-width: 749px) {
+  .arcadia-promotion-media {
+    grid-template-columns: 1fr;
+  }
+  .arcadia-promotion-media[data-mobile-layout="reverse"] > div:last-child {
+    order: -1;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .arcadia-game-card {
+    transition: none;
+  }
+  .arcadia-game-card[data-lift="true"]:hover {
+    transform: none;
+  }
+}
+
+.arcadia-card__media {
+  position: relative;
+}
+.arcadia-card__media .arcadia-card__rollover {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+.arcadia-card__media:hover .arcadia-card__rollover,
+.arcadia-card__media:focus .arcadia-card__rollover {
+  opacity: 1;
+}
+.arcadia-swatch {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  border: 1px solid var(--arcadia-border);
+  overflow: hidden;
+  display: inline-flex;
+}
+.arcadia-swatch img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.arcadia-sticky-cart {
+  position: fixed;
+  bottom: 1rem;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 25;
+  box-shadow: 0 8px 30px #0004;
+  max-width: calc(100% - 2rem);
+}
+.arcadia-live-promo {
+  padding: 0.65rem 0;
+}
+.arcadia-live-promo .arcadia-row {
+  justify-content: center;
+}
+.arcadia-live-promo a {
+  color: inherit;
+}
+.arcadia-live-promo .arcadia-countdown {
+  font-variant-numeric: tabular-nums;
+}
+@media (prefers-reduced-motion: reduce) {
+  .arcadia-card__media .arcadia-card__rollover {
+    transition: none;
+  }
+}

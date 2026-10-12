@@ -1,0 +1,61 @@
+{% liquid
+  assign rarity = product.metafields[settings.rarity_namespace][settings.rarity_key].value | handleize
+  assign card_id = 'ArcadiaCard-' | append: section.id | append: '-' | append: product.id
+%}
+<article
+  class="arcadia-card{% if settings.holo_enabled and settings.holo_products %} arcadia-holo{% endif %}"
+  {% if settings.rarity_enabled %}
+    data-rarity="{{ rarity }}"
+  {% endif %}
+  {% if settings.rarity_enabled %}
+    {%- render 'arcadia-rarity-style', rarity: rarity -%}
+  {% endif %}
+  data-holo-static="{{ settings.holo_static }}"
+  data-holo-hover="{{ settings.holo_hover }}"
+>
+  <a href="{{ product.url }}" class="arcadia-card__media" aria-label="{{ product.title | escape }}">
+    {%- render 'arcadia-media',
+      image: product.featured_image,
+      sizes: '(min-width: 1000px) 25vw, 50vw',
+      loading: 'lazy'
+    -%}
+    {%- if settings.rollover_images and product.images.size > 1 -%}
+      {{- product.images[1] | image_url: width: 900 | image_tag: loading: 'lazy', class: 'arcadia-card__rollover' -}}
+    {%- endif -%}
+  </a>
+  <div class="arcadia-card__body arcadia-stack">
+    <div>
+      {% if settings.show_vendor %}
+        <p class="arcadia-eyebrow">{{ product.vendor | escape }}</p>
+      {% endif %}
+      <h3 class="arcadia-card__title">
+        <a href="{{ product.url }}">{{ product.title | escape }}</a>
+      </h3>
+      {% render 'arcadia-price', target: product %}
+    </div>
+    <div class="arcadia-row">
+      {% if settings.rarity_enabled -%}
+        {%- render 'arcadia-badge',
+          label: product.metafields[settings.rarity_namespace][settings.rarity_key].value,
+          rarity: rarity
+        -%}
+      {%- endif -%}
+      {%- if product.metafields.arcadia.preorder.value -%}
+        {%- assign preorder_label = 'products.preorder' | t -%}
+        {%- render 'arcadia-badge', label: preorder_label -%}
+      {%- endif -%}
+      {%- unless product.available -%}
+        {%- assign sold_label = 'products.sold_out' | t -%}
+        {%- render 'arcadia-badge', label: sold_label -%}
+      {%- endunless %}
+    </div>
+    {% if settings.quick_buy %}{% render 'arcadia-quick-buy', product: product, form_id: card_id %}{% endif %}
+    {% if settings.quick_view -%}
+      <a href="{{ product.url }}" data-arcadia-module="quick-view" data-arcadia-product-url="{{ product.url }}">
+        {{- 'products.quick_view' | t -}}
+      </a>
+    {%- endif %}
+    {% render 'arcadia-hook-product-card-actions', product: product %}
+    {% render 'arcadia-hook-product-card', product: product %}
+  </div>
+</article>

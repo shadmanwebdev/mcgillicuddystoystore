@@ -1,0 +1,14 @@
+<script src="{{ 'arcadia-sticky-cart.js' | asset_url }}" defer></script>
+<a
+  href="{{ routes.cart_url }}"
+  class="arcadia-sticky-cart arcadia-button"
+  data-arcadia-module="sticky-cart"
+  {% if cart.item_count == 0 %}
+    hidden
+  {% endif %}
+>
+  {% render 'arcadia-icon', name: 'cart' %}
+  {{ 'cart.title' | t }}
+  <span data-arcadia-sticky-count>{{ cart.item_count }}</span>
+  <span data-arcadia-sticky-total>{{ cart.total_price | money_with_currency }}</span>
+</a>

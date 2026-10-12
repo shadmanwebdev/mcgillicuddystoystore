@@ -1,0 +1,18 @@
+{% assign completed_label = 'events.countdown_done' | t %}
+{% if target != blank %}
+  <div
+    class="arcadia-countdown"
+    data-arcadia-module="countdown"
+    data-arcadia-target-date="{{ target | escape }}"
+    data-arcadia-completion-action="{{ completion_action | default: 'message' }}"
+    data-arcadia-complete="{{ completion_message | default: completed_label | escape }}"
+    data-arcadia-units="{{ 'events.days' | t }},{{ 'events.hours' | t }},{{ 'events.minutes' | t }},{{ 'events.seconds' | t }}"
+    hidden
+  >
+    <span data-arcadia-countdown-output aria-hidden="true"></span>
+    <span class="arcadia-visually-hidden">
+      {{- 'events.start' | t }}: {{ target | date: format: 'abbreviated_date' }}
+      {{ target | date: '%H:%M %z' -}}
+    </span>
+  </div>
+{% endif %}

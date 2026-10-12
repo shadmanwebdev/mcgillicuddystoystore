@@ -1,0 +1,701 @@
+[
+  {
+    "name": "Appearance",
+    "settings": [
+      {
+        "type": "select",
+        "id": "default_mode",
+        "label": "Default appearance",
+        "options": [
+          {
+            "value": "dark",
+            "label": "Dark"
+          },
+          {
+            "value": "light",
+            "label": "Light"
+          }
+        ],
+        "default": "dark"
+      },
+      {
+        "type": "checkbox",
+        "id": "mode_toggle",
+        "label": "Show appearance toggle",
+        "default": true
+      },
+      {
+        "type": "color",
+        "id": "dark_background",
+        "label": "Dark background",
+        "default": "#111317"
+      },
+      {
+        "type": "color",
+        "id": "dark_surface",
+        "label": "Dark surface",
+        "default": "#1b1e25"
+      },
+      {
+        "type": "color",
+        "id": "dark_accent",
+        "label": "Dark accent",
+        "default": "#beff50"
+      },
+      {
+        "type": "color",
+        "id": "light_background",
+        "label": "Light background",
+        "default": "#f6f5f0"
+      },
+      {
+        "type": "color",
+        "id": "light_accent",
+        "label": "Light accent",
+        "default": "#456d00"
+      },
+      {
+        "type": "font_picker",
+        "id": "body_font",
+        "label": "Body font",
+        "default": "assistant_n4"
+      },
+      {
+        "type": "font_picker",
+        "id": "heading_font",
+        "label": "Heading font",
+        "default": "assistant_n7"
+      },
+      {
+        "type": "range",
+        "id": "page_width",
+        "label": "Page width",
+        "min": 1000,
+        "max": 1800,
+        "step": 50,
+        "default": 1400,
+        "unit": "px"
+      },
+      {
+        "type": "range",
+        "id": "card_radius",
+        "label": "Card corners",
+        "min": 0,
+        "max": 32,
+        "step": 2,
+        "default": 16,
+        "unit": "px"
+      },
+      {
+        "type": "image_picker",
+        "id": "favicon",
+        "label": "Favicon"
+      },
+      {
+        "type": "color",
+        "id": "dark_text",
+        "label": "Dark text",
+        "default": "#f3f4f6"
+      },
+      {
+        "type": "color",
+        "id": "dark_muted",
+        "label": "Dark muted text",
+        "default": "#a3a9b6"
+      },
+      {
+        "type": "color",
+        "id": "light_surface",
+        "label": "Light surface",
+        "default": "#ffffff"
+      },
+      {
+        "type": "color",
+        "id": "light_text",
+        "label": "Light text",
+        "default": "#191c23"
+      },
+      {
+        "type": "color",
+        "id": "light_muted",
+        "label": "Light muted text",
+        "default": "#5e6571"
+      }
+    ]
+  },
+  {
+    "name": "Card effects and rarity",
+    "settings": [
+      {
+        "type": "checkbox",
+        "id": "holo_enabled",
+        "label": "Enable holographic card treatment",
+        "default": false
+      },
+      {
+        "type": "range",
+        "id": "holo_opacity",
+        "label": "Holographic opacity",
+        "min": 5,
+        "max": 70,
+        "step": 5,
+        "default": 25,
+        "unit": "%"
+      },
+      {
+        "type": "range",
+        "id": "holo_speed",
+        "label": "Holographic speed",
+        "min": 4,
+        "max": 30,
+        "step": 1,
+        "default": 12,
+        "unit": "s"
+      },
+      {
+        "type": "checkbox",
+        "id": "holo_hover",
+        "label": "Hover/focus only",
+        "default": true
+      },
+      {
+        "type": "checkbox",
+        "id": "holo_static",
+        "label": "Static treatment",
+        "default": false
+      },
+      {
+        "type": "checkbox",
+        "id": "rarity_enabled",
+        "label": "Show merchant rarity",
+        "default": true
+      },
+      {
+        "type": "text",
+        "id": "rarity_namespace",
+        "label": "Rarity metafield namespace",
+        "default": "arcadia"
+      },
+      {
+        "type": "text",
+        "id": "rarity_key",
+        "label": "Rarity metafield key",
+        "default": "rarity"
+      },
+      {
+        "type": "paragraph",
+        "content": "Generic styles: common, uncommon, rare, ultra, special, promotional, exclusive. Unknown merchant values use the base frame. Rarity never changes availability or price."
+      },
+      {
+        "type": "range",
+        "id": "holo_intensity",
+        "label": "Holographic color intensity",
+        "min": 0,
+        "max": 200,
+        "step": 10,
+        "default": 100,
+        "unit": "%"
+      },
+      {
+        "type": "checkbox",
+        "id": "holo_products",
+        "label": "Holographic products",
+        "default": true
+      },
+      {
+        "type": "checkbox",
+        "id": "holo_promos",
+        "label": "Holographic promos",
+        "default": false
+      },
+      {
+        "type": "checkbox",
+        "id": "holo_events",
+        "label": "Holographic events",
+        "default": false
+      },
+      {
+        "type": "checkbox",
+        "id": "holo_badges",
+        "label": "Holographic badges",
+        "default": false
+      },
+      {
+        "type": "checkbox",
+        "id": "holo_heroes",
+        "label": "Holographic heroes",
+        "default": false
+      }
+    ]
+  },
+  {
+    "name": "Shopping",
+    "settings": [
+      {
+        "type": "checkbox",
+        "id": "quick_buy",
+        "label": "Quick buy",
+        "default": true
+      },
+      {
+        "type": "checkbox",
+        "id": "quick_view",
+        "label": "Quick view",
+        "default": true
+      },
+      {
+        "type": "checkbox",
+        "id": "cart_drawer",
+        "label": "Cart drawer",
+        "default": true
+      },
+      {
+        "type": "checkbox",
+        "id": "predictive_search",
+        "label": "Predictive search",
+        "default": true
+      },
+      {
+        "type": "checkbox",
+        "id": "recently_viewed",
+        "label": "Recently viewed",
+        "default": true
+      },
+      {
+        "type": "checkbox",
+        "id": "show_vendor",
+        "label": "Product vendor",
+        "default": false
+      },
+      {
+        "type": "checkbox",
+        "id": "show_stock",
+        "label": "Actual inventory counts",
+        "default": false
+      },
+      {
+        "type": "checkbox",
+        "id": "breadcrumbs",
+        "label": "Breadcrumbs",
+        "default": true
+      },
+      {
+        "type": "collection",
+        "id": "cart_upsell_collection",
+        "label": "Cart cross-sell collection"
+      },
+      {
+        "type": "checkbox",
+        "id": "gift_note",
+        "label": "Gift message field",
+        "default": true
+      },
+      {
+        "type": "text",
+        "id": "gift_label",
+        "label": "Gift field label",
+        "default": "Gift message"
+      },
+      {
+        "type": "checkbox",
+        "id": "gift_wrap",
+        "label": "Offer complimentary gift wrapping",
+        "default": false
+      },
+      {
+        "type": "text",
+        "id": "gift_wrap_label",
+        "label": "Gift wrapping label",
+        "default": "Complimentary gift wrapping"
+      },
+      {
+        "type": "checkbox",
+        "id": "rollover_images",
+        "label": "Second product image on hover",
+        "default": false
+      },
+      {
+        "type": "checkbox",
+        "id": "swatches",
+        "label": "Native option and filter swatches",
+        "default": true
+      },
+      {
+        "type": "checkbox",
+        "id": "sticky_cart",
+        "label": "Sticky cart summary",
+        "default": false
+      },
+      {
+        "type": "checkbox",
+        "id": "shop_login",
+        "label": "Shop sign-in on customer login",
+        "default": false
+      }
+    ]
+  },
+  {
+    "name": "Community and age gate",
+    "settings": [
+      {
+        "type": "url",
+        "id": "discord_url",
+        "label": "Discord URL"
+      },
+      {
+        "type": "url",
+        "id": "instagram_url",
+        "label": "Instagram URL"
+      },
+      {
+        "type": "url",
+        "id": "youtube_url",
+        "label": "YouTube URL"
+      },
+      {
+        "type": "checkbox",
+        "id": "back_to_top",
+        "label": "Back-to-top link",
+        "default": true
+      },
+      {
+        "type": "checkbox",
+        "id": "age_enabled",
+        "label": "Enable age confirmation",
+        "default": false
+      },
+      {
+        "type": "range",
+        "id": "minimum_age",
+        "label": "Minimum age",
+        "min": 13,
+        "max": 25,
+        "step": 1,
+        "default": 18
+      },
+      {
+        "type": "text",
+        "id": "age_message",
+        "label": "Age confirmation message",
+        "default": "Please confirm that you meet the minimum age to enter this store."
+      },
+      {
+        "type": "url",
+        "id": "age_exit",
+        "label": "Exit URL"
+      },
+      {
+        "type": "paragraph",
+        "content": "This is a browser-local self-declaration only, not identity verification or a legal compliance system."
+      }
+    ]
+  },
+  {
+    "name": "Common rarity",
+    "settings": [
+      {
+        "type": "text",
+        "id": "rarity_common_value",
+        "label": "Metafield value",
+        "default": "common"
+      },
+      {
+        "type": "color",
+        "id": "rarity_common_color",
+        "label": "Color",
+        "default": "#a3a9b6"
+      },
+      {
+        "type": "color_background",
+        "id": "rarity_common_gradient",
+        "label": "Gradient"
+      },
+      {
+        "type": "checkbox",
+        "id": "rarity_common_border",
+        "label": "Colored border",
+        "default": true
+      },
+      {
+        "type": "range",
+        "id": "rarity_common_glow",
+        "label": "Glow strength",
+        "min": 0,
+        "max": 40,
+        "step": 2,
+        "default": 0,
+        "unit": "px"
+      },
+      {
+        "type": "text",
+        "id": "rarity_common_icon",
+        "label": "Badge symbol",
+        "info": "Short symbol or emoji; leave empty for text only."
+      }
+    ]
+  },
+  {
+    "name": "Uncommon rarity",
+    "settings": [
+      {
+        "type": "text",
+        "id": "rarity_uncommon_value",
+        "label": "Metafield value",
+        "default": "uncommon"
+      },
+      {
+        "type": "color",
+        "id": "rarity_uncommon_color",
+        "label": "Color",
+        "default": "#7bb39a"
+      },
+      {
+        "type": "color_background",
+        "id": "rarity_uncommon_gradient",
+        "label": "Gradient"
+      },
+      {
+        "type": "checkbox",
+        "id": "rarity_uncommon_border",
+        "label": "Colored border",
+        "default": true
+      },
+      {
+        "type": "range",
+        "id": "rarity_uncommon_glow",
+        "label": "Glow strength",
+        "min": 0,
+        "max": 40,
+        "step": 2,
+        "default": 0,
+        "unit": "px"
+      },
+      {
+        "type": "text",
+        "id": "rarity_uncommon_icon",
+        "label": "Badge symbol",
+        "info": "Short symbol or emoji; leave empty for text only."
+      }
+    ]
+  },
+  {
+    "name": "Rare rarity",
+    "settings": [
+      {
+        "type": "text",
+        "id": "rarity_rare_value",
+        "label": "Metafield value",
+        "default": "rare"
+      },
+      {
+        "type": "color",
+        "id": "rarity_rare_color",
+        "label": "Color",
+        "default": "#75b9ef"
+      },
+      {
+        "type": "color_background",
+        "id": "rarity_rare_gradient",
+        "label": "Gradient"
+      },
+      {
+        "type": "checkbox",
+        "id": "rarity_rare_border",
+        "label": "Colored border",
+        "default": true
+      },
+      {
+        "type": "range",
+        "id": "rarity_rare_glow",
+        "label": "Glow strength",
+        "min": 0,
+        "max": 40,
+        "step": 2,
+        "default": 0,
+        "unit": "px"
+      },
+      {
+        "type": "text",
+        "id": "rarity_rare_icon",
+        "label": "Badge symbol",
+        "info": "Short symbol or emoji; leave empty for text only."
+      }
+    ]
+  },
+  {
+    "name": "Ultra rarity",
+    "settings": [
+      {
+        "type": "text",
+        "id": "rarity_ultra_value",
+        "label": "Metafield value",
+        "default": "ultra"
+      },
+      {
+        "type": "color",
+        "id": "rarity_ultra_color",
+        "label": "Color",
+        "default": "#beff50"
+      },
+      {
+        "type": "color_background",
+        "id": "rarity_ultra_gradient",
+        "label": "Gradient"
+      },
+      {
+        "type": "checkbox",
+        "id": "rarity_ultra_border",
+        "label": "Colored border",
+        "default": true
+      },
+      {
+        "type": "range",
+        "id": "rarity_ultra_glow",
+        "label": "Glow strength",
+        "min": 0,
+        "max": 40,
+        "step": 2,
+        "default": 0,
+        "unit": "px"
+      },
+      {
+        "type": "text",
+        "id": "rarity_ultra_icon",
+        "label": "Badge symbol",
+        "info": "Short symbol or emoji; leave empty for text only."
+      }
+    ]
+  },
+  {
+    "name": "Special rarity",
+    "settings": [
+      {
+        "type": "text",
+        "id": "rarity_special_value",
+        "label": "Metafield value",
+        "default": "special"
+      },
+      {
+        "type": "color",
+        "id": "rarity_special_color",
+        "label": "Color",
+        "default": "#d4a759"
+      },
+      {
+        "type": "color_background",
+        "id": "rarity_special_gradient",
+        "label": "Gradient"
+      },
+      {
+        "type": "checkbox",
+        "id": "rarity_special_border",
+        "label": "Colored border",
+        "default": true
+      },
+      {
+        "type": "range",
+        "id": "rarity_special_glow",
+        "label": "Glow strength",
+        "min": 0,
+        "max": 40,
+        "step": 2,
+        "default": 0,
+        "unit": "px"
+      },
+      {
+        "type": "text",
+        "id": "rarity_special_icon",
+        "label": "Badge symbol",
+        "info": "Short symbol or emoji; leave empty for text only."
+      }
+    ]
+  },
+  {
+    "name": "Promotional rarity",
+    "settings": [
+      {
+        "type": "text",
+        "id": "rarity_promotional_value",
+        "label": "Metafield value",
+        "default": "promotional"
+      },
+      {
+        "type": "color",
+        "id": "rarity_promotional_color",
+        "label": "Color",
+        "default": "#de93ec"
+      },
+      {
+        "type": "color_background",
+        "id": "rarity_promotional_gradient",
+        "label": "Gradient"
+      },
+      {
+        "type": "checkbox",
+        "id": "rarity_promotional_border",
+        "label": "Colored border",
+        "default": true
+      },
+      {
+        "type": "range",
+        "id": "rarity_promotional_glow",
+        "label": "Glow strength",
+        "min": 0,
+        "max": 40,
+        "step": 2,
+        "default": 0,
+        "unit": "px"
+      },
+      {
+        "type": "text",
+        "id": "rarity_promotional_icon",
+        "label": "Badge symbol",
+        "info": "Short symbol or emoji; leave empty for text only."
+      }
+    ]
+  },
+  {
+    "name": "Exclusive rarity",
+    "settings": [
+      {
+        "type": "text",
+        "id": "rarity_exclusive_value",
+        "label": "Metafield value",
+        "default": "exclusive"
+      },
+      {
+        "type": "color",
+        "id": "rarity_exclusive_color",
+        "label": "Color",
+        "default": "#ffb085"
+      },
+      {
+        "type": "color_background",
+        "id": "rarity_exclusive_gradient",
+        "label": "Gradient"
+      },
+      {
+        "type": "checkbox",
+        "id": "rarity_exclusive_border",
+        "label": "Colored border",
+        "default": true
+      },
+      {
+        "type": "range",
+        "id": "rarity_exclusive_glow",
+        "label": "Glow strength",
+        "min": 0,
+        "max": 40,
+        "step": 2,
+        "default": 0,
+        "unit": "px"
+      },
+      {
+        "type": "text",
+        "id": "rarity_exclusive_icon",
+        "label": "Badge symbol",
+        "info": "Short symbol or emoji; leave empty for text only."
+      }
+    ]
+  }
+]

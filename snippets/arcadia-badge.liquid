@@ -1,0 +1,30 @@
+{% if label != blank %}
+  {% liquid
+    assign badge_icon = icon
+    if rarity != blank
+      assign tiers = 'common,uncommon,rare,ultra,special,promotional,exclusive' | split: ','
+      for tier in tiers
+        assign value_key = 'rarity_' | append: tier | append: '_value'
+        assign mapped_value = settings[value_key] | handleize
+        if rarity == mapped_value
+          assign icon_key = 'rarity_' | append: tier | append: '_icon'
+          assign badge_icon = settings[icon_key]
+          break
+        endif
+      endfor
+    endif
+  %}
+  <span
+    class="arcadia-badge arcadia-badge--{{ variant | default: 'subtle' | escape }}{% if settings.holo_enabled and settings.holo_badges %} arcadia-holo{% endif %}"
+    {% if rarity != blank %}
+      data-rarity="{{ rarity }}" {% render 'arcadia-rarity-style', rarity: rarity -%}
+    {% endif %}
+    data-holo-static="{{ settings.holo_static }}"
+    data-holo-hover="{{ settings.holo_hover }}"
+  >
+    {%- if badge_icon != blank -%}
+      <span aria-hidden="true">{{ badge_icon | escape }}</span>
+    {% endif -%}
+    {{- label | escape -}}
+  </span>
+{% endif %}

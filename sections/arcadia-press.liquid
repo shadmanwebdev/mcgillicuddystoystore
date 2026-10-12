@@ -1,0 +1,41 @@
+<section class="arcadia-container arcadia-section">
+  {% render 'arcadia-section-header', heading: section.settings.heading %}
+  <div class="arcadia-grid arcadia-grid--content">
+    {% for block in section.blocks %}
+      <figure class="arcadia-card arcadia-card__body arcadia-stack" {{ block.shopify_attributes }}>
+        {% if block.settings.logo != blank -%}
+          {{- block.settings.logo | image_url: width: 320 | image_tag: loading: 'lazy' -}}
+        {%- endif %}
+        {% if block.settings.quote != blank %}
+          <blockquote>{{ block.settings.quote | escape }}</blockquote>
+        {% endif %}
+        <figcaption>
+          {% if block.settings.url != blank -%}
+            <a href="{{ block.settings.url }}">{{ block.settings.publication | escape }}</a>
+          {%- else -%}
+            {{- block.settings.publication | escape -}}
+          {%- endif %}
+        </figcaption>
+      </figure>
+    {% endfor %}
+  </div>
+</section>
+{% schema %}
+{
+  "name": "Press and publications",
+  "settings": [{ "type": "text", "id": "heading", "label": "Heading", "default": "In the community" }],
+  "blocks": [
+    {
+      "type": "press",
+      "name": "Publication",
+      "settings": [
+        { "type": "image_picker", "id": "logo", "label": "Publication logo" },
+        { "type": "text", "id": "publication", "label": "Publication" },
+        { "type": "textarea", "id": "quote", "label": "Authorized quote" },
+        { "type": "url", "id": "url", "label": "Article link" }
+      ]
+    }
+  ],
+  "presets": [{ "name": "Press and publications" }]
+}
+{% endschema %}

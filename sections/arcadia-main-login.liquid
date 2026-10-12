@@ -1,0 +1,34 @@
+<section class="arcadia-container arcadia-section arcadia-narrow arcadia-stack">
+  <h1>{{ 'customer.login' | t }}</h1>
+  {% form 'customer_login', class: 'arcadia-stack' %}
+    {{ form.errors | default_errors -}}
+    {%- if settings.shop_login %}{{ form | login_button }}{% endif -%}
+    <label class="arcadia-field">
+      {{- 'customer.email' | t -}}
+      <input class="arcadia-input" type="email" name="customer[email]" autocomplete="email" required></label
+    ><label class="arcadia-field">
+      {{- 'customer.password' | t -}}
+      <input
+        class="arcadia-input"
+        type="password"
+        name="customer[password]"
+        autocomplete="current-password"
+        required></label
+    ><button class="arcadia-button" type="submit">{{ 'customer.login' | t }}</button>
+  {% endform %}
+  <a href="{{ routes.account_register_url }}">{{ 'customer.register' | t }}</a>
+  <details id="recover" class="arcadia-accordion">
+    <summary>{{ 'customer.forgot' | t }}</summary>
+    {% form 'recover_customer_password', class: 'arcadia-stack' %}
+      {{ form.errors | default_errors -}}
+      {%- if form.posted_successfully? %}
+        <p role="status">{{ 'customer.recover_sent' | t }}</p>
+      {% endif -%}
+      <label class="arcadia-field">
+        {{- 'customer.email' | t -}}
+        <input class="arcadia-input" type="email" name="email" autocomplete="email" required></label
+      ><button class="arcadia-button" type="submit">{{ 'customer.recover' | t }}</button>
+    {% endform %}
+  </details>
+</section>
+{% schema %}{"name":"Customer login","settings":[]} {% endschema %}

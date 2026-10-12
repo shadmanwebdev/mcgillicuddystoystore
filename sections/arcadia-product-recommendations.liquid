@@ -1,0 +1,58 @@
+<script src="{{ 'arcadia-product-recommendations.js' | asset_url }}" defer></script>
+<section
+  class="arcadia-container arcadia-section"
+  data-arcadia-module="recommendations"
+  data-arcadia-section-id="{{ section.id }}"
+  data-arcadia-product-id="{{ product.id }}"
+  data-arcadia-recommendations-url="{{ routes.product_recommendations_url }}"
+  {% unless recommendations.performed and recommendations.products_count > 0 %}
+    hidden
+  {% endunless %}
+>
+  {% if recommendations.performed and recommendations.products_count > 0 -%}
+    {%- render 'arcadia-section-header', heading: section.settings.heading %}
+    <div class="arcadia-grid">
+      {% for product in recommendations.products -%}
+        {%- render 'arcadia-product-card', product: product -%}
+      {%- endfor %}
+    </div>
+  {% endif %}
+</section>
+{% schema %}
+{
+  "name": "Recommendations",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Build your next deck"
+    },
+    {
+      "type": "select",
+      "id": "heading_alignment",
+      "label": "Heading alignment",
+      "default": "start",
+      "options": [
+        {
+          "value": "start",
+          "label": "Start"
+        },
+        {
+          "value": "center",
+          "label": "Center"
+        },
+        {
+          "value": "end",
+          "label": "End"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Recommendations"
+    }
+  ]
+}
+{% endschema %}

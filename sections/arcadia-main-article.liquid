@@ -1,0 +1,75 @@
+<article class="arcadia-container arcadia-section arcadia-narrow arcadia-stack">
+  <header>
+    <p class="arcadia-eyebrow">{{ article.published_at | date: format: 'abbreviated_date' }}</p>
+    <h1>{{ article.title | escape }}</h1>
+    {% if section.settings.show_author %}
+      <p>{{ 'blog.by' | t: author: article.author }}</p>
+    {% endif %}
+  </header>
+  {% if article.image %}{% render 'arcadia-media', image: article.image, loading: 'eager', sizes: '800px' %}{% endif %}
+  <div class="arcadia-rte">{{ article.content }}</div>
+  {% if article.tags.size > 0 %}
+    <nav class="arcadia-row">
+      {% for tag in article.tags -%}
+        {{- tag | link_to_tag: tag -}}
+      {%- endfor %}
+    </nav>
+  {% endif -%}
+  {%- if blog.comments_enabled? %}
+    <section>
+      <h2>{{ 'blog.comments' | t }}</h2>
+      {% paginate article.comments by 20 -%}
+        {%- for comment in article.comments %}
+          <div class="arcadia-card__body">
+            <p>
+              <strong>{{ comment.author | escape }}</strong> ·
+              {{ comment.created_at | date: format: 'abbreviated_date' }}
+            </p>
+            <div class="arcadia-rte">{{ comment.content }}</div>
+          </div>
+        {% endfor -%}
+        {%- render 'arcadia-pagination', paginate: paginate -%}
+      {%- endpaginate %}
+      {% form 'new_comment', article, class: 'arcadia-stack' %}
+        <h3>{{ 'blog.comment' | t }}</h3>
+        {{ form.errors | default_errors -}}
+        {%- if form.posted_successfully? %}
+          <p role="status">{{ 'blog.success' | t }}</p>
+        {% endif -%}
+        <label class="arcadia-field">
+          {{- 'general.name' | t -}}
+          <input
+            class="arcadia-input"
+            type="text"
+            name="comment[author]"
+            value="{{ form.author | escape }}"
+            autocomplete="name"
+            required></label
+        ><label class="arcadia-field">
+          {{- 'general.email' | t -}}
+          <input
+            class="arcadia-input"
+            type="email"
+            name="comment[email]"
+            value="{{ form.email | escape }}"
+            autocomplete="email"
+            required></label
+        ><label class="arcadia-field">
+          {{- 'general.message' | t -}}
+          <textarea name="comment[body]" rows="6" required>{{ form.body | escape }}</textarea>
+        </label>
+        {%- if blog.moderated? %}
+          <p>{{ 'blog.moderated' | t }}</p>
+        {% endif -%}
+        <button type="submit" class="arcadia-button">{{ 'general.submit' | t }}</button>
+      {% endform %}
+    </section>
+  {% endif %}
+  <script type="application/ld+json">
+    {{ article | structured_data }}
+  </script>
+  {% for block in section.blocks -%}
+    {%- render block -%}
+  {%- endfor %}
+</article>
+{% schema %}{"name":"Article","settings":[{"type":"checkbox","id":"show_author","label":"Show author","default":true}],"blocks":[{"type":"@app"}]} {% endschema %}

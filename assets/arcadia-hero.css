@@ -1,0 +1,138 @@
+.arcadia-hero {
+  position: relative;
+  overflow: hidden;
+  border-bottom: 1px solid var(--arcadia-line);
+}
+.arcadia-hero__inner {
+  display: grid;
+  grid-template-columns: 1.1fr 1fr;
+  align-items: center;
+  gap: 3rem;
+  min-height: 580px;
+}
+.arcadia-hero__copy {
+  position: relative;
+  z-index: 2;
+  padding-block: 4rem;
+}
+.arcadia-hero__copy h1,
+.arcadia-hero__copy h2 {
+  font-size: clamp(3rem, 6.8vw, 6.7rem);
+  max-width: 12ch;
+  font-weight: 850;
+  line-height: 0.98;
+  letter-spacing: -0.055em;
+}
+.arcadia-hero__copy .arcadia-rte {
+  max-width: 45ch;
+  font-size: 1.1rem;
+  margin-block: 1.5rem 2rem;
+  color: var(--arcadia-muted);
+}
+.arcadia-hero__art {
+  position: relative;
+  min-height: 520px;
+  display: grid;
+  place-items: center;
+}
+.arcadia-hero__art::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    ellipse at 60% 45%,
+    color-mix(in srgb, var(--arcadia-secondary) 28%, transparent),
+    transparent 65%
+  );
+  pointer-events: none;
+}
+.arcadia-hero__image {
+  position: relative;
+  width: 100%;
+  border-radius: var(--arcadia-radius);
+  overflow: hidden;
+}
+.arcadia-hero__image img {
+  width: 100%;
+  height: auto;
+}
+.arcadia-hero__cards {
+  position: relative;
+  width: 82%;
+  aspect-ratio: 4/5;
+  max-width: 390px;
+}
+.arcadia-hero__card {
+  position: absolute;
+  inset: 0;
+  border: 1px solid var(--arcadia-line);
+  border-radius: 22px;
+  padding: 12px;
+  background: var(--arcadia-surface);
+  box-shadow: 0 24px 70px #0007;
+}
+.arcadia-hero__card:first-child {
+  transform: rotate(-14deg) translate(-14%, 3%);
+  border-color: var(--arcadia-secondary);
+}
+.arcadia-hero__card:nth-child(2) {
+  transform: rotate(12deg) translate(13%, 1%);
+  border-color: var(--arcadia-accent);
+}
+.arcadia-hero__card:last-child {
+  transform: rotate(-3deg);
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+.arcadia-hero__sigil {
+  flex: 1;
+  display: grid;
+  place-items: center;
+  background:
+    radial-gradient(circle, #a995ff33, transparent 70%),
+    linear-gradient(150deg, #252830, #111317);
+  border: 1px solid var(--arcadia-line);
+  border-radius: 12px;
+  color: var(--arcadia-accent);
+}
+.arcadia-hero__sigil svg {
+  width: 70%;
+  height: 70%;
+}
+.arcadia-hero__card-label {
+  display: flex;
+  justify-content: space-between;
+  text-transform: uppercase;
+  font-size: 0.75rem;
+  letter-spacing: 0.1em;
+}
+.arcadia-hero__card-lines {
+  height: 30px;
+  background: repeating-linear-gradient(
+    0deg,
+    var(--arcadia-line) 0 1px,
+    transparent 1px 10px
+  );
+}
+@media (max-width: 750px) {
+  .arcadia-hero__inner {
+    grid-template-columns: 1fr;
+    gap: 0;
+    min-height: 0;
+  }
+  .arcadia-hero__copy {
+    padding-block: 3rem 1rem;
+  }
+  .arcadia-hero__art {
+    min-height: 420px;
+    padding-block: 2rem;
+  }
+  .arcadia-hero__cards {
+    max-width: 270px;
+  }
+  .arcadia-hero__copy h1,
+  .arcadia-hero__copy h2 {
+    max-width: 15ch;
+  }
+}

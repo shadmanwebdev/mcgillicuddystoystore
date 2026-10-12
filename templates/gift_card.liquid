@@ -1,0 +1,49 @@
+{% layout none %}
+<!doctype html>
+<html lang="{{ request.locale.iso_code }}">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="robots" content="noindex,nofollow">
+    <title>
+      {{ 'gift_card.title' | t }}
+      —
+      {{ shop.name | escape }}
+    </title>
+    {{ content_for_header }}
+    {{ 'arcadia-tokens.css' | asset_url | stylesheet_tag }}
+    {{ 'arcadia-base.css' | asset_url | stylesheet_tag }}
+    {{ 'arcadia-layout.css' | asset_url | stylesheet_tag }}
+    {{ 'arcadia-components.css' | asset_url | stylesheet_tag }}
+  </head>
+  <body>
+    <main class="arcadia-container arcadia-section arcadia-narrow arcadia-stack">
+      <p class="arcadia-logo">{{ shop.name | escape }}</p>
+      <h1>{{ 'gift_card.title' | t }}</h1>
+      <div class="arcadia-card">
+        <div class="arcadia-card__body arcadia-stack">
+          <p>
+            {{ 'gift_card.balance' | t }}: <strong>{{ gift_card.balance | money_with_currency }}</strong>
+          </p>
+          {% if gift_card.expired %}
+            <p>{{ 'gift_card.expired' | t }}</p>
+          {% elsif gift_card.enabled == false %}
+            <p>{{ 'gift_card.disabled' | t }}</p>
+          {% endif -%}
+          {%- if gift_card.expires_on %}
+            <p>{{ 'gift_card.expires' | t }}: {{ gift_card.expires_on | date: format: 'abbreviated_date' }}</p>
+          {% endif -%}
+          <label class="arcadia-field">
+            {{- 'gift_card.code' | t -}}
+            <input class="arcadia-input" type="text" value="{{ gift_card.code | format_code }}" readonly
+          ></label>
+          <p>{{ 'gift_card.instructions' | t }}</p>
+          {% if gift_card.pass_url -%}
+            <a href="{{ gift_card.pass_url }}">{{ 'gift_card.wallet' | t }}</a>
+          {%- endif %}
+        </div>
+      </div>
+      <a class="arcadia-button" href="{{ shop.url }}">{{ 'general.continue' | t }}</a>
+    </main>
+  </body>
+</html>

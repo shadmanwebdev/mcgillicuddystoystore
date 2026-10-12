@@ -1,0 +1,13 @@
+{% assign unit_measurement = target.unit_price_measurement | default: measurement %}
+<span class="arcadia-price">
+  {%- if target.compare_at_price > target.price -%}
+    <s>{{ target.compare_at_price | money_with_currency }}</s>
+  {%- endif -%}
+  {{- target.price | money_with_currency -}}
+</span>
+{%- if unit_measurement -%}
+  <small>
+    {{- target.unit_price | money }}/{{ unit_measurement.reference_value -}}
+    {{- unit_measurement.reference_unit -}}
+  </small>
+{%- endif %}

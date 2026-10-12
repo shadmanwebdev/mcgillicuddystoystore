@@ -1,0 +1,27 @@
+<div
+  {% if settings.predictive_search %}
+    data-arcadia-module="predictive-search"
+  {% endif %}
+>
+  <form class="arcadia-search-form" action="{{ routes.search_url }}" method="get" role="search">
+    <label class="arcadia-visually-hidden" for="Search-{{ id }}">{{ 'general.search' | t }}</label
+    ><input
+      class="arcadia-input"
+      id="Search-{{ id }}"
+      type="search"
+      name="q"
+      value="{{ search.terms | escape }}"
+      placeholder="{{ 'general.search' | t }}"
+      autocomplete="off"
+      data-arcadia-search-input
+
+    ><input type="hidden" name="options[prefix]" value="last"
+    ><button type="submit" class="arcadia-icon-button" aria-label="{{ 'general.search' | t }}">
+      {% render 'arcadia-icon', name: 'search' %}
+    </button>
+  </form>
+  {% if settings.predictive_search %}
+    <div id="Predictive-{{ id }}" class="arcadia-predictive" data-arcadia-search-results hidden></div>
+    <span role="status" class="arcadia-visually-hidden" data-arcadia-search-status></span>
+  {%- endif %}
+</div>

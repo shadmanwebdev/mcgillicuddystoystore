@@ -1,0 +1,85 @@
+<div class="arcadia-stack" data-arcadia-module="address">
+  <label class="arcadia-field">
+    {{- 'customer.first_name' | t -}}
+    <input
+      class="arcadia-input"
+      name="address[first_name]"
+      type="text"
+      value="{{ form.first_name | escape }}"
+      autocomplete="given-name"></label
+  ><label class="arcadia-field">
+    {{- 'customer.last_name' | t -}}
+    <input
+      class="arcadia-input"
+      name="address[last_name]"
+      type="text"
+      value="{{ form.last_name | escape }}"
+      autocomplete="family-name"></label
+  ><label class="arcadia-field">
+    {{- 'customer.company' | t -}}
+    <input
+      class="arcadia-input"
+      name="address[company]"
+      type="text"
+      value="{{ form.company | escape }}"
+      autocomplete="organization"></label
+  ><label class="arcadia-field">
+    {{- 'customer.address1' | t -}}
+    <input
+      class="arcadia-input"
+      name="address[address1]"
+      type="text"
+      value="{{ form.address1 | escape }}"
+      autocomplete="address-line1"
+      required></label
+  ><label class="arcadia-field">
+    {{- 'customer.address2' | t -}}
+    <input
+      class="arcadia-input"
+      name="address[address2]"
+      type="text"
+      value="{{ form.address2 | escape }}"
+      autocomplete="address-line2"></label
+  ><label class="arcadia-field">
+    {{- 'customer.city' | t -}}
+    <input
+      class="arcadia-input"
+      name="address[city]"
+      type="text"
+      value="{{ form.city | escape }}"
+      autocomplete="address-level2"
+      required></label
+  ><label class="arcadia-field">
+    {{- 'customer.country' | t -}}
+    <select name="address[country]" autocomplete="country-name" data-arcadia-country data-default="{{ form.country }}">
+      {{ all_country_option_tags }}
+    </select></label
+  ><label class="arcadia-field" data-arcadia-province-container>
+    {{- 'customer.province' | t -}}
+    <select
+      name="address[province]"
+      autocomplete="address-level1"
+      data-arcadia-province
+      data-default="{{ form.province }}"
+    ></select></label
+  ><label class="arcadia-field">
+    {{- 'customer.zip' | t -}}
+    <input
+      class="arcadia-input"
+      name="address[zip]"
+      type="text"
+      value="{{ form.zip | escape }}"
+      autocomplete="postal-code"></label
+  ><label class="arcadia-field">
+    {{- 'customer.phone' | t -}}
+    <input
+      class="arcadia-input"
+      name="address[phone]"
+      type="tel"
+      value="{{ form.phone | escape }}"
+      autocomplete="tel"></label
+  ><label class="arcadia-row">
+    {{- form.set_as_default_checkbox }}
+    {{ 'customer.set_default' | t -}}</label
+  ><button class="arcadia-button" type="submit">{{ 'customer.save' | t }}</button>
+</div>

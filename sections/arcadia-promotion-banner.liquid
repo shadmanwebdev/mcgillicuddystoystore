@@ -1,0 +1,157 @@
+<script src="{{ 'arcadia-countdown.js' | asset_url }}" defer></script>
+{{ 'arcadia-merchandising.css' | asset_url | stylesheet_tag }}
+<section class="arcadia-container arcadia-section">
+  <div
+    class="arcadia-promo arcadia-promotion-media{% if settings.holo_enabled and settings.holo_promos %} arcadia-holo{% endif %}"
+    data-mobile-layout="{{ section.settings.mobile_layout }}"
+    data-holo-static="{{ settings.holo_static }}"
+    data-holo-hover="{{ settings.holo_hover }}"
+  >
+    <div>
+      {% render 'arcadia-badge', label: section.settings.badge, icon: section.settings.icon, variant: 'solid' -%}
+      {%- render 'arcadia-section-header',
+        heading: section.settings.heading,
+        eyebrow: section.settings.eyebrow,
+        description: section.settings.description
+      -%}
+      {%- render 'arcadia-countdown',
+        target: section.settings.target,
+        completion_message: section.settings.completion_message,
+        completion_action: section.settings.completion_action
+      -%}
+      {%- render 'arcadia-button',
+        label: section.settings.button_label,
+        url: section.settings.button_link,
+        icon: 'arrow'
+      %}
+    </div>
+    {% if section.settings.video != blank or section.settings.image != blank %}
+      <div>
+        {% render 'arcadia-media', image: section.settings.image, video: section.settings.video, loading: 'lazy' %}
+      </div>
+    {% endif %}
+  </div>
+</section>
+{% schema %}
+{
+  "name": "Promotion banner",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "The next chapter starts here."
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "Collect. Play. Belong."
+    },
+    {
+      "type": "richtext",
+      "id": "description",
+      "label": "Description"
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Button label",
+      "default": "Explore the store"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button link"
+    },
+    {
+      "type": "text",
+      "id": "badge",
+      "label": "Urgency badge"
+    },
+    {
+      "type": "text",
+      "id": "icon",
+      "label": "Symbol or emoji"
+    },
+    {
+      "type": "text",
+      "id": "target",
+      "label": "Deadline (ISO 8601 with offset)"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Artwork"
+    },
+    {
+      "type": "video",
+      "id": "video",
+      "label": "Hosted video"
+    },
+    {
+      "type": "select",
+      "id": "mobile_layout",
+      "label": "Mobile layout",
+      "default": "stack",
+      "options": [
+        {
+          "value": "stack",
+          "label": "Stack"
+        },
+        {
+          "value": "reverse",
+          "label": "Artwork first"
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "id": "completion_message",
+      "label": "Completion message",
+      "default": "Now available"
+    },
+    {
+      "type": "select",
+      "id": "completion_action",
+      "label": "Completion behavior",
+      "default": "message",
+      "options": [
+        {
+          "value": "message",
+          "label": "Show message"
+        },
+        {
+          "value": "hide",
+          "label": "Hide countdown"
+        }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "heading_alignment",
+      "label": "Heading alignment",
+      "default": "start",
+      "options": [
+        {
+          "value": "start",
+          "label": "Start"
+        },
+        {
+          "value": "center",
+          "label": "Center"
+        },
+        {
+          "value": "end",
+          "label": "End"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Promotion banner"
+    }
+  ]
+}
+{% endschema %}

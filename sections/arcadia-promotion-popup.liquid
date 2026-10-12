@@ -1,0 +1,54 @@
+{% if section.settings.enabled %}
+  <script src="{{ 'arcadia-promotion-popup.js' | asset_url }}" defer></script>
+  <div
+    data-arcadia-module="promotion-popup"
+    data-delay="{{ section.settings.delay }}"
+    data-key="{{ section.id }}-{{ section.settings.campaign_key }}"
+  >
+    <dialog
+      class="arcadia-dialog"
+      id="Promotion-{{ section.id }}"
+      data-arcadia-module="dialog"
+      aria-labelledby="PromotionTitle-{{ section.id }}"
+    >
+      <div class="arcadia-card__body arcadia-stack">
+        <button type="button" class="arcadia-icon-button" data-arcadia-close aria-label="{{ 'general.close' | t }}">
+          {% render 'arcadia-icon', name: 'close' %}
+        </button>
+        {% if section.settings.image != blank -%}
+          {%- render 'arcadia-media', image: section.settings.image, loading: 'lazy', sizes: '450px' -%}
+        {%- endif %}
+        <h2 id="PromotionTitle-{{ section.id }}">{{ section.settings.heading | escape }}</h2>
+        <div class="arcadia-rte">{{ section.settings.description }}</div>
+        {% render 'arcadia-button', label: section.settings.button_label, url: section.settings.button_link %}
+        {% if section.settings.newsletter -%}
+          {%- assign newsletter_id = 'PopupNewsletter-' | append: section.id -%}
+          {%- render 'arcadia-newsletter-form', id: newsletter_id -%}
+        {%- endif %}
+      </div>
+    </dialog>
+  </div>
+{% endif %}
+{% schema %}
+{
+  "name": "Promotion popup",
+  "settings": [
+    { "type": "checkbox", "id": "enabled", "label": "Enable popup", "default": false },
+    {
+      "type": "text",
+      "id": "campaign_key",
+      "label": "Campaign key",
+      "default": "welcome",
+      "info": "Change this to show a new campaign to visitors who dismissed the previous one."
+    },
+    { "type": "range", "id": "delay", "label": "Delay", "min": 5, "max": 60, "step": 5, "default": 15, "unit": "s" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Welcome to the table" },
+    { "type": "richtext", "id": "description", "label": "Description" },
+    { "type": "image_picker", "id": "image", "label": "Image" },
+    { "type": "text", "id": "button_label", "label": "Button label", "default": "Explore" },
+    { "type": "url", "id": "button_link", "label": "Button link" },
+    { "type": "checkbox", "id": "newsletter", "label": "Show newsletter signup", "default": false }
+  ],
+  "presets": [{ "name": "Promotion popup" }]
+}
+{% endschema %}

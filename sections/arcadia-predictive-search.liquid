@@ -1,0 +1,47 @@
+{% if predictive_search.performed %}
+  <div data-arcadia-predictive-fragment>
+    <p>{{ 'general.search' | t }}</p>
+    <ul>
+      {% for query in predictive_search.resources.queries %}
+        <li>
+          <a href="{{ query.url }}">{{ query.text | escape }}</a>
+        </li>
+      {% endfor -%}
+      {%- for product in predictive_search.resources.products %}
+        <li>
+          <a href="{{ product.url }}">
+            {%- if product.featured_image -%}
+              {{- product.featured_image | image_url: width: 100 | image_tag: width: 50, height: 50, loading: 'lazy' -}}
+            {%- endif -%}
+            <span>
+              {{- product.title | escape -}}
+              <br>
+              {% render 'arcadia-price', target: product -%}
+            </span></a
+          >
+        </li>
+      {% endfor -%}
+      {%- for collection in predictive_search.resources.collections %}
+        <li>
+          <a href="{{ collection.url }}">{{ collection.title | escape }}</a>
+        </li>
+      {% endfor -%}
+      {%- for page in predictive_search.resources.pages %}
+        <li>
+          <a href="{{ page.url }}">{{ page.title | escape }}</a>
+        </li>
+      {% endfor -%}
+      {%- for article in predictive_search.resources.articles %}
+        <li>
+          <a href="{{ article.url }}">{{ article.title | escape }}</a>
+        </li>
+      {% endfor %}
+      <li>
+        <a href="{{ routes.search_url }}?q={{ predictive_search.terms | url_encode }}&options%5Bprefix%5D=last">
+          {{- 'general.view_all' | t }}: {{ predictive_search.terms | escape -}}
+        </a>
+      </li>
+    </ul>
+  </div>
+{% endif -%}
+{% schema %}{"name":"Predictive search","settings":[]} {% endschema %}

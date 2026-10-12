@@ -1,0 +1,45 @@
+{{ 'arcadia-collection.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'arcadia-facets.js' | asset_url }}" defer></script>
+{% if section.settings.infinite %}
+  <script src="{{ 'arcadia-infinite-scroll.js' | asset_url }}" defer></script>
+{% endif %}
+<section class="arcadia-container arcadia-section">
+  <h1>{{ collection.title | escape }}</h1>
+  <div class="arcadia-rte arcadia-muted">{{ collection.description }}</div>
+  {% if section.settings.show_image and collection.image %}
+    <div class="arcadia-collection-banner">
+      {% render 'arcadia-media', image: collection.image, loading: 'eager', sizes: '100vw' %}
+    </div>
+  {% endif %}
+  <div class="arcadia-collection-layout">
+    {% assign sort_by = collection.sort_by | default: collection.default_sort_by -%}
+    {%- render 'arcadia-facets',
+      filters: collection.filters,
+      filter_url: collection.url,
+      sort_options: collection.sort_options,
+      sort_by: sort_by
+    %}
+    <div
+      class="arcadia-stack"
+      data-arcadia-pagination-root="{{ section.id }}"
+      {% if section.settings.infinite %}
+        data-arcadia-module="infinite-scroll" data-arcadia-automatic="{{ section.settings.automatic }}"
+      {% endif %}
+    >
+      {% render 'arcadia-active-facets', filters: collection.filters %}
+      <p>{{ 'general.results' | t: count: collection.products_count }}</p>
+      {% paginate collection.products by section.settings.page_size %}
+        <div class="arcadia-grid" data-arcadia-grid>
+          {% for product in collection.products -%}
+            {%- render 'arcadia-product-card', product: product -%}
+          {%- else %}
+            <p>{{ 'collections.no_products' | t }}</p>
+          {% endfor %}
+        </div>
+        {% render 'arcadia-pagination', paginate: paginate -%}
+      {%- endpaginate -%}
+      {%- render 'arcadia-hook-collection', collection: collection %}
+    </div>
+  </div>
+</section>
+{% schema %}{"name":"Collection","settings":[{"type":"checkbox","id":"show_image","label":"Collection image","default":true},{"type":"range","id":"page_size","label":"Products per page","min":12,"max":48,"step":6,"default":24},{"type":"checkbox","id":"infinite","label":"Load next page without navigation","default":false},{"type":"checkbox","id":"automatic","label":"Automatically load when next link enters view","default":false}]}{% endschema %}

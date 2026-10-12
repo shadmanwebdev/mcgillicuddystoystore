@@ -1,0 +1,37 @@
+<script src="{{ 'arcadia-addresses.js' | asset_url }}" defer></script>
+<section class="arcadia-container arcadia-section arcadia-narrow arcadia-stack">
+  <a href="{{ routes.account_url }}">{{ 'customer.return' | t }}</a>
+  <h1>{{ 'customer.addresses' | t }}</h1>
+  {% paginate customer.addresses by 10 -%}
+    {%- for address in customer.addresses %}
+      <article class="arcadia-card">
+        <div class="arcadia-card__body">
+          {% if address == customer.default_address %}
+            <p class="arcadia-eyebrow">{{ 'customer.default' | t }}</p>
+          {% endif -%}
+          {{- address | format_address }}
+          <details>
+            <summary>{{ 'customer.edit' | t }}</summary>
+            {% form 'customer_address', address %}
+              {{ form.errors | default_errors -}}
+              {%- render 'arcadia-address-form', form: form %}
+            {% endform %}
+          </details>
+          <form method="post" action="{{ routes.account_addresses_url }}/{{ address.id }}">
+            <input type="hidden" name="_method" value="delete"
+            ><button class="arcadia-button arcadia-button--secondary" type="submit">{{ 'customer.delete' | t }}</button>
+          </form>
+        </div>
+      </article>
+    {% endfor -%}
+    {%- render 'arcadia-pagination', paginate: paginate -%}
+  {%- endpaginate %}
+  <details>
+    <summary>{{ 'customer.add_address' | t }}</summary>
+    {% form 'customer_address', customer.new_address %}
+      {{ form.errors | default_errors -}}
+      {%- render 'arcadia-address-form', form: form %}
+    {% endform %}
+  </details>
+</section>
+{% schema %}{"name":"Customer addresses","settings":[]} {% endschema %}

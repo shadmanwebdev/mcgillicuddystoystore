@@ -1,0 +1,38 @@
+<div class="arcadia-field">
+  <label for="Note-{{ section.id }}">{{ 'cart.note' | t }}</label
+  >><textarea id="Note-{{ section.id }}" name="note" rows="3">{{ cart.note | escape }}</textarea>
+</div>
+{% if settings.gift_note %}
+  <div class="arcadia-field">
+    <label for="Gift-{{ section.id }}">{{ settings.gift_label | escape }}</label
+    >><textarea
+      id="Gift-{{ section.id }}"
+      name="attributes[Gift message]"
+      rows="2"
+    >{{ cart.attributes['Gift message'] | escape }}</textarea>
+  </div>
+{% endif %}
+
+{% if settings.gift_wrap -%}
+  <label class="arcadia-field">
+    {{- settings.gift_wrap_label | escape -}}
+    <select name="attributes[Gift wrapping]">
+      <option
+        value="No"
+        {% unless cart.attributes['Gift wrapping'] == 'Yes' %}
+          selected
+        {% endunless %}
+      >
+        {{ 'general.no' | t }}
+      </option>
+      <option
+        value="Yes"
+        {% if cart.attributes['Gift wrapping'] == 'Yes' %}
+          selected
+        {% endif %}
+      >
+        {{ 'general.yes' | t }}
+      </option>
+    </select></label
+  >
+{%- endif %}

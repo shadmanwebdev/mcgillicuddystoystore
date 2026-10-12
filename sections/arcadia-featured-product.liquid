@@ -1,0 +1,20 @@
+{{ 'arcadia-product.css' | asset_url | stylesheet_tag }}
+<section class="arcadia-section arcadia-container" data-arcadia-product-root>
+  {% assign product = section.settings.product -%}
+  {%- if product != blank %}
+    <div class="arcadia-split">
+      {% render 'arcadia-product-gallery', product: product %}
+      <div class="arcadia-stack">
+        <p class="arcadia-eyebrow">{{ section.settings.eyebrow | escape }}</p>
+        <h2>
+          <a href="{{ product.url }}">{{ product.title | escape }}</a>
+        </h2>
+        {% render 'arcadia-product-form', product: product, update_url: false -%}
+        <a href="{{ product.url }}">{{ 'products.back' | t }}</a>
+      </div>
+    </div>
+  {% elsif request.design_mode %}
+    <p>Select a product in this section's settings.</p>
+  {% endif %}
+</section>
+{% schema %}{"name":"Featured product","settings":[{"type":"product","id":"product","label":"Product"},{"type":"text","id":"eyebrow","label":"Eyebrow","default":"Featured drop"}],"presets":[{"name":"Featured product"}]}{% endschema %}

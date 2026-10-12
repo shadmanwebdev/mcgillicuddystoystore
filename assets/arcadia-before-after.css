@@ -1,0 +1,26 @@
+.arcadia-compare__images {
+  position: relative;
+  overflow: hidden;
+  aspect-ratio: 16/9;
+  border-radius: var(--arcadia-radius);
+}
+.arcadia-compare__images > div {
+  position: absolute;
+  inset: 0;
+}
+.arcadia-compare__images img,
+.arcadia-compare__images svg {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.arcadia-compare__after {
+  clip-path: inset(0 0 0 var(--position));
+}
+.arcadia-compare input {
+  width: 100%;
+  accent-color: var(--arcadia-accent);
+}
+.arcadia-compare .arcadia-row {
+  justify-content: space-between;
+}

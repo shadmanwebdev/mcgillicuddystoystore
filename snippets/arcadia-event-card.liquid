@@ -1,0 +1,136 @@
+{% liquid
+  if event.system != blank
+    assign accent = event.accent.value
+    assign title = event.title.value
+    assign description = event.short_description.value
+    assign image = event.image.value
+    assign start_at = event.start_at.value | date: '%Y-%m-%dT%H:%M:%S%z'
+    assign end_at = event.end_at.value | date: '%Y-%m-%dT%H:%M:%S%z'
+    assign game = event.game.value
+    assign event_type = event.event_type.value
+    assign venue = event.venue.value
+    assign address = event.address.value
+    assign status = event.status.value
+    assign capacity = event.capacity.value
+    assign spaces = event.spaces_remaining.value
+    assign badge = event.badge.value
+    assign entry_product = event.product.value
+    assign link = event.system.url
+    assign registration = event.registration_link.value
+    assign ticket = event.ticket_link.value
+    assign cta_label = event.cta_label.value
+  else
+    assign accent = event.accent
+    assign title = event.title
+    assign description = event.short_description
+    assign image = event.image
+    assign start_at = event.start_at
+    assign end_at = event.end_at
+    assign game = event.game
+    assign event_type = event.event_type
+    assign venue = event.venue
+    assign address = event.address
+    assign status = event.status
+    assign capacity = event.capacity
+    assign spaces = event.spaces_remaining
+    assign badge = event.badge
+    assign entry_product = event.product
+    assign link = event.link
+    assign registration = event.registration_link
+    assign ticket = event.ticket_link
+    assign cta_label = event.cta_label
+  endif
+  assign destination = link | default: registration | default: ticket | default: entry_product.url
+%}
+<article
+  class="arcadia-card arcadia-event-card{% if settings.holo_enabled and settings.holo_events %} arcadia-holo{% endif %}"
+  data-card-style="{{ card_style | default: 'clean' }}"
+  data-animate="{{ event.animate }}"
+  style="--event-accent: {{ accent | default: settings.dark_accent }}; --event-overlay: {{ event.overlay | default: 20 | divided_by: 100.0 }};{% if event.background != blank %} background: {{ event.background }};{% endif %}"
+  data-arcadia-status="{{ status | escape }}"
+  data-arcadia-event
+  data-arcadia-game="{{ game | escape }}"
+  data-arcadia-type="{{ event_type | escape }}"
+  data-arcadia-start="{{ start_at | escape }}"
+  data-holo-static="{{ settings.holo_static }}"
+  data-holo-hover="{{ settings.holo_hover }}"
+  {{ attributes }}
+>
+  {% if image != blank %}
+    <div class="arcadia-card__media">
+      {% if destination != blank -%}
+        <a href="{{ destination }}" aria-label="{{ title | escape }}">
+          {%- render 'arcadia-media', image: image, loading: 'lazy', sizes: '(min-width: 1000px) 33vw, 100vw' -%}
+        </a>
+      {%- else -%}
+        {%- render 'arcadia-media', image: image, loading: 'lazy', sizes: '(min-width: 1000px) 33vw, 100vw' -%}
+      {%- endif %}
+    </div>
+  {% endif %}
+  <div class="arcadia-card__body arcadia-stack">
+    <div class="arcadia-row">
+      {% render 'arcadia-event-status', status: status -%}
+      {%- render 'arcadia-badge', label: badge %}
+    </div>
+    <div>
+      {% if game != blank and section.settings.show_game != false %}
+        <p class="arcadia-eyebrow">
+          {{ game | escape -}}
+          {%- if event_type != blank %} / {{ event_type | escape }}{% endif %}
+        </p>
+      {% endif %}
+      <h3>
+        {% if destination != blank -%}
+          <a href="{{ destination }}">{{ title | escape }}</a>
+        {%- else -%}
+          {{- title | escape -}}
+        {%- endif %}
+      </h3>
+      {% render 'arcadia-event-date', start_at: start_at -%}
+      {%- if venue != blank and section.settings.show_venue != false %}
+        <p class="arcadia-muted">{{ venue | escape }}</p>
+      {% endif %}
+    </div>
+    {% if description != blank and section.settings.show_description != false %}
+      <p class="arcadia-event-card__description">{{ description | escape }}</p>
+    {% endif %}
+    {% if section.settings.show_price != false -%}
+      {%- if event.system != blank -%}
+        {%- if event.entry_price.value != blank %}
+          <p>{{ event.entry_price.value | escape }}</p>
+        {% endif -%}
+      {%- elsif event.entry_price != blank %}
+        <p>{{ event.entry_price | escape }}</p>
+      {% endif -%}
+    {%- endif %}
+    {% if capacity != blank and section.settings.show_capacity != false -%}
+      <small>{{ 'events.capacity' | t: count: capacity }}</small>
+    {%- endif -%}
+    {%- if spaces != blank and section.settings.show_capacity != false -%}
+      <small>{{ 'events.spaces' | t: count: spaces }}</small>
+    {%- endif %}
+    {% if show_countdown -%}
+      {%- render 'arcadia-countdown',
+        target: start_at,
+        completion_message: section.settings.completion_message,
+        completion_action: section.settings.completion_action
+      -%}
+    {%- endif %}
+    {% if destination != blank -%}
+      {%- assign action_label = cta_label | default: default_label -%}
+      {%- if action_label == blank %}{% assign action_label = 'events.details' | t %}{% endif -%}
+      {%- render 'arcadia-button', label: action_label, url: destination, secondary: true, icon: 'arrow' -%}
+    {%- endif %}
+    {% if show_calendar -%}
+      {%- render 'arcadia-calendar-links',
+        title: title,
+        start_at: start_at,
+        end_at: end_at,
+        location: address,
+        description: description,
+        url: destination
+      -%}
+    {%- endif %}
+    {% render 'arcadia-hook-event-card', event: event %}
+  </div>
+</article>

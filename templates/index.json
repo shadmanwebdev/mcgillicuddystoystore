@@ -1,0 +1,59 @@
+{
+  "sections": {
+    "hero": {
+      "type": "arcadia-hero",
+      "settings": {
+        "heading": "Your next great pull starts here.",
+        "eyebrow": "A home for collectors & competitors",
+        "description": "<p>Discover your next deck. Find your people. Make every game a story worth telling.</p>",
+        "heading_tag": "h1",
+        "button_label": "Explore the collection",
+        "button_link": "shopify://collections/all",
+        "secondary_label": "Upcoming events",
+        "secondary_link": "shopify://pages/events"
+      }
+    },
+    "games": {
+      "type": "arcadia-shop-by-game",
+      "settings": {
+        "heading": "Find your game.",
+        "eyebrow": "One table. Endless worlds."
+      }
+    },
+    "products": {
+      "type": "arcadia-featured-products",
+      "settings": {
+        "heading": "The next additions to your collection.",
+        "eyebrow": "On our radar",
+        "collection": "all",
+        "limit": 4
+      }
+    },
+    "events": {
+      "type": "arcadia-upcoming-events",
+      "settings": {
+        "heading": "The table is waiting.",
+        "eyebrow": "Play locally. Connect for real.",
+        "source": "both",
+        "limit": 6
+      }
+    },
+    "community": {
+      "type": "arcadia-community-cta",
+      "settings": {
+        "heading": "More than a collection. A community.",
+        "eyebrow": "This is your place",
+        "description": "<p>New to the game or chasing your next win? There is room at the table.</p>"
+      }
+    },
+    "newsletter": {
+      "type": "arcadia-newsletter",
+      "settings": {
+        "heading": "Stay one step ahead.",
+        "eyebrow": "Drops. Events. Stories.",
+        "description": "<p>Get store news and upcoming events straight to your inbox.</p>"
+      }
+    }
+  },
+  "order": ["hero", "games", "products", "events", "community", "newsletter"]
+}

@@ -1,0 +1,18 @@
+{
+  "sections": {
+    "page": {
+      "type": "arcadia-main-page",
+      "settings": {}
+    },
+    "events": {
+      "type": "arcadia-events",
+      "settings": {
+        "heading": "Find your next event.",
+        "layout": "grid",
+        "source": "both",
+        "limit": 24
+      }
+    }
+  },
+  "order": ["page", "events"]
+}

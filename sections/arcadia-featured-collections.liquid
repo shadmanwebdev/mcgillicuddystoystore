@@ -1,0 +1,104 @@
+{{ 'arcadia-merchandising.css' | asset_url | stylesheet_tag }}
+<section class="arcadia-container arcadia-section">
+  {% render 'arcadia-section-header',
+    heading: section.settings.heading,
+    eyebrow: section.settings.eyebrow,
+    description: section.settings.description
+  %}
+  <div class="arcadia-grid">
+    {% for block in section.blocks %}
+      <div class="arcadia-collection-card" {{ block.shopify_attributes }}>
+        {% render 'arcadia-collection-card',
+          collection: block.settings.collection,
+          image: block.settings.image,
+          title: block.settings.title,
+          description: block.settings.description,
+          url: block.settings.url
+        %}
+      </div>
+    {% endfor %}
+  </div>
+</section>
+{% schema %}
+{
+  "name": "Featured collections",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "The next chapter starts here."
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "Collect. Play. Belong."
+    },
+    {
+      "type": "richtext",
+      "id": "description",
+      "label": "Description"
+    },
+    {
+      "type": "select",
+      "id": "heading_alignment",
+      "label": "Heading alignment",
+      "default": "start",
+      "options": [
+        {
+          "value": "start",
+          "label": "Start"
+        },
+        {
+          "value": "center",
+          "label": "Center"
+        },
+        {
+          "value": "end",
+          "label": "End"
+        }
+      ]
+    }
+  ],
+  "blocks": [
+    {
+      "type": "collection",
+      "name": "Collection / game",
+      "settings": [
+        {
+          "type": "collection",
+          "id": "collection",
+          "label": "Collection"
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Custom artwork"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Custom title"
+        },
+        {
+          "type": "text",
+          "id": "description",
+          "label": "Description"
+        },
+        {
+          "type": "url",
+          "id": "url",
+          "label": "Custom URL"
+        }
+      ]
+    }
+  ],
+  "max_blocks": 12,
+  "presets": [
+    {
+      "name": "Featured collections"
+    }
+  ]
+}
+{% endschema %}

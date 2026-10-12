@@ -1,0 +1,33 @@
+{
+  "sections": {
+    "page": {
+      "type": "arcadia-main-page",
+      "settings": {}
+    },
+    "gallery": {
+      "type": "arcadia-community-gallery",
+      "settings": {
+        "heading": "Life around the table."
+      }
+    },
+    "winners": {
+      "type": "arcadia-tournament-winners",
+      "settings": {
+        "heading": "From the winner's table."
+      }
+    },
+    "team": {
+      "type": "arcadia-team",
+      "settings": {
+        "heading": "Meet your local team."
+      }
+    },
+    "cta": {
+      "type": "arcadia-community-cta",
+      "settings": {
+        "heading": "Find your people."
+      }
+    }
+  },
+  "order": ["page", "gallery", "winners", "team", "cta"]
+}

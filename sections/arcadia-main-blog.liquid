@@ -1,0 +1,22 @@
+<section class="arcadia-container arcadia-section">
+  <h1>{{ blog.title | escape }}</h1>
+  {% if blog.all_tags.size > 0 %}
+    <nav class="arcadia-row" aria-label="{{ 'collections.filter' | t }}">
+      <a href="{{ blog.url }}">{{ 'general.view_all' | t }}</a>
+      {%- for tag in blog.all_tags -%}
+        {{- tag | link_to_tag: tag -}}
+      {%- endfor %}
+    </nav>
+  {% endif -%}
+  {%- paginate blog.articles by 9 %}
+    <div class="arcadia-grid arcadia-grid--content" style="--arcadia-columns:3">
+      {% for article in blog.articles -%}
+        {%- render 'arcadia-article-card', article: article -%}
+      {%- else %}
+        <p>{{ 'general.empty' | t }}</p>
+      {% endfor %}
+    </div>
+    {% render 'arcadia-pagination', paginate: paginate -%}
+  {%- endpaginate %}
+</section>
+{% schema %}{"name":"Blog","settings":[]} {% endschema %}

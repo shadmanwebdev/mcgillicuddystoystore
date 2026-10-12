@@ -1,0 +1,115 @@
+{{ 'arcadia-merchandising.css' | asset_url | stylesheet_tag }}
+<section class="arcadia-container arcadia-section">
+  <div class="arcadia-promo arcadia-split">
+    <div>
+      {% if section.settings.icon != blank -%}
+        <span aria-hidden="true" class="arcadia-community-icon">{{ section.settings.icon | escape }}</span>
+      {%- endif -%}
+      {%- if section.settings.member_count != blank %}
+        <p>{{ section.settings.member_count | escape }}</p>
+      {% endif -%}
+      {%- render 'arcadia-section-header',
+        heading: section.settings.heading,
+        eyebrow: section.settings.eyebrow,
+        description: section.settings.description
+      %}
+      <div class="arcadia-row">
+        {% render 'arcadia-button',
+          label: section.settings.button_label,
+          url: section.settings.button_link,
+          icon: 'arrow'
+        -%}
+        {%- if settings.discord_url != blank -%}
+          <a class="arcadia-button arcadia-button--secondary" href="{{ settings.discord_url }}">
+            {{- section.settings.platform_label | escape -}}
+          </a>
+        {%- endif %}
+      </div>
+    </div>
+    {% if section.settings.image != blank %}
+      <div>{% render 'arcadia-media', image: section.settings.image, loading: 'lazy', sizes: '50vw' %}</div>
+    {% endif %}
+  </div>
+</section>
+{% schema %}
+{
+  "name": "Community call to action",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "The next chapter starts here."
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "Collect. Play. Belong."
+    },
+    {
+      "type": "richtext",
+      "id": "description",
+      "label": "Description"
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Button label",
+      "default": "Explore the store"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button link"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Community artwork"
+    },
+    {
+      "type": "text",
+      "id": "icon",
+      "label": "Community symbol"
+    },
+    {
+      "type": "text",
+      "id": "member_count",
+      "label": "Manual member count display",
+      "info": "Enter an accurate count and update it yourself; no live analytics connection."
+    },
+    {
+      "type": "text",
+      "id": "platform_label",
+      "label": "Community platform label",
+      "default": "Discord"
+    },
+    {
+      "type": "select",
+      "id": "heading_alignment",
+      "label": "Heading alignment",
+      "default": "start",
+      "options": [
+        {
+          "value": "start",
+          "label": "Start"
+        },
+        {
+          "value": "center",
+          "label": "Center"
+        },
+        {
+          "value": "end",
+          "label": "End"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Community call to action"
+    }
+  ]
+}
+{% endschema %}

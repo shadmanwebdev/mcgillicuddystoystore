@@ -1,0 +1,134 @@
+{{ 'arcadia-merchandising.css' | asset_url | stylesheet_tag }}
+<section class="arcadia-container arcadia-section">
+  {% render 'arcadia-section-header',
+    heading: section.settings.heading,
+    eyebrow: section.settings.eyebrow,
+    description: section.settings.description
+  %}
+  <div class="arcadia-grid">
+    {% for block in section.blocks %}
+      <div
+        class="arcadia-collection-card arcadia-game-card"
+        data-lift="{{ block.settings.hover }}"
+        style="--game-color:{{ block.settings.color }};{% if block.settings.gradient != blank %}background:{{ block.settings.gradient }};{% endif %}"
+        {{ block.shopify_attributes }}
+      >
+        {% if block.settings.logo != blank -%}
+          {{- block.settings.logo | image_url: width: 240 | image_tag: loading: 'lazy', class: 'arcadia-game-logo' -}}
+        {%- endif -%}
+        {%- render 'arcadia-collection-card',
+          collection: block.settings.collection,
+          image: block.settings.image,
+          title: block.settings.title,
+          description: block.settings.description,
+          url: block.settings.url
+        %}
+      </div>
+    {% endfor %}
+  </div>
+</section>
+{% schema %}
+{
+  "name": "Shop by game",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "The next chapter starts here."
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "Collect. Play. Belong."
+    },
+    {
+      "type": "richtext",
+      "id": "description",
+      "label": "Description"
+    },
+    {
+      "type": "select",
+      "id": "heading_alignment",
+      "label": "Heading alignment",
+      "default": "start",
+      "options": [
+        {
+          "value": "start",
+          "label": "Start"
+        },
+        {
+          "value": "center",
+          "label": "Center"
+        },
+        {
+          "value": "end",
+          "label": "End"
+        }
+      ]
+    }
+  ],
+  "blocks": [
+    {
+      "type": "collection",
+      "name": "Collection / game",
+      "settings": [
+        {
+          "type": "collection",
+          "id": "collection",
+          "label": "Collection"
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Custom artwork"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Custom title"
+        },
+        {
+          "type": "text",
+          "id": "description",
+          "label": "Description"
+        },
+        {
+          "type": "url",
+          "id": "url",
+          "label": "Custom URL"
+        },
+        {
+          "type": "image_picker",
+          "id": "logo",
+          "label": "Game logo"
+        },
+        {
+          "type": "color",
+          "id": "color",
+          "label": "Accent",
+          "default": "#beff50"
+        },
+        {
+          "type": "color_background",
+          "id": "gradient",
+          "label": "Background gradient"
+        },
+        {
+          "type": "checkbox",
+          "id": "hover",
+          "label": "Lift on hover",
+          "default": true
+        }
+      ]
+    }
+  ],
+  "max_blocks": 12,
+  "presets": [
+    {
+      "name": "Shop by game"
+    }
+  ]
+}
+{% endschema %}

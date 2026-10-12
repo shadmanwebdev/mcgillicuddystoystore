@@ -1,0 +1,41 @@
+{% assign product = block.settings.product %}
+<article class="arcadia-card" {{ block.shopify_attributes }}>
+  {% assign image = block.settings.image | default: product.featured_image -%}
+  {%- if image != blank %}
+    <div class="arcadia-card__media">
+      {% render 'arcadia-media', image: image, loading: 'lazy', sizes: '(min-width: 1000px) 33vw, 100vw' %}
+    </div>
+  {% endif %}
+  <div class="arcadia-card__body arcadia-stack">
+    {% if block.settings.set_logo != blank -%}
+      {{- block.settings.set_logo | image_url: width: 240 | image_tag: loading: 'lazy', class: 'arcadia-game-logo' -}}
+    {%- endif -%}
+    {%- render 'arcadia-badge', label: block.settings.availability_badge -%}
+    {%- if block.settings.category != blank %}
+      <p class="arcadia-eyebrow">{{ block.settings.category | escape }}</p>
+    {% endif -%}
+    {%- if block.settings.preorder_date != blank %}
+      <p>{{ block.settings.preorder_date | escape }}</p>
+    {% endif %}
+    <p class="arcadia-release-date">{{ block.settings.date_label | escape }}</p>
+    <h3>{{ block.settings.title | default: product.title | escape }}</h3>
+    <div class="arcadia-rte">{{ block.settings.description }}</div>
+    {% if block.settings.target != blank %}{% render 'arcadia-countdown', target: block.settings.target %}{% endif -%}
+    {%- if product != blank %}{% render 'arcadia-price', target: product %}{% endif -%}
+    {%- assign destination = block.settings.url | default: product.url -%}
+    {%- render 'arcadia-button', label: block.settings.button_label, url: destination %}
+  </div>
+  {% if block.settings.collection != blank %}
+    <div class="arcadia-card__body" data-arcadia-module="slider">
+      {% render 'arcadia-slider-controls' %}
+      <div class="arcadia-scroll" data-arcadia-slider-track>
+        {% for linked_product in block.settings.collection.products limit: 8 -%}
+          <a href="{{ linked_product.url }}" class="arcadia-release-product">
+            {%- render 'arcadia-media', image: linked_product.featured_image, loading: 'lazy', sizes: '180px' -%}
+            <span>{{ linked_product.title | escape }}</span>{% render 'arcadia-price', target: linked_product -%}
+          </a>
+        {%- endfor %}
+      </div>
+    </div>
+  {% endif %}
+</article>

@@ -1,0 +1,6 @@
+{% assign image = image | default: collection.featured_image -%}
+{%- assign title = title | default: collection.title -%}
+{%- assign url = url | default: collection.url -%}
+{%- capture media %}<a href="{{ url | default: routes.collections_url }}" class="arcadia-card__media" aria-label="{{ title | escape }}">{% render 'arcadia-media', image: image, loading: 'lazy', sizes: '(min-width: 1000px) 25vw, 50vw' %}</a>{% endcapture -%}
+{%- capture content %}<h3 class="arcadia-card__title"><a href="{{ url | default: routes.collections_url }}">{{ title | escape }}</a></h3>{% if description != blank %}<p class="arcadia-muted">{{ description | escape }}</p>{% endif %}{% endcapture -%}
+{%- render 'arcadia-card', media: media, content: content %}

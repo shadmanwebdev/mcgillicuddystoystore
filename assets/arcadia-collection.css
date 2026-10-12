@@ -1,0 +1,50 @@
+.arcadia-collection-layout {
+  display: grid;
+  grid-template-columns: 240px 1fr;
+  gap: 2rem;
+}
+.arcadia-facets h2 {
+  font-size: 1.2rem;
+}
+.arcadia-facets__values {
+  list-style: none;
+  padding: 0;
+}
+.arcadia-facets__values li {
+  padding: 0.4rem 0;
+}
+.arcadia-facets .arcadia-row {
+  gap: 0.5rem;
+}
+.arcadia-facets .arcadia-field {
+  flex: 1;
+  min-width: 70px;
+}
+.arcadia-collection-banner {
+  max-height: 300px;
+  overflow: hidden;
+  margin-bottom: 2rem;
+  border-radius: var(--arcadia-radius);
+}
+.arcadia-collection-banner img {
+  width: 100%;
+  height: 300px;
+  object-fit: cover;
+}
+.arcadia-collection-layout .arcadia-grid {
+  --arcadia-columns: 3;
+}
+@media (max-width: 800px) {
+  .arcadia-collection-layout {
+    grid-template-columns: 1fr;
+  }
+  .arcadia-facets {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .arcadia-facets > h2 {
+    grid-column: 1/-1;
+  }
+  .arcadia-collection-layout .arcadia-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
