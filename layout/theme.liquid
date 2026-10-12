@@ -30,6 +30,7 @@
     {%- endif %}
     <script src="{{ 'arcadia-core.js' | asset_url }}" defer></script>
     <script src="{{ 'arcadia-modules.js' | asset_url }}" defer></script>
+    <script src="{{ 'arcadia-cookie-consent.js' | asset_url }}" defer></script>
     <script src="{{ 'arcadia-modal.js' | asset_url }}" defer></script>
     <script src="{{ 'arcadia-section-lifecycle.js' | asset_url }}" defer></script>
     <script src="{{ 'arcadia-theme-mode.js' | asset_url }}" defer></script>
@@ -48,7 +49,7 @@
       <script src="{{ 'arcadia-cart-drawer.js' | asset_url }}" defer></script>
     {% endif %}
   </head>
-  <body id="ArcadiaTop">
+  <body id="ArcadiaTop" data-arcadia-module="cookie-consent">
     <a class="arcadia-skip" href="#MainContent">{{ 'general.skip' | t }}</a>{% sections 'header-group' -%}
     {%- if settings.breadcrumbs and request.page_type != 'index' %}{% render 'arcadia-breadcrumbs' %}{% endif %}
     <main id="MainContent" tabindex="-1">

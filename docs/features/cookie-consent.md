@@ -1,5 +1,11 @@
 # Cookie consent appearance
 
+## Saved-choice visibility
+
+Added `assets/arcadia-cookie-consent.js` to read Shopify's `currentVisitorConsent()` on initial load, after `visitorConsentCollected`, and on `pageshow`. Explicit yes/no decisions for analytics, marketing and preferences mark the body `data-arcadia-consent="saved"`; a scoped CSS rule then hides only the banner, including a late-inserted banner. Shopify continues saving the actual choice. No localStorage dismissal flag, consent-cookie rewrite or forced acceptance is used. Undecided/partial consent and sale-of-data-only GPC signals leave the banner behavior intact. The preferences dialog remains available.
+
+Loads the Customer Privacy API via `Shopify.loadFeatures` if needed, and leaves normal banner behavior in place if unavailable. Listener cleanup guards against delayed initialization after unload. Four tests cover accept/decline after refresh, undecided/GPC, custom preferences/reset, and delayed API/cleanup. Theme Check passed. Storefront browser interactions remain unverified. Reference: [Shopify Customer Privacy API](https://shopify.dev/docs/api/customer-privacy). This visibility enhancement supersedes the original CSS-only description below.
+
 The Shopify customer-privacy banner is styled by `assets/arcadia-cookie-consent.css`, loaded globally from `layout/theme.liquid`. Styles target the banner IDs previously observed on this store, rather than replacing Shopify's consent implementation.
 
 The banner uses Arcadia's light/dark surface, text, accent, font and radius tokens. It is fixed at the bottom and centered horizontally in both LTR and RTL, at 80% of the viewport width, with padded content, rounded buttons and a soft shadow. At viewport widths of 768px and below it uses the available width with 1rem side margins; the panel scrolls if its contents exceed the available height. Accept and Decline receive equal visual emphasis. Manage preferences and policy links remain available with visible keyboard focus.

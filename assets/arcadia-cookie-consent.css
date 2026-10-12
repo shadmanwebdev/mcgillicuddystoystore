@@ -1,5 +1,8 @@
-/* Presentation only: Shopify retains consent state, text and event handling.
+/* Shopify retains consent state, text and event handling.
    IDs verified on the store's Shopify customer-privacy banner. */
+[data-arcadia-consent="saved"] #shopify-pc__banner {
+  display: none !important;
+}
 #shopify-pc__banner {
   box-sizing: border-box !important;
   position: fixed !important;
